@@ -1,9 +1,12 @@
-import type { NextPage } from 'next';
+import { NextPage } from "next/types";
+
+import BaseLayout from "layouts/BaseLayout";
 
 const Home: NextPage = () => {
-  return (
-   <h1>Testing</h1>
-  );
+    return (
+        <BaseLayout>
+        </BaseLayout>
+    )
 };
 
 export default Home;

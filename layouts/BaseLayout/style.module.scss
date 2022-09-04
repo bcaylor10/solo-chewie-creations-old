@@ -1,0 +1,14 @@
+.loaderContainer {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: $white;
+    z-index: 100;
+}
+
+.loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
