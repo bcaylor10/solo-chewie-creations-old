@@ -1,37 +1,24 @@
-import { useEffect } from "react";
-import { Header as MantineHeader, Container, Grid, Button, Group } from "@mantine/core";
-import { useAuth0 } from "@auth0/auth0-react";
+import { Header as MantineHeader, Container, Grid } from "@mantine/core";
 
-import AvatarButton from "./AvatarButton";
+import UserMenu from "./UserMenu";
+import Navigation from './Navigation';
 
-interface IHeader {
-    setLoading: any;
-}
+import styles from './styles.module.scss';
 
-const Header = ({ setLoading }: IHeader) => {
-    const { user, isLoading, loginWithRedirect } = useAuth0();
 
-    useEffect(() => {
-        if (isLoading) {
-            setLoading(true);
-        } else {
-            setLoading(false);
-        }
-    }, [ setLoading, isLoading ]);
-
+const Header = () => {
     return (
-        <MantineHeader height={60} p="sm">
-           <Container>
-                <Grid align="center" justify="flex-end">
+        <MantineHeader height={70} p="sm" className={styles.header}>
+            <Container className={styles.container} fluid>
+                <Grid align="center" justify="space-between">
                     <Grid.Col span={6}>
-                        <Group position="right">
-                            {user ? <AvatarButton user={user} /> : (
-                                <Button color="green" onClick={() => loginWithRedirect()}>Log In</Button>
-                            )}
-                        </Group>
+                        <Navigation />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <UserMenu />
                     </Grid.Col>
                 </Grid>
-           </Container>
+            </Container>
         </MantineHeader>
     )
 };

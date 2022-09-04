@@ -6,15 +6,17 @@ export interface IProduct {
     description: String,
     size: String,
     labor_hours: String
+    price: number;
+    featured: boolean;
 }
-
-export const productNames: string[] = [ 'scarf', 'hat', 'headband' ];
 
 const productSchema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     size: { type: String, required: true },
-    labor_hours: { type: String, required: true }
+    labor_hours: { type: String, required: true },
+    price: { type: Number, required: true},
+    featured: { type: Boolean, required: false }
 });
 
 export const Product = models.Product || model('Product', productSchema, 'products');

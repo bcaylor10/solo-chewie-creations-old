@@ -1,0 +1,11 @@
+.hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    .productContainer {
+        flex: 1;
+        .stack {
+            height: 100%;
+        }
+    }
+}

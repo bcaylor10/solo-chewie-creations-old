@@ -1,0 +1,25 @@
+.footer {
+    color: $dark-green !important;
+    .facebookIcon {
+        display: flex;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        cursor: pointer;
+        border: 1px solid $dark-green;
+        border-radius: 100%;
+        color: $dark-green;
+        font-size: 1.2rem;
+        transition: all .2s ease-in-out;
+        margin-right: -7px;
+        &:hover {
+            color: $green;
+            border-color: $green;
+        }
+    }
+    button {
+        color: $dark-green !important;
+        font-size: .75rem;
+    }
+}

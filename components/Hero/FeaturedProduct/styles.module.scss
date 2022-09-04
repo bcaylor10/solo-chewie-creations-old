@@ -1,0 +1,36 @@
+.featuredProduct {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    &.turqoise {
+        background: $turqoise;
+    }
+    &.blue-grey {
+        background: $blue-grey;
+    }
+    &.green {
+        background: $green;
+    }
+    &.tan {
+        background: $tan;
+    }
+    &.dark-tan {
+        background: $dark-tan;
+    }
+    .productInfo {
+        position: absolute;
+        top: 0;
+        left: 0;
+        .productTitle,
+        .productPrice {
+            display: inline-block;
+            background: $black;
+            color: $white;
+            padding: 10px;
+        }
+        .productTitle {
+            min-width: 200px;
+        }
+    }
+}

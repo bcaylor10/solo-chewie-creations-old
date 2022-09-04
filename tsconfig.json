@@ -17,8 +17,13 @@
     "baseUrl": ".",
     "paths": {
       "@/components/*": ["components/*"],
+      "@/images/*": ["images/*"],
       "@/layouts/*": ["layouts/*"],
-      "@/mongo/*": ["mongo/*"]
+      "@/mongo/*": ["mongo/*"],
+      "@/queries/*": ["util/hooks/queries/*"],
+      "@/helpers": ["util/helpers.ts"],
+      "@/redux/*": ["redux/*"],
+      "@/routes": ["pages/routes"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react';
 import { Auth0Provider } from "@auth0/auth0-react";
-import { Loader, Transition } from "@mantine/core";
+import { useSelector } from "react-redux"; 
 
 import Header from "components/Header";
 import Footer from "components/Footer";
-
-import styles from './style.module.scss';
+import Loader from "@/components/Loader";
 
 const BaseLayout = ({ children }: any) => {
-    const [ loading, setLoading ] = useState<boolean>(true);
+    const loading = useSelector((store: any) => store.site.loading);
 
     return (
         <Auth0Provider
@@ -16,14 +14,8 @@ const BaseLayout = ({ children }: any) => {
             clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID || ''}
             redirectUri={process.env.NEXT_PUBLIC_DOMAIN || ''}
         >
-            <Transition mounted={loading} transition="fade" timingFunction="ease">
-                {(style) => (
-                    <div style={style} className={styles.loaderContainer}>
-                        <Loader color="green" size="xl" variant="bars" className={styles.loader} />
-                    </div>
-                )}
-            </Transition>
-            <Header setLoading={setLoading} />
+            <Loader loading={loading} variant="bars" />
+            <Header />
             <main>{children}</main>
             <Footer />
         </Auth0Provider>
