@@ -19,7 +19,8 @@
       "@/components/*": ["components/*"],
       "@/layouts/*": ["layouts/*"],
       "@/mongo/*": ["mongo/*"],
-      "@/queries/*": ["util/hooks/queries/*"]
+      "@/queries/*": ["util/hooks/queries/*"],
+      "@/routes": ["pages/routes"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

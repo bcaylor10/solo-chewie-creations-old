@@ -23,7 +23,7 @@ const BaseLayout = ({ children }: any) => {
                     </div>
                 )}
             </Transition>
-            <Header setLoading={setLoading} />
+            <Header loading={loading} setLoading={setLoading} />
             <main>{children}</main>
             <Footer />
         </Auth0Provider>

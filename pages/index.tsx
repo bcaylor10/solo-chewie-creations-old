@@ -7,10 +7,8 @@ import { IProduct } from "@/mongo/models/Product";
 
 
 const Home: NextPage = () => {
-
     return (
-        <BaseLayout>
-        </BaseLayout>
+        <h1>Home</h1>
     )
 };
 

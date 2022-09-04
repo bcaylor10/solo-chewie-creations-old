@@ -1,0 +1,8 @@
+.avatarButton {
+    border: 1px solid $dark-green !important;
+    border-radius: 100%;
+    transition: border-color .2s ease-in-out;
+    &:hover {
+        border-color: $green !important;
+    }
+}
