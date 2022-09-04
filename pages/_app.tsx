@@ -2,16 +2,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MantineProvider } from '@mantine/core';
 import { NotificationsProvider } from '@mantine/notifications';
 import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 import BaseLayout from '@/layouts/BaseLayout';
+import rootReducer from '@/redux/index';
 
 import '../styles/app.scss';
 
 const queryClient = new QueryClient();
+const store = configureStore({ reducer: rootReducer });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
+      <Provider store={store}>
         <MantineProvider 
           theme={{
             "colors": {
@@ -28,6 +33,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             </BaseLayout>
           </NotificationsProvider>
         </MantineProvider>
+      </Provider>
     </QueryClientProvider>
   )
 }

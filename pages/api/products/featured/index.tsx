@@ -7,18 +7,18 @@ import { Product, IProduct } from 'mongo/models/Product';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET') return res.status(405);
     
-    let hats: IProduct[] = [];
+    let featured: IProduct[] = [];
 
     await connect().then(() => {
         // @ts-ignore
-        return Product.find({ name: { $regex: new RegExp('hat', 'i') } })
+        return Product.find({ featured: true });
     }).then((data: IProduct[] | []) => {
-        hats = data;
+        featured = data;
     }).catch((error) => {
         res.status(500).json({ error });
     });
 
-    res.status(200).json(hats)
+    res.status(200).json(featured)
 };
 
 export default handler;

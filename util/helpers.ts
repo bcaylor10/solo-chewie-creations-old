@@ -1,6 +1,9 @@
 import { createStyles } from "@mantine/core"; 
 
-export const calculateWaitTime = (shipping = false) => {
+import { IProduct } from '../mongo/models/Product';
+import routes from "@/routes";
+
+export const calculateWaitTime = (shipping = false): number => {
     const hoursPerWeek = 5;
     const backedHours = 0; // TODO: create function to query all products
 	let waitTime = Math.ceil(backedHours / hoursPerWeek);
@@ -29,3 +32,33 @@ export const menuStyles = createStyles(() => ({
         },
     },
 }));
+
+export const buildProductUrl = (product: IProduct): string => {
+    const productType: string = product.name.toLowerCase();
+    const productSize: string = product.size.toLowerCase();
+    let route: string = '';
+
+    switch (productType) {
+        case 'hat':
+            route = routes.products.hatsView(productSize);
+            break;
+        case 'scarf':
+            route = routes.products.scarvesView(productSize);
+            break;
+        case 'head band':
+            route = routes.products.headBandsView(productSize);
+            break;
+    }
+
+    return route;
+}
+
+export const formatPrice = (price: number): string => {
+    const usdFormat = Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+    const formattedPrice = usdFormat.format(price);
+
+    return formattedPrice;
+}

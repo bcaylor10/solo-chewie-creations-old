@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import connect from 'mongo';
-import { Product, IProduct, productNames } from 'mongo/models/Product';
+import { Product, IProduct } from 'mongo/models/Product';
 
 // return all hats matching the slug sent
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

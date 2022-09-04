@@ -1,19 +1,17 @@
 .navContainer {
     display: flex;
     align-items: center;
-
     .logo {
         cursor: pointer;
     }
-
     .list {
         padding: 0;
         margin: 0 0 0 20px;
         display: flex;
         list-style: none;
-        margin-right: -10px;
         .listItem {
             margin-right: 5px;
+            font-size: 1rem;
             &:last-of-type {
                 margin-right: 0;
             }
@@ -52,5 +50,8 @@
                 }
             }
         }
+    }
+    button {
+        font-size: 1rem;
     }
 }

@@ -2,10 +2,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from 'next/image'
 import cn from 'classnames';
-import { Menu } from "@mantine/core";
+import { Menu, Button } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 
-import Logo from './solo-chewie-creations-logo.png';
+import Logo from '@/images/logo.png';
 import { menuStyles } from "util/helpers";
 import routes from '@/routes';
 
@@ -65,7 +65,7 @@ const Navigation = () => {
                                 {sub ? (
                                     <Menu 
                                         classNames={classes} 
-                                        trigger="click" 
+                                        trigger="hover" 
                                         openDelay={100} 
                                         shadow="md" 
                                         width={150} 
@@ -96,6 +96,7 @@ const Navigation = () => {
                     })}
                 </ul>
             </nav>
+            <Button variant="subtle" color="green">Contact Us</Button>
         </div>
     )
 };
