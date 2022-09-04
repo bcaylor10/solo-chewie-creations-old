@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { Loader, Transition } from "@mantine/core";
 

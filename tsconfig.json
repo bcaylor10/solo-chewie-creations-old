@@ -18,7 +18,8 @@
     "paths": {
       "@/components/*": ["components/*"],
       "@/layouts/*": ["layouts/*"],
-      "@/mongo/*": ["mongo/*"]
+      "@/mongo/*": ["mongo/*"],
+      "@/queries/*": ["util/hooks/queries/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
