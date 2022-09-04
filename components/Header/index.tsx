@@ -11,8 +11,6 @@ interface IHeader {
 const Header = ({ setLoading }: IHeader) => {
     const { user, isLoading, loginWithRedirect } = useAuth0();
 
-    console.log(user)
-
     useEffect(() => {
         if (isLoading) {
             setLoading(true);
