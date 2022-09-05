@@ -3,7 +3,7 @@ import { Title, Text } from "@mantine/core";
 import cn from 'classnames';
 
 import { IProduct } from "@/mongo/models/Product";
-import { buildProductUrl, formatPrice } from '@/helpers';
+import { buildProductUrl, formatPrice, formatImagesArray } from '@/helpers';
 
 import styles from './styles.module.scss';
 
@@ -18,7 +18,8 @@ const FeaturedProduct = ({ product, large = false, background = 'tan' }: IFeatur
     let image: string = '';
 
     if (product.img_urls && product.img_urls.length > 0) {
-        image = product.img_urls[0];
+        const images = formatImagesArray(product.img_urls);
+        image = images[0];
     }
 
     return (

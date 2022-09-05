@@ -16,8 +16,6 @@ const Footer = () => {
     const dispatch = useDispatch();
     const matches = useMediaQuery('(max-width: 768px)');
 
-    console.log(matches)
-
     return (
         <MantineFooter withBorder={false} height={265} className={styles.footer} p="xl">
             <Container size="xl">

@@ -62,3 +62,8 @@ export const formatPrice = (price: number): string => {
 
     return formattedPrice;
 }
+
+export const formatImagesArray = (images: string[]): string[] => {
+    const formatted: string[] = images[0].replace(/\s/g, '').split(',');
+    return formatted;
+};
