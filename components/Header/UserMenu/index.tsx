@@ -39,7 +39,7 @@ const UserMenu = () => {
             showNotification({
                 title: 'Login successful',
                 message: `Welcome, ${user?.nickname}!`,
-                color: 'blue'
+                color: 'green'
             });
         }
     }, [ showSuccess ]);

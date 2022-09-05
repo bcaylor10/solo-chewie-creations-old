@@ -1,4 +1,6 @@
-import { Modal, Button, Group, TextInput, Textarea, Text, Divider } from '@mantine/core';
+import { useEffect } from 'react';
+import { Modal, Button, Group, TextInput, Textarea, Text, Divider, LoadingOverlay } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from '@mantine/form';
 
@@ -9,7 +11,7 @@ import styles from './styles.module.scss';
 
 const ContactModal = () => {
     const open = useSelector((store: any) => store.site.contactModal);
-    const { mutate: sendEmail, isLoading } = useSendEmail();
+    const { mutate: sendEmail, isLoading, status, reset } = useSendEmail();
     const dispatch = useDispatch();
     const form = useForm<IContactData>({
         initialValues: {
@@ -32,11 +34,19 @@ const ContactModal = () => {
         }, 200);
     }
 
-    const submit = (data: IContactData) => {
-        // do loading
-        const res = sendEmail(data);
-        console.log(res);
-    };
+    const submit = (data: IContactData) => sendEmail(data);
+
+    useEffect(() => {
+        if (status === 'success') {
+            showNotification({
+                title: 'Message sent',
+                message: `Message successfully sent! We will get back to you soon!`,
+                color: 'green',
+                autoClose: 7000
+            });   
+            reset();
+        }
+    }, [ status ]);
 
     return (
         <Modal 
@@ -46,6 +56,7 @@ const ContactModal = () => {
             centered
             size="lg"
         >
+            <LoadingOverlay loaderProps={{ color: 'green', variant: 'dots' }} visible={isLoading} />
             <Text size="sm" className={styles.description}>
                 Have a question, and issue, a large order, or just want to leave us a review? Fill out this form
                 and we will get back to you as soon as possible!

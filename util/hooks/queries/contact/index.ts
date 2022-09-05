@@ -11,6 +11,6 @@ export interface IContactData {
 const sendContactEmail = (data: IContactData) => axios.post('/api/contact', data);
 
 export const useSendEmail = () => {
-    const { mutate, isLoading } = useMutation(sendContactEmail);
-    return { mutate, isLoading }
+    const mutation = useMutation(sendContactEmail);
+    return mutation;
 }

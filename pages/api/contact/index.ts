@@ -8,7 +8,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'POST') return res.status(405);
 
     const { name, email, phone, message }: IContactData = req.body;
-    let emailSent = false;
 
     if (!name || !email || !message) return res.status(422);
 
