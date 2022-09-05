@@ -6,8 +6,8 @@ import { Product, IProduct } from 'mongo/models/Product';
 // return all hats matching the slug sent
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const slug = req.query.slug?.toString();
-    if (req.method !== 'GET') return res.status(405);
-    if (!slug) return res.status(404);
+    if (req.method !== 'GET') return res.status(405).end();
+    if (!slug) return res.status(404).end();
     
     let hats: IProduct[] = [];
 

@@ -19,7 +19,7 @@ const Header = () => {
                                     layout="fixed" 
                                     src={Logo} 
                                     alt="Go to home" 
-                                    height={70} 
+                                    height={55} 
                                     width={70} 
                                 />
                             </a>

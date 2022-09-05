@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Burger, Drawer, MediaQuery, NavLink, Menu, Button } from '@mantine/core';
+import { Burger, Drawer, MediaQuery, NavLink, Button } from '@mantine/core';
 import { useDispatch } from 'react-redux';
 
 import { ILink, ILinks, links, isCurrentPage } from '..';

@@ -3,6 +3,10 @@
     width: 100%;
     position: relative;
     cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
     &.turqoise {
         background: $turqoise;
     }
@@ -18,10 +22,26 @@
     &.dark-tan {
         background: $dark-tan;
     }
+    &.large {
+        @media (min-width: 769px) {
+            .productImage {
+                width: 85% !important;
+                max-height: none;
+            }
+        }
+    }
+    &:hover {
+        @media (min-width: 769px) {
+            .productImage {
+                transform: scale(1.1);
+            }
+        }
+    }
     .productInfo {
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 10;
         .productTitle,
         .productPrice {
             display: inline-block;
@@ -31,6 +51,17 @@
         }
         .productTitle {
             min-width: 200px;
+        }
+    }
+    .productImage {
+        width: auto !important;
+        max-height: 410px;
+        transform-origin: bottom;
+        transform: scale(1);
+        transition: transform .2s ease-in-out;
+        @media (max-width: $sm) {
+            max-width: 100% !important;
+            max-height: 250px !important;
         }
     }
 }

@@ -29,6 +29,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               "dark-green": ["#1a5545"]
             },
             components: {
+              Title: {
+                styles: (theme) => ({
+                  root: {
+                    color: '#1a5545'
+                  },
+                }),
+              },
               Text: {
                 styles: (theme) => ({
                   root: {
