@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Header from "components/Header";
 import Footer from "components/Footer";
 import Loader from "@/components/Loader";
+import { ContactModal } from "@/components/Modals";
 
 const BaseLayout = ({ children }: any) => {
     const loading = useSelector((store: any) => store.site.loading);
@@ -18,6 +19,7 @@ const BaseLayout = ({ children }: any) => {
             <Header />
             <main>{children}</main>
             <Footer />
+            <ContactModal />
         </Auth0Provider>
     )
 };

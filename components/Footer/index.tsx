@@ -1,14 +1,17 @@
 import { Container, Text, Footer as MantineFooter, Group, Button, Center } from "@mantine/core";
 import { FiFacebook } from 'react-icons/fi';
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 
 import Logo from '@/images/logo.png';
+import { setContactModal } from "@/redux/site";
 
 import styles from './styles.module.scss';
-import Link from "next/link";
 
 const Footer = () => {
     const year = new Date().getFullYear();
+    const dispatch = useDispatch();
 
     return (
         <MantineFooter withBorder={false} height={307} fixed className={styles.footer} p="xl">
@@ -24,7 +27,11 @@ const Footer = () => {
                                 <FiFacebook />
                             </a>
                         </Link>
-                        <Button variant="subtle" color="green">
+                        <Button
+                            onClick={() => dispatch(setContactModal(true))}
+                            variant="subtle" 
+                            color="green"
+                        >
                             Contact Us
                         </Button>
                     </Group>

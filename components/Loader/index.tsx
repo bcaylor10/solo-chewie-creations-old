@@ -1,5 +1,4 @@
 import { Loader as MantineLoader, Transition } from "@mantine/core";
-import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
