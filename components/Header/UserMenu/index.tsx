@@ -59,7 +59,7 @@ const UserMenu = () => {
                 </a>
             </Link>
             {user ? <AvatarButton user={user} /> : (
-                <Button variant="subtle" onClick={handleLogin}>Log In</Button>
+                <Button color="green" variant="subtle" onClick={handleLogin}>Log In</Button>
             )}
         </Group>
     )
