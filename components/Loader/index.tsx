@@ -12,6 +12,7 @@ const Loader = ({ loading = false, variant = 'dots' }: ILoader) => {
         <Transition mounted={loading} transition="fade" timingFunction="ease">
             {(style) => (
                 <div style={style} className={styles.loaderContainer}>
+                    {/* @ts-ignore */}
                     <MantineLoader color="green" size="xl" variant={variant} className={styles.loader} />
                 </div>
             )}

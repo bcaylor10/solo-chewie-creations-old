@@ -1,3 +1,4 @@
+// @ts-ignore
 import { combineReducers } from '@reduxjs/toolkit';
 
 import siteSlice from './site';

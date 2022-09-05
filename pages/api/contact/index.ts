@@ -11,6 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (!name || !email || !message) return res.status(422);
 
+    // @ts-ignore
     sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
     const msg = {
@@ -32,7 +33,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             }
         ]
     };
-
+    
+    // @ts-ignore
     return sendGrid.send(msg).then(() => {
         return res.status(200).json("Email sent successfully");
     }).catch((err) => {
