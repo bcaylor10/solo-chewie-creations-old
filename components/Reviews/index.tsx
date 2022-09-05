@@ -1,14 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import { shuffle } from 'lodash';
-import { Title, Text, Container } from '@mantine/core';
-import { FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { Title, Text, Container, Loader, Center } from '@mantine/core';
 import { useSelector } from 'react-redux';
 import { Carousel } from '@mantine/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 
 import { IReview } from '@/mongo/models/Review';
 import { useGetReviews } from '@/queries/reviews';
-import Loader from '../Loader';
+import ReviewStars from '../ReviewStars';
 
 import styles from './styles.module.scss';
 
@@ -25,25 +24,13 @@ const Reviews = () => {
         }
     }, [ status ]);
 
-    const renderStars = (rating: number) => {
-        const isDecimal = rating % 1 !== 0;
-        const wholeStars: number = Math.floor(rating);
-        const stars: any[] = [];
-
-        for (let i = 0; i < wholeStars; i++) {
-            stars.push(<FaStar className={styles.star} />);
-        };
-
-        if (isDecimal) stars.push(<FaStarHalfAlt className={styles.star} />);
-
-        return stars;
-    };
-
     return (
         <section className={styles.section}>
             <Title order={2} align="center">Our Latest Reviews</Title>
             {!reduxLoading && isLoading ? (
-                <Loader loading={isLoading} />
+                <Center>
+                    <Loader color="turqoise" variant="dots" />
+                </Center>
             ) : (
                 reviews.length > 0 ? (
                     <Carousel 
@@ -61,7 +48,7 @@ const Reviews = () => {
                                 <Carousel.Slide key={i}>
                                     <Container>
                                         <div className={styles.starsContainer}>
-                                            {renderStars(rating)}
+                                            <ReviewStars rating={rating} className={styles.stars} />
                                         </div>
                                         <Text align="center" className={styles.message}>{message}</Text>
                                         <Text weight="bold" align="center" size="sm">{author}</Text>
@@ -71,7 +58,7 @@ const Reviews = () => {
                         })}
                     </Carousel>
                 ) : (
-                    <h1>No reviews found</h1>
+                    <Title align="center" order={4}>No reviews found</Title>
                 )
             )}
         </section>

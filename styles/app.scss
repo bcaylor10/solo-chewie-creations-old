@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
 @import 'variables';
 @import 'typography';
 
@@ -17,7 +18,7 @@ body {
 }
 
 body {
-    // font-family: $jost;
+    font-family: $comfortaa;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
 }
@@ -28,4 +29,8 @@ section {
 
 .no-margin {
     margin: 0 !important;
+}
+
+.no-padding {
+    padding: 0 !important;
 }

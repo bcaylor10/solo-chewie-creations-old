@@ -3,26 +3,22 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import connect from 'mongo';
 import { Product, IProduct } from 'mongo/models/Product';
 
-// return hat matching the slug sent
+// return all scarves
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const slug = req.query.slug?.toString();
     if (req.method !== 'GET') return res.status(405).end();
-    if (!slug) return res.status(404).end();
     
-    let hats: IProduct[] = [];
+    let scarves: IProduct[] = [];
 
     await connect().then(() => {
-        return Product.find({ 
-            name: { $regex: new RegExp('hat', 'i') }, 
-            size: { $regex: new RegExp(slug, 'i') }
-        });
+        // @ts-ignore
+        return Product.find({ name: { $regex: new RegExp('scarf', 'i') } })
     }).then((data: IProduct[] | []) => {
-        hats = data;
+        scarves = data;
     }).catch((error) => {
         res.status(500).json({ error });
     });
 
-    res.status(200).json(hats)
+    res.status(200).json(scarves);
 };
 
 export default handler;

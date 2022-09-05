@@ -33,9 +33,9 @@ export const menuStyles = createStyles(() => ({
     },
 }));
 
-export const buildProductUrl = (product: IProduct): string => {
+export const buildProductUrl = (product: IProduct, size?: string): string => {
     const productType: string = product.name.toLowerCase();
-    const productSize: string = product.size.toLowerCase();
+    const productSize: string = size ? size.toLowerCase() : product.size.toLowerCase();
     let route: string = '';
 
     switch (productType) {
@@ -53,7 +53,9 @@ export const buildProductUrl = (product: IProduct): string => {
     return route;
 }
 
-export const formatPrice = (price: number): string => {
+export const formatPrice = (price: number | undefined): string => {
+    if (!price) return '';
+
     const usdFormat = Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',

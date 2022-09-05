@@ -1,0 +1,16 @@
+.productInfo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    .productTitle,
+    .productPrice {
+        display: inline-block;
+        background: $black;
+        color: $white;
+        padding: 15px 25px;
+    }
+    .productTitle {
+        min-width: 200px;
+    }
+}

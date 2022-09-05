@@ -1,0 +1,16 @@
+.productDetails {
+    height: 100%;
+    padding: 30px 20px;
+    .description {
+        margin-bottom: 30px;
+    }
+    .sizes {
+        margin-bottom: 30px;
+    }
+    .reviews {
+        margin-bottom: 20px;
+        .stars {
+            color: $dark-green;
+        }
+    }
+}
