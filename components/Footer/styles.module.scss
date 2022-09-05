@@ -1,6 +1,10 @@
 .footer {
     color: $dark-green !important;
     z-index: 10 !important;
+    position: absolute !important;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     .facebookIcon {
         display: flex;
         align-items: center;

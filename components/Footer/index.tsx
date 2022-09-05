@@ -14,10 +14,15 @@ const Footer = () => {
     const dispatch = useDispatch();
 
     return (
-        <MantineFooter withBorder={false} height={307} fixed className={styles.footer} p="xl">
+        <MantineFooter withBorder={false} height={265} className={styles.footer} p="xl">
             <Container size="xl">
-                <Center>
-                    <Image src={Logo} alt="Solo and Chewie Creations Logo" height={220} width={200} />
+                <Center style={{ marginBottom: '30px' }}>
+                    <Image 
+                        src={Logo} 
+                        alt="Solo and Chewie Creations Logo" 
+                        height={150} 
+                        width={170} 
+                    />
                 </Center>
                 <Group position="apart">
                     <Text size="xs">&copy; {year} Solo and Chewie Creations. All rights reserved.</Text>

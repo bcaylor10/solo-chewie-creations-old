@@ -31,7 +31,7 @@ const Hero = () => {
                 featured.length > 0 ? (
                     <Grid gutter={0} className={styles.productContainer}>
                         <Grid.Col span={6}>
-                            <FeaturedProduct product={featured[0]} />
+                            <FeaturedProduct product={featured[0]} large />
                         </Grid.Col>
                         <Grid.Col span={6}>
                             <Stack spacing={0} className={styles.stack}>

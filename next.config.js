@@ -5,5 +5,8 @@ module.exports = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
     prependData: `@import "variables.scss";`,
+  },
+  images: {
+    domains: ['res.cloudinary.com']
   }
 }
