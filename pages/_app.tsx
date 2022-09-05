@@ -21,6 +21,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           withNormalizeCSS
           withGlobalStyles
           theme={{
+            fontFamily: 'Comfortaa',
             colors: {
               "turqoise": ["#E5FFFD", "#B8FFF9", "#8AFFF4", "#5CFFF0", "#2EFFEC", "#00FFE8", "#00CCBA", "#00998B", "#00665D", "#00332E"],
               "green": ["#EBF9F5", "#C8EEE4", "#A5E4D2", "#82D9C1", "#5ECFAF", "#3BC49E", "#2F9D7E", "#23765F", "#184E3F", "#0C2720"],
@@ -46,7 +47,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             }
           }}
         >
-          <NotificationsProvider position="top-right">
+          <NotificationsProvider position="top-center">
             <BaseLayout>
               <Component {...pageProps} />
             </BaseLayout>

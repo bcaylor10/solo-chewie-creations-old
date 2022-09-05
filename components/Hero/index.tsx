@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import { shuffle } from 'lodash';
 import { useSelector } from 'react-redux';
-import { Grid, Stack } from '@mantine/core';
+import { Grid, Stack, Loader, Center, Title } from '@mantine/core';
 
 import { useFeaturedProducts } from "@/queries/products";
 import { IProduct } from "@/mongo/models/Product";
-import Loader from '../Loader';
 
 import styles from './styles.module.scss';
 import FeaturedProduct from './FeaturedProduct';
@@ -26,7 +25,9 @@ const Hero = () => {
     return (
         <div className={styles.hero}>
             {!reduxLoading && isLoading ? (
-                <Loader loading={isLoading} />
+                <Center>
+                    <Loader color="turqoise" variant="dots" />
+                </Center>
             ) : (
                 featured.length > 0 ? (
                     <Grid gutter={0} className={styles.productContainer}>
@@ -41,7 +42,7 @@ const Hero = () => {
                         </Grid.Col>
                     </Grid>
                 ) : (
-                    <h1>No products found</h1>
+                    <Title align="center" order={4}>No featured products found</Title>
                 )
             )}
         </div>

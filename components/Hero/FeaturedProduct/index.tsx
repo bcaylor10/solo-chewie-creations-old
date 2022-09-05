@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Title, Text } from "@mantine/core";
 import cn from 'classnames';
 
+import ProductTitle from "@/components/ProductTitle";
 import { IProduct } from "@/mongo/models/Product";
-import { buildProductUrl, formatPrice, formatImagesArray } from '@/helpers';
+import { buildProductUrl, formatImagesArray } from '@/helpers';
 
 import styles from './styles.module.scss';
 
@@ -25,14 +25,7 @@ const FeaturedProduct = ({ product, large = false, background = 'tan' }: IFeatur
     return (
         <Link href={url}>
             <div className={cn(styles.featuredProduct, styles[background], large && styles.large)}>
-                <div className={styles.productInfo}>
-                    <Title order={2} className="no-margin">
-                        <span className={styles.productTitle}>{product.name} - {product.size}</span>
-                    </Title>
-                    <Text size="xs">
-                        <span className={styles.productPrice}>{formatPrice(product.price)}</span>
-                    </Text>
-                </div>
+                <ProductTitle product={product} />
                 {image && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img 

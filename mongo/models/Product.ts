@@ -2,10 +2,10 @@ import { Schema, models, model, ObjectId } from "mongoose";
 
 export interface IProduct {
     _id?: ObjectId;
-    name: String,
-    description: String,
-    size: String,
-    labor_hours: String
+    name: string,
+    description: string,
+    size: string,
+    labor_hours: string
     price: number;
     featured: boolean;
     img_urls?: string[];

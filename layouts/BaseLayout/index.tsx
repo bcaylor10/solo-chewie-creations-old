@@ -1,8 +1,8 @@
 import { Auth0Provider } from "@auth0/auth0-react";
 import { useSelector } from "react-redux"; 
 
-import Header from "components/Header";
-import Footer from "components/Footer";
+import Header from "./Header";
+import Footer from "./Footer";
 import Loader from "@/components/Loader";
 import { ContactModal } from "@/components/Modals";
 
