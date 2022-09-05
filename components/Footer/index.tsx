@@ -29,7 +29,7 @@ const Footer = () => {
                         </Link>
                         <Button
                             onClick={() => dispatch(setContactModal(true))}
-                            variant="subtle" 
+                            variant="light" 
                             color="green"
                         >
                             Contact Us

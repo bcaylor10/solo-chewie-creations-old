@@ -9,8 +9,9 @@ import cn from 'classnames';
 import { useDispatch } from "react-redux";
 
 import AvatarButton from "./AvatarButton";
-import routes from '@/routes';
+import { MobileMenu } from "..";
 import { setLoading } from "@/redux/site";
+import routes from '@/routes';
 
 import styles from './styles.module.scss';
 
@@ -59,8 +60,9 @@ const UserMenu = () => {
                 </a>
             </Link>
             {user ? <AvatarButton user={user} /> : (
-                <Button color="green" variant="subtle" onClick={handleLogin}>Log In</Button>
+                <Button color="green" variant="light" onClick={handleLogin}>Log In</Button>
             )}
+            <MobileMenu />
         </Group>
     )
 };

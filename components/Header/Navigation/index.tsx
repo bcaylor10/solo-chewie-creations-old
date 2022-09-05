@@ -1,113 +1,42 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Image from 'next/image'
-import cn from 'classnames';
-import { Menu, Button } from "@mantine/core";
-import { NextLink } from "@mantine/next";
-import { useDispatch } from "react-redux";
+import DesktopMenu from "./DesktopMenu";
+import MobileMenu from "./MobileMenu";
+import UserMenu from "./UserMenu";
+import routes from "@/routes";
 
-import Logo from '@/images/logo.png';
-import { menuStyles } from "util/helpers";
-import routes from '@/routes';
-import { setContactModal } from "@/redux/site";
-
-import styles from './styles.module.scss';
-
-interface ILink {
+export interface ILink {
     href: string;
     text: string;
 }
 
-interface ILinks {
+export interface ILinks {
     link: ILink;
     sub?: ILink[];
 }
 
-const Navigation = () => {
-    const { classes } = menuStyles();
-    const dispatch = useDispatch();
-    const router = useRouter();
-    const links: ILinks[] = [
-        { 
-            link: { href: '#', text: 'Products' },
-            sub: [
-                { href: routes.products.all, text: 'All Products' },
-                { href: routes.products.hats, text: 'Hats' },
-                { href: routes.products.scarves, text: 'Scarves' },
-                { href: routes.products.headBands, text: 'Head Bands' }
-            ]
-        },
-        { link: { href: routes.products.popular, text: 'Popular' } },
-        { link: { href: routes.about, text: 'About' } }
-    ];
+export const links: ILinks[] = [
+    { 
+        link: { href: '#', text: 'Products' },
+        sub: [
+            { href: routes.products.all, text: 'All Products' },
+            { href: routes.products.hats, text: 'Hats' },
+            { href: routes.products.scarves, text: 'Scarves' },
+            { href: routes.products.headBands, text: 'Head Bands' }
+        ]
+    },
+    { link: { href: routes.products.popular, text: 'Popular' } },
+    { link: { href: routes.about, text: 'About' } }
+];
 
-    const isCurrentPage = (href: string, subLinks?: ILink[]): boolean => {
-        const sub = subLinks ? subLinks.map((s: ILink) => s.href) : [];
-        let isCurrent = false;
+export const  isCurrentPage = (router: any, href: string, subLinks?: ILink[]): boolean => {
+    const sub = subLinks ? subLinks.map((s: ILink) => s.href) : [];
+    let isCurrent = false;
 
-        if (router.pathname === href || sub.includes(router.pathname)) {
-            isCurrent = true;
-        }
+    if (router.pathname === href || sub.includes(router.pathname)) {
+        isCurrent = true;
+    }
 
-        return isCurrent;
-    };
-
-    return (
-        <div className={styles.navContainer}>
-            <Link href="/">
-                <span>
-                    <Image src={Logo} alt="Go to home" height={70} width={70} className={styles.logo} />
-                </span>
-            </Link>
-            <nav>
-                <ul className={styles.list}>
-                    {links.map(({ link, sub }: ILinks, i: number) => {
-                        const { href, text } = link;
-                        return (
-                            <li key={i} className={cn(styles.listItem, isCurrentPage(href) && styles.active)}>
-                                {sub ? (
-                                    <Menu 
-                                        classNames={classes} 
-                                        trigger="hover" 
-                                        openDelay={100} 
-                                        shadow="md" 
-                                        width={150} 
-                                        position="bottom-start"
-                                    >
-                                        <Menu.Target>
-                                            <span className={cn(styles.link, isCurrentPage(href, sub) && styles.active)}>
-                                                {text}
-                                            </span>
-                                        </Menu.Target>
-                                        <Menu.Dropdown>
-                                            {sub.map(({ href, text }: ILink, i: number) => {
-                                                return (
-                                                    <Menu.Item color="green[0]" key={i} component={NextLink} href={href}>
-                                                        <span className={styles.subListItem}>{text}</span>
-                                                    </Menu.Item>
-                                                )
-                                            })}
-                                        </Menu.Dropdown>
-                                    </Menu>
-                                ) : (
-                                    <Link href={href}>
-                                        <a className={styles.link}>{text}</a>
-                                    </Link>
-                                )}
-                            </li>
-                        )
-                    })}
-                </ul>
-            </nav>
-            <Button 
-                onClick={() => dispatch(setContactModal(true))} 
-                variant="subtle" 
-                color="green"
-            >
-                Contact Us
-            </Button>
-        </div>
-    )
+    return isCurrent;
 };
 
-export default Navigation;
+
+export { DesktopMenu, MobileMenu, UserMenu };

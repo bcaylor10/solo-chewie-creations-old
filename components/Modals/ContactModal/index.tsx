@@ -3,6 +3,7 @@ import { Modal, Button, Group, TextInput, Textarea, Text, Divider, LoadingOverla
 import { showNotification } from '@mantine/notifications';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from '@mantine/form';
+import { useMediaQuery } from '@mantine/hooks';
 
 import { setContactModal } from '@/redux/site';
 import { IContactData, useSendEmail } from '@/queries/contact';
@@ -13,6 +14,7 @@ const ContactModal = () => {
     const open = useSelector((store: any) => store.site.contactModal);
     const { mutate: sendEmail, isLoading, status, reset } = useSendEmail();
     const dispatch = useDispatch();
+    const matches = useMediaQuery('(max-width: 768px)');
     const form = useForm<IContactData>({
         initialValues: {
             name: '',
@@ -53,7 +55,7 @@ const ContactModal = () => {
             opened={open} 
             onClose={handleClose} 
             title="Contact Us"
-            centered
+            centered={matches ? false : true}
             size="lg"
         >
             <LoadingOverlay loaderProps={{ color: 'green', variant: 'dots' }} visible={isLoading} />
@@ -92,7 +94,7 @@ const ContactModal = () => {
                 />
                 <Group position="right">
                     <input type="submit" style={{ display: 'none' }} />
-                    <Button variant="subtle" color="red" onClick={handleClose}>
+                    <Button variant="light" color="red" onClick={handleClose}>
                         Cancel
                     </Button>
                     <Button variant="filled" color="green" type="submit">
