@@ -1,9 +1,6 @@
 .navContainer {
     display: flex;
     align-items: center;
-    .logo {
-        cursor: pointer;
-    }
     .list {
         padding: 0;
         margin: 0 0 0 20px;
@@ -11,10 +8,7 @@
         list-style: none;
         .listItem {
             margin-right: 5px;
-            font-size: 1rem;
-            &:last-of-type {
-                margin-right: 0;
-            }
+            font-size: .875rem;
             &.active,
             &:hover {
                 .link {
@@ -50,8 +44,5 @@
                 }
             }
         }
-    }
-    button {
-        font-size: 1rem;
     }
 }

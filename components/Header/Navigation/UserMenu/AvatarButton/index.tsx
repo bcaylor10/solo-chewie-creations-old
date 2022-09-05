@@ -32,7 +32,14 @@ const AvatarButton = ({ user }: IAvatarButton) => {
             <Menu.Target>
                 <UnstyledButton className={styles.avatarButton}>
                     <Group align="center">
-                        <Avatar radius="xl" variant="filled" color="green" src={user.picture} alt="Profile Icon" />
+                        <Avatar
+                            size="sm"
+                            radius="xl" 
+                            variant="filled" 
+                            color="green" 
+                            src={user.picture} 
+                            alt="Profile Icon" 
+                        />
                     </Group>
                 </UnstyledButton>
             </Menu.Target>
