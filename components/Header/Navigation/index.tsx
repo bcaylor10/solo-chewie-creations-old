@@ -4,10 +4,12 @@ import Image from 'next/image'
 import cn from 'classnames';
 import { Menu, Button } from "@mantine/core";
 import { NextLink } from "@mantine/next";
+import { useDispatch } from "react-redux";
 
 import Logo from '@/images/logo.png';
 import { menuStyles } from "util/helpers";
 import routes from '@/routes';
+import { setContactModal } from "@/redux/site";
 
 import styles from './styles.module.scss';
 
@@ -23,6 +25,7 @@ interface ILinks {
 
 const Navigation = () => {
     const { classes } = menuStyles();
+    const dispatch = useDispatch();
     const router = useRouter();
     const links: ILinks[] = [
         { 
@@ -96,7 +99,13 @@ const Navigation = () => {
                     })}
                 </ul>
             </nav>
-            <Button variant="subtle" color="green">Contact Us</Button>
+            <Button 
+                onClick={() => dispatch(setContactModal(true))} 
+                variant="subtle" 
+                color="green"
+            >
+                Contact Us
+            </Button>
         </div>
     )
 };

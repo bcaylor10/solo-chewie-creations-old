@@ -4,7 +4,8 @@ const initialState = {
     loading: true,
     error: null,
     success: null,
-    title: ''
+    title: '',
+    contactModal: false
 };
 
 const siteSlice = createSlice({
@@ -22,9 +23,12 @@ const siteSlice = createSlice({
         },
         setTitle: (slice, action) => {
             slice.title = action.payload;
+        },
+        setContactModal: (slice, action) => {
+            slice.contactModal = action.payload
         }
     }
 });
 
-export const { setLoading, setSuccess, setError, setTitle } = siteSlice.actions;
+export const { setLoading, setSuccess, setError, setTitle, setContactModal } = siteSlice.actions;
 export default siteSlice.reducer;
