@@ -15,7 +15,7 @@ const ProductTitle = ({ product }: IProductTitle) => {
             <Title order={2} className="no-margin">
                 <span className={styles.productTitle}>{product?.name} - {product?.size}</span>
             </Title>
-            <Text size="xs">
+            <Text size="sm" weight={600}>
                 <span className={styles.productPrice}>{formatPrice(product?.price)}</span>
             </Text>
         </div>

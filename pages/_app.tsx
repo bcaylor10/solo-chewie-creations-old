@@ -33,14 +33,16 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               Title: {
                 styles: (theme) => ({
                   root: {
-                    color: '#1a5545'
+                    color: '#1a5545',
+                    fontFamily: 'Comfortaa'
                   },
                 }),
               },
               Text: {
                 styles: (theme) => ({
                   root: {
-                    color: '#1a5545'
+                    color: '#1a5545',
+                    fontFamily: 'Comfortaa'
                   },
                 }),
               }

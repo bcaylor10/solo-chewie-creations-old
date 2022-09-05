@@ -8,7 +8,10 @@
         display: inline-block;
         background: $black;
         color: $white;
-        padding: 15px 25px;
+        padding: 12px 25px;
+    }
+    .productPrice {
+        letter-spacing: 1px;
     }
     .productTitle {
         min-width: 200px;
