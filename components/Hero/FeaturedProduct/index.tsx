@@ -25,7 +25,7 @@ const FeaturedProduct = ({ product, large = false, background = 'tan' }: IFeatur
         <Link href={url}>
             <div className={cn(styles.featuredProduct, styles[background], large && styles.large)}>
                 <div className={styles.productInfo}>
-                    <Title order={2}>
+                    <Title order={2} className="no-margin">
                         <span className={styles.productTitle}>{product.name} - {product.size}</span>
                     </Title>
                     <Text size="xs">

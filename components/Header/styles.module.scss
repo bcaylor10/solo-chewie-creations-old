@@ -1,13 +1,19 @@
 .header {
     display: flex;
     align-items: center;
+    width: 100% !important;
+    padding: 12px 0;
+    @media (max-width: $sm) {
+        padding: 0 !important;
+    }
     .container {
         width: 100%;
         .logoContainer {
             display: flex;
+            align-items: center;
             .logo {
                 cursor: pointer;
-                height: 70px;
+                margin-top: 5px;
             }
         }
     }

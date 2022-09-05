@@ -5,7 +5,7 @@ import { Product, IProduct } from 'mongo/models/Product';
 
 // return all hats
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    if (req.method !== 'GET') return res.status(405);
+    if (req.method !== 'GET') return res.status(405).end();
     
     let featured: IProduct[] = [];
 

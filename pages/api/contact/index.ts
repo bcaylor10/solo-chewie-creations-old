@@ -9,7 +9,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const { name, email, phone, message }: IContactData = req.body;
 
-    if (!name || !email || !message) return res.status(422);
+    if (!name || !email || !message) return res.status(422).end();
 
     // @ts-ignore
     sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
