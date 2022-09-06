@@ -21,9 +21,13 @@ const ReviewStars = ({ rating, className = '' }: IReviewStars) => {
             stars.push(<FaRegStar className={className} />)
         }
     }
+
+    const starComponents = stars.map((s: any, i: number) => {
+        return <span key={i}>{s}</span>;
+    })
     
     return (
-        <div>{stars}</div>
+        <div>{starComponents}</div>
     );
 };
 

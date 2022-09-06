@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import connect from 'mongo';
 import { Product, IProduct } from 'mongo/models/Product';
+import { capitalizeFirstLetter } from '@/helpers';
 
 // return hat matching the slug sent
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -14,7 +15,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     await connect().then(() => {
         return Product.find({ 
             name: { $regex: new RegExp('hat', 'i') }, 
-            size: { $regex: new RegExp(slug, 'i') }
+            size: { $eq: capitalizeFirstLetter(slug) }
         });
     }).then((data: IProduct[] | []) => {
         hats = data;

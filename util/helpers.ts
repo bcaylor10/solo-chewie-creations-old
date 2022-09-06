@@ -1,6 +1,8 @@
 import { createStyles } from "@mantine/core"; 
 
-import { IProduct } from '../mongo/models/Product';
+import { IProduct } from '@/mongo/models/Product';
+import { ICartItem } from '@/redux/cart';
+
 import routes from "@/routes";
 
 export const calculateWaitTime = (shipping = false): number => {
@@ -66,6 +68,22 @@ export const formatPrice = (price: number | undefined): string => {
 }
 
 export const formatImagesArray = (images: string[]): string[] => {
+    if (images.length === 0) return [];
     const formatted: string[] = images[0].replace(/\s/g, '').split(',');
     return formatted;
 };
+
+export const capitalizeFirstLetter = (string: string): string => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export const calculateTotalPrice = (cart: ICartItem[]): string => {
+    let price = 0;
+    
+    cart.forEach((c: ICartItem) => {
+        const amount = c.product.price * c.quantity;
+        price += amount;
+    });
+
+    return formatPrice(price);
+}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 
 import { IProduct } from "@/mongo/models/Product";
 import ProductLayout from "@/layouts/ProductLayout";
@@ -15,6 +14,7 @@ const HatProduct = () => {
     useEffect(() => {        
         if (status === 'success') setHat(data?.data[0]);
     }, [ status ]);
+
 
     return (
         <ProductLayout product={hat} isLoading={isLoading} />
