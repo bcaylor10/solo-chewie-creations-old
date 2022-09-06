@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { FiShoppingCart } from 'react-icons/fi';
 import { Group, Button } from "@mantine/core";
 import { showNotification } from '@mantine/notifications';
 import { useAuth0 } from "@auth0/auth0-react";
-import cn from 'classnames';
 import { useDispatch, useSelector } from "react-redux";
 
 import AvatarButton from "./AvatarButton";
@@ -73,7 +71,7 @@ const UserMenu = () => {
             <Group position="right">
                 <span role="button" className={styles.cartButton} onClick={() => setShowCart(true)}>
                     <FiShoppingCart 
-                        className={cn(styles.cart, router.pathname === routes.cart && styles.active)} 
+                        className={styles.cart} 
                         aria-label="Cart" 
                     />
                     <span className={styles.cartAmount}>{cartAmount}</span>
