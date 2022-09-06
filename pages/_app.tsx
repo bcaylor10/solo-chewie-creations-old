@@ -4,6 +4,7 @@ import { NotificationsProvider } from '@mantine/notifications';
 import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
+import { useRouter } from 'next/router';
 
 import BaseLayout from '@/layouts/BaseLayout';
 import rootReducer from '@/redux/index';
@@ -14,6 +15,7 @@ const queryClient = new QueryClient();
 const store = configureStore({ reducer: rootReducer });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
       <Provider store={store}>
@@ -42,7 +44,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 styles: (theme) => ({
                   root: {
                     color: '#1a5545',
-                    fontFamily: 'Comfortaa'
+                    fontFamily: 'Comfortaa',
+                    letterSpacing: '.6px'
                   },
                 }),
               }
@@ -51,7 +54,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         >
           <NotificationsProvider position="top-center">
             <BaseLayout>
-              <Component {...pageProps} />
+              <Component key={router.asPath} {...pageProps} />
             </BaseLayout>
           </NotificationsProvider>
         </MantineProvider>

@@ -28,7 +28,9 @@ const Footer = () => {
                     />
                 </Center>
                 <Group position={matches ? 'center' : 'apart'}>
-                    <Text size="xs">&copy; {year} Solo and Chewie Creations. All rights reserved.</Text>
+                    <Text size="xs" align={matches ? 'center' : 'left'}>
+                        &copy; {year} Solo and Chewie Creations. All rights reserved.
+                    </Text>
                     <Group position="right">
                         <Link href="https://www.facebook.com/soloandchewiecreations/">
                             <a target="_blank" className={styles.facebookIcon} role="link" aria-label="Facebook Page Link">

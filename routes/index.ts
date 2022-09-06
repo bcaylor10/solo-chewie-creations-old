@@ -5,7 +5,7 @@ const routes = {
         settings: '/account/settings'
     },
     about: '/about',
-    cart: '/cart',
+    checkout: '/checkout',
     products: {
         all: '/products',
         popular: '/products/popular',

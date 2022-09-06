@@ -1,0 +1,24 @@
+.cartList {
+    margin-bottom: -20px;
+    .cartListItem {
+        margin-bottom: 20px;
+        background: $blue-grey;
+        padding: 10px;
+        border-radius: 4px;
+        .productDetails {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 10px;
+        }
+        .quantityControls {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            .quantity {
+                width: 35px;
+                margin-top: 3px;
+            }
+        }
+    }
+}
