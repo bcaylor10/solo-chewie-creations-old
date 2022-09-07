@@ -12,7 +12,7 @@ const Header = () => {
         <MantineHeader height={70} p="sm" className={styles.header}>
             <Container className={styles.container} fluid>
                 <Grid align="center" justify="space-between">
-                    <Grid.Col span={6} className={styles.logoContainer}>
+                    <Grid.Col span={4} className={styles.logoContainer}>
                         <Link href="/">
                             <a className={styles.logo}>
                                 <Image 
@@ -26,11 +26,10 @@ const Header = () => {
                         </Link>
                         <DesktopMenu />
                     </Grid.Col>
-                    <Grid.Col span={6}>
+                    <Grid.Col span={8} className={styles.userMenuContainer}>
                         <UserMenu />
                     </Grid.Col>
                 </Grid>
-                
             </Container>
         </MantineHeader>
     )
