@@ -44,9 +44,8 @@ const ContactModal = () => {
                 title: 'Message sent',
                 message: `Message successfully sent! We will get back to you soon!`,
                 color: 'green',
-                autoClose: 7000
             });   
-            reset();
+            handleClose();
         }
     }, [ status ]);
 

@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { useRouter } from 'next/router';
+import { useMediaQuery } from '@mantine/hooks';
 
 import BaseLayout from '@/layouts/BaseLayout';
 import rootReducer from '@/redux/index';
@@ -16,6 +17,8 @@ const store = configureStore({ reducer: rootReducer });
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const matches = useMediaQuery('(max-width: 768px)');
+
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
       <Provider store={store}>
@@ -52,7 +55,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             }
           }}
         >
-          <NotificationsProvider position="top-center">
+          <NotificationsProvider position={matches ? 'bottom-center' : 'bottom-right'}>
             <BaseLayout>
               <Component key={router.asPath} {...pageProps} />
             </BaseLayout>
