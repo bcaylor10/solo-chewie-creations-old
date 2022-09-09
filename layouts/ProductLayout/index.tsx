@@ -23,7 +23,7 @@ const ProductLayout = ({ product, isLoading }: IProductLayout) => {
             ) : (
                 product ? (
                     <section className="no-padding">
-                        <Grid className={styles.productLayout}>
+                        <Grid gutter={0} className={styles.productLayout}>
                             <Grid.Col sm={12} md={7}>
                                 <ProductImages product={product} isLoading={isLoading} />  
                             </Grid.Col>

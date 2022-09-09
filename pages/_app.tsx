@@ -35,6 +35,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               "dark-green": ["#1a5545"]
             },
             components: {
+              Container: {
+                styles: (theme) => ({
+                  root: {
+                    padding: '0 20px;'
+                  }
+                })
+              },
               Title: {
                 styles: (theme) => ({
                   root: {

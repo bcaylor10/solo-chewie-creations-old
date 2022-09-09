@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { FiShoppingCart } from 'react-icons/fi';
 import { Group, Button } from "@mantine/core";
 import { showNotification } from '@mantine/notifications';
@@ -22,7 +21,6 @@ const UserMenu = () => {
     const [ showCart, setShowCart ] = useState<boolean>(false);
     const cart = useSelector((store: any) => store.cart);
     const dispatch = useDispatch();
-    const router = useRouter();
 
     const calculateCartAmount = (): number => {
         let quantity: number = 0;

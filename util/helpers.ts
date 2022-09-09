@@ -87,3 +87,9 @@ export const calculateTotalPrice = (cart: ICartItem[]): string => {
 
     return formatPrice(price);
 }
+
+export const PRODUCT_TYPES = {
+    hat: 0,
+    scarf: 1,
+    headBand: 2
+}

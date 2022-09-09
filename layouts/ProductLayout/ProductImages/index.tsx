@@ -15,6 +15,7 @@ const ProductImages = ({ product }: IProductLayout) => {
     const [ images, setImages ] = useState<string[]>([]);
     const [ currentSlide, setCurrentSlide ] = useState<number>(0);
     const [embla, setEmbla] = useState<Embla | null>(null);
+    const showCarousel = images.length > 1;
 
     useEffect(() => {
         if (!product) return;
@@ -39,21 +40,29 @@ const ProductImages = ({ product }: IProductLayout) => {
             <ProductTitle product={product} />
             {images.length > 0 && (
                 <>
-                    <div className={styles.carousel}>
-                        <Carousel withControls={false} getEmblaApi={setEmbla} loop height="100%">
-                            {images.map((img: string, i: number) => {
-                                if (i >= 5) return; // allow only a maxiumum of 5 images
-                                return (
-                                    <Carousel.Slide key={i} className={styles.carouselSlide}>
-                                        <img 
-                                            src={img} 
-                                            alt={`${product?.name} - ${product?.size} Image`}
-                                        />
-                                    </Carousel.Slide>
-                                )
-                            })}
-                        </Carousel>
-                        <div className={styles.carouselControls}>
+                    <div className={cn(styles.carousel, !showCarousel && styles.soloImage)}>
+                        {images.length > 1 ? (
+                            <Carousel withControls={false} getEmblaApi={setEmbla} loop height="100%">
+                                {images.map((img: string, i: number) => {
+                                    if (i >= 5) return; // allow only a maxiumum of 5 images
+                                    return (
+                                        <Carousel.Slide key={i} className={styles.carouselSlide}>
+                                            <img 
+                                                src={img} 
+                                                alt={`${product?.name} - ${product?.size} Image`}
+                                            />
+                                        </Carousel.Slide>
+                                    )
+                                })}
+                            </Carousel>
+                        ) : (
+                            <img 
+                                src={images[0]} 
+                                alt={`${product?.name} - ${product?.size} Image`}
+                            />
+                        )}
+                       {showCarousel && (
+                         <div className={styles.carouselControls}>
                             <div className={styles.slideCounter}>
                                 <Text size="sm">{currentSlide + 1} / {images.length}</Text>
                             </div>
@@ -78,28 +87,31 @@ const ProductImages = ({ product }: IProductLayout) => {
                                 </Button>
                             </Button.Group>
                         </div>
+                       )}
                     </div>
-                    <div className={styles.imageList}>
-                        <ul>
-                            {images.map((img: string, i: number) => {
-                                const isActive = currentSlide === i;
-                                return (
-                                    <li 
-                                        key={i} 
-                                        role="button" 
-                                        onClick={() => goToSlide(i)}
-                                        className={cn(isActive && styles.active)}
-                                    >
-                                        <img 
-                                            className={styles.productImage} 
-                                            src={img} 
-                                            alt={`${product?.name} - ${product?.size} Image`}
-                                        />
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </div>
+                    {showCarousel && (
+                        <div className={styles.imageList}>
+                            <ul>
+                                {images.map((img: string, i: number) => {
+                                    const isActive = currentSlide === i;
+                                    return (
+                                        <li 
+                                            key={i} 
+                                            role="button" 
+                                            onClick={() => goToSlide(i)}
+                                            className={cn(isActive && styles.active)}
+                                        >
+                                            <img 
+                                                className={styles.productImage} 
+                                                src={img} 
+                                                alt={`${product?.name} - ${product?.size} Image`}
+                                            />
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    )}
                 </>
             )}
         </div>

@@ -9,6 +9,13 @@
         height: 100%;
         display: flex;
         position: relative;
+        &.soloImage {
+            flex: 0 0 100%;
+            padding: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         @media (max-width: 800px) {
             flex: 0 0 100%;
         }
