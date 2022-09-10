@@ -1,5 +1,6 @@
 import { Title, Text } from '@mantine/core';
 import cn from 'classnames';
+import { get } from 'lodash';
 
 import { IProduct } from '@/mongo/models/Product';
 import { formatPrice } from '../../util/helpers';
@@ -14,7 +15,8 @@ interface IProductTitle {
 const ProductTitle = ({ product, smaller = false }: IProductTitle) => {
     if (!product) return <></>;
     
-    const onSale = product?.pricing?.sale_price !== 0;
+    const salePrice = get(product, [ 'pricing', 'sale_price' ]);
+    const onSale = salePrice && salePrice !== 0;
 
     return (
         <div className={styles.productInfo}>
@@ -24,7 +26,7 @@ const ProductTitle = ({ product, smaller = false }: IProductTitle) => {
             <Text size={smaller ? 'xs' : 'sm'}  weight={600}>
                 <span className={cn(styles.productPrice, smaller && styles.smaller)}>
                     <span className={cn(onSale && styles.onSale)}>{formatPrice(product?.pricing?.price)}</span>
-                    {onSale && formatPrice(product?.pricing?.sale_price)}
+                    {onSale && formatPrice(salePrice)}
                 </span>
             </Text>
         </div>

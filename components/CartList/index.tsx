@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { Avatar, Grid, Title, Text, CloseButton, Group, ActionIcon, ScrollArea } from '@mantine/core';
 import { filter, findIndex } from "lodash";
 import { FiPlus, FiMinus } from 'react-icons/fi';
+import { get } from 'lodash';
 
 import { ICartItem, setCart } from "@/redux/cart";
 import { formatImagesArray, buildProductUrl, formatPrice } from '@/helpers';
@@ -47,7 +48,8 @@ const CartList = ({ cart }: ICartList) => {
                 const name = `${product.name} - ${product.size}`;
                 const image = product.img_urls ? formatImagesArray(product.img_urls)[0] : '';
                 const url = buildProductUrl(product);
-                const price = product.pricing.sale_price !== 0 ? product.pricing.sale_price : product.pricing.price;
+                const salePrice = get(product, [ 'pricing', 'sale_price' ]);
+                const price = (salePrice && salePrice !== 0) ? salePrice : product.pricing.price;
                 // @ts-ignore
                 const productPrice = formatPrice(quantity * price);
 

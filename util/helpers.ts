@@ -1,5 +1,5 @@
 import { createStyles } from "@mantine/core"; 
-import { reverse, orderBy } from 'lodash';
+import { get, orderBy } from 'lodash';
 
 import { IProduct } from '@/mongo/models/Product';
 import { ICartItem } from '@/redux/cart';
@@ -97,7 +97,9 @@ export const calculateTotalPrice = (cart: ICartItem[]): string => {
     
     cart.forEach((c: ICartItem) => {
         const pricing = c.product.pricing;
-        const itemPrice = pricing.sale_price !== 0 ? pricing.sale_price : pricing.price;
+        const normal = get(c.product, [ 'pricing', 'price' ]);
+        const onSale = get(c.product, [ 'pricing', 'sale_price' ]);
+        const itemPrice = (onSale && onSale !== 0) ? onSale : normal;
         // @ts-ignore
         const amount = itemPrice * c.quantity;
 
@@ -125,19 +127,25 @@ export const orderProducts = (order: string, products?: IProduct[]): IProduct[] 
             break;
         case 'priceLowToHigh':
             ordered = orderBy(products, (p) => {
-                if (p.pricing.sale_price) {
-                    return p.pricing.sale_price;
+                const normal = get(p, [ 'pricing', 'price' ]);
+                const onSale = get(p, [ 'pricing', 'sale_price' ]);
+
+                if (onSale && onSale !== 0) {
+                    return onSale;
                 } else {
-                    return p.pricing.price
+                    return normal;
                 }
             }, ['asc']);
             break;
         case 'priceHighToLow':
             ordered = orderBy(products, (p) => {
-                if (p.pricing.sale_price) {
-                    return p.pricing.sale_price;
+                const normal = get(p, [ 'pricing', 'price' ]);
+                const onSale = get(p, [ 'pricing', 'sale_price' ]);
+
+                if (onSale && onSale !== 0) {
+                    return onSale;
                 } else {
-                    return p.pricing.price
+                    return normal;
                 }
             }, ['desc']);
             break;
