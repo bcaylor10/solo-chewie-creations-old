@@ -48,8 +48,9 @@ const CartList = ({ cart }: ICartList) => {
                 const name = `${product.name} - ${product.size}`;
                 const image = product.img_urls ? formatImagesArray(product.img_urls)[0] : '';
                 const url = buildProductUrl(product);
+                const normalPrice = get(product, [ 'pricing', 'price' ]);
                 const salePrice = get(product, [ 'pricing', 'sale_price' ]);
-                const price = (salePrice && salePrice !== 0) ? salePrice : product.pricing.price;
+                const price = (salePrice && salePrice !== 0) ? salePrice : normalPrice;
                 // @ts-ignore
                 const productPrice = formatPrice(quantity * price);
 

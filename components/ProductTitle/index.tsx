@@ -15,6 +15,7 @@ interface IProductTitle {
 const ProductTitle = ({ product, smaller = false }: IProductTitle) => {
     if (!product) return <></>;
     
+    const normalPrice = get(product, [ 'pricing', 'price' ]);
     const salePrice = get(product, [ 'pricing', 'sale_price' ]);
     const onSale = salePrice && salePrice !== 0;
 
@@ -25,7 +26,7 @@ const ProductTitle = ({ product, smaller = false }: IProductTitle) => {
             </Title>
             <Text size={smaller ? 'xs' : 'sm'}  weight={600}>
                 <span className={cn(styles.productPrice, smaller && styles.smaller)}>
-                    <span className={cn(onSale && styles.onSale)}>{formatPrice(product?.pricing?.price)}</span>
+                    <span className={cn(onSale && styles.onSale)}>{formatPrice(normalPrice)}</span>
                     {onSale && formatPrice(salePrice)}
                 </span>
             </Text>
