@@ -14,7 +14,8 @@ const HeadBands = () => {
     }, [ status ]);
 
     return (
-        <ProductListLayout 
+        <ProductListLayout
+            productType={PRODUCT_TYPES.headBand}
             products={headBands} 
             isLoading={isLoading} 
             productName="head bands" 

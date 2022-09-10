@@ -5,7 +5,7 @@ import connect from 'mongo';
 import { Product, IProduct } from 'mongo/models/Product';
 
 interface IQuery {
-    product_type: number;
+    product_type?: number;
     size?: any;
 }
 
@@ -14,13 +14,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const type = req?.query?.type;
     const size = req?.query?.size;
     if (req.method !== 'GET') return res.status(405).end();
-    
-    if (!type) return res.status(404).end();
 
-    const query: IQuery = {
-        product_type: parseInt(type.toString()),
-    };
+    const query: IQuery = {};
 
+    if (type) query.product_type = parseInt(type.toString());
     if (size) query.size = { $regex: `^${size}$`, $options: 'i' };
     
     let products: IProduct[] = [];

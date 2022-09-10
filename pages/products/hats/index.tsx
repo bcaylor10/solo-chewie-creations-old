@@ -14,7 +14,8 @@ const Hats = () => {
     }, [ status ]);
 
     return (
-        <ProductListLayout 
+        <ProductListLayout
+            productType={PRODUCT_TYPES.hat}
             products={hats} 
             isLoading={isLoading} 
             productName="hats" 

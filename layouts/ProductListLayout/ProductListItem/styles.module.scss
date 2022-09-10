@@ -3,9 +3,15 @@
     height: 300px;
     cursor: pointer;
     overflow: hidden;
+    @media (max-width: 576px) {
+        height: 400px;
+    }
     &:hover {
         .productImage {
             transform: scale(1.1);
+            @media (max-width: 576px) {
+                transform: translateX(-50%);
+            }
         }
     }
     &.green {
@@ -24,6 +30,13 @@
         width: 100%;
         transform: scale(1);
         transition: transform .2s ease-in-out;
+        transform-origin: center;
+        @media (max-width: 576px) {
+            width: auto;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
     .icon {
         position: absolute;

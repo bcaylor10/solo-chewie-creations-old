@@ -3,5 +3,8 @@
     .title {
         padding: 100px 0 50px !important;
         text-transform: capitalize;
+        @media (max-width: 768px) {
+            padding: 50px 0 25px !important;
+        }
     }
 }

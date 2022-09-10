@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const type = req?.query?.type;
     if (req.method !== 'GET') return res.status(405).end();
     
-    if (!type) return res.status(404).end();
+    if (!type || parseInt(type.toString()) === -1) return res.status(404).end();
 
     const query = {
         product_type: type,

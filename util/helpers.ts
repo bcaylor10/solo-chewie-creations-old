@@ -1,4 +1,5 @@
 import { createStyles } from "@mantine/core"; 
+import { reverse, orderBy } from 'lodash';
 
 import { IProduct } from '@/mongo/models/Product';
 import { ICartItem } from '@/redux/cart';
@@ -111,4 +112,85 @@ export const getRatingInfo = (ratingArray: number[]): IRating => {
         count: ratingArray.reduce((a, b) => a + b) / ratingArray.length,
         amount: ratingArray.length
     }
+}
+
+export const orderProducts = (order: string, products?: IProduct[]): IProduct[] => {
+    if (!products) return [];
+
+    let ordered = products;
+
+    switch (order) {
+        case 'updatedAt':
+            ordered = ordered;
+            break;
+        case 'priceLowToHigh':
+            ordered = orderBy(products, (p) => {
+                if (p.pricing.sale_price) {
+                    return p.pricing.sale_price;
+                } else {
+                    return p.pricing.price
+                }
+            }, ['asc']);
+            break;
+        case 'priceHighToLow':
+            ordered = orderBy(products, (p) => {
+                if (p.pricing.sale_price) {
+                    return p.pricing.sale_price;
+                } else {
+                    return p.pricing.price
+                }
+            }, ['desc']);
+            break;
+    }
+
+    return ordered;
+}
+
+export const filterProductsByName = (name: string, products?: IProduct[]): IProduct[] => {
+    if (!products) return [];
+
+    let ordered = products;
+
+    switch (name) {
+        case 'all':
+            ordered = ordered;
+            break;
+        case 'hats':
+            ordered = ordered.filter((o) => o.name === 'Hat');
+            break;
+        case 'scarves':
+            ordered = ordered.filter((o) => o.name === 'Scarf');
+            break;
+        case 'head-bands':
+            ordered = ordered.filter((o) => o.name === 'Head Band');
+            break;
+    }
+
+    return ordered;
+}
+
+export const filterProductsBySize = (size: string, products?: IProduct[]): IProduct[] => {
+    if (!products) return [];
+
+    let ordered = products;
+
+    switch (size) {
+        case 'all':
+            ordered = ordered;
+            break;
+        case 'kids':
+            ordered = ordered.filter((o) => o.size === 'Kids');
+            break;
+        case 'womens':
+            ordered = ordered.filter((o) => o.size === 'Womens');
+            break;
+        case 'mens':
+            ordered = ordered.filter((o) => o.size === 'Mens');
+            break;
+        case 'adults':
+            ordered = ordered.filter((o) => o.size !== 'Kids');
+            break;
+    }
+
+    return ordered;
 }

@@ -23,7 +23,7 @@ export const links: ILinks[] = [
             { href: routes.products.headBands, text: 'Head Bands' }
         ]
     },
-    { link: { href: routes.products.popular, text: 'Popular' } },
+    // { link: { href: routes.products.popular, text: 'Popular' } },
     { link: { href: routes.about, text: 'About' } }
 ];
 

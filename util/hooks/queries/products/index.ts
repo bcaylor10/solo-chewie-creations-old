@@ -2,11 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const getProducts = (type: number) => axios.get('/api/products', { params: { type: type } });
+const getAllProducts = () => axios.get('/api/products');
 const getProductSizes = (type: number) => axios.get('/api/products/sizes', { params: { type: type } })
 const getFeaturedProducts = () => axios.get('/api/products/featured');
 
 export const useGetProducts = (type: number) => {
     const query = useQuery([`products-${type}`], async () => await getProducts(type));
+    return query;
+};
+
+export const useGetAllProducts = () => {
+    const query = useQuery([`all-products`], async () => await getAllProducts());
     return query;
 };
 
