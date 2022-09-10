@@ -17,7 +17,7 @@ const ProductTitle = ({ product, smaller = false }: IProductTitle) => {
     
     const normalPrice = get(product, [ 'pricing', 'price' ]);
     const salePrice = get(product, [ 'pricing', 'sale_price' ]);
-    const onSale = salePrice && salePrice !== 0;
+    const onSale = salePrice !== undefined && salePrice !== 0;
 
     return (
         <div className={styles.productInfo}>

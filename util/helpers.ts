@@ -96,10 +96,9 @@ export const calculateTotalPrice = (cart: ICartItem[]): string => {
     let price = 0;
     
     cart.forEach((c: ICartItem) => {
-        const pricing = c.product.pricing;
         const normal = get(c.product, [ 'pricing', 'price' ]);
         const onSale = get(c.product, [ 'pricing', 'sale_price' ]);
-        const itemPrice = (onSale && onSale !== 0) ? onSale : normal;
+        const itemPrice = (onSale !== undefined && onSale !== 0) ? onSale : normal;
         // @ts-ignore
         const amount = itemPrice * c.quantity;
 
@@ -130,7 +129,7 @@ export const orderProducts = (order: string, products?: IProduct[]): IProduct[] 
                 const normal = get(p, [ 'pricing', 'price' ]);
                 const onSale = get(p, [ 'pricing', 'sale_price' ]);
 
-                if (onSale && onSale !== 0) {
+                if (onSale !== undefined && onSale !== 0) {
                     return onSale;
                 } else {
                     return normal;
@@ -142,7 +141,7 @@ export const orderProducts = (order: string, products?: IProduct[]): IProduct[] 
                 const normal = get(p, [ 'pricing', 'price' ]);
                 const onSale = get(p, [ 'pricing', 'sale_price' ]);
 
-                if (onSale && onSale !== 0) {
+                if (onSale !== undefined && onSale !== 0) {
                     return onSale;
                 } else {
                     return normal;

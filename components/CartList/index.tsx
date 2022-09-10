@@ -50,7 +50,7 @@ const CartList = ({ cart }: ICartList) => {
                 const url = buildProductUrl(product);
                 const normalPrice = get(product, [ 'pricing', 'price' ]);
                 const salePrice = get(product, [ 'pricing', 'sale_price' ]);
-                const price = (salePrice && salePrice !== 0) ? salePrice : normalPrice;
+                const price = (salePrice !== undefined && salePrice !== 0) ? salePrice : normalPrice;
                 // @ts-ignore
                 const productPrice = formatPrice(quantity * price);
 

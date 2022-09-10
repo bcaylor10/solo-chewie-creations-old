@@ -32,6 +32,7 @@ const ProductDetails = ({ product }: IProductLayout) => {
     const [ sizes, setSizes ] = useState<ISize[]>([]);
     const price = get(product, [ 'pricing', 'price' ]);
     const salePrice = get(product, [ 'pricing', 'sale_price' ]);
+    const onSale = (salePrice !== undefined && salePrice !== 0);
 
     useEffect(() => {
         if (!product) return;
@@ -114,10 +115,10 @@ const ProductDetails = ({ product }: IProductLayout) => {
                     <Text>
                         <>
                             Price: 
-                            <span className={cn(styles.productPrice, salePrice !== 0 && styles.onSale)}>
+                            <span className={cn(styles.productPrice, onSale && styles.onSale)}>
                                 {formatPrice(price)}
                             </span>
-                            {salePrice !== 0 && formatPrice(salePrice)}
+                            {onSale && formatPrice(salePrice)}
                         </>
                     </Text>
                     <Text className={styles.notification} size="xs">
