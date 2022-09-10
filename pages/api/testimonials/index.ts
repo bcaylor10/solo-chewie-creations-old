@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await connect().then(() => {
         // @ts-ignore
-        return Testimonial.find();
+        return Testimonial.find().sort({ updated_at: 'desc' });
     }).then((data: ITestimonial[] | []) => {
         testimonials = data;
     }).catch((error) => {

@@ -27,7 +27,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await connect().then(() => {
         // @ts-ignore
-        return Product.find(query)
+        return Product.find(query).sort({ updated_at: 'desc' })
     }).then((data: IProduct[] | []) => {
         products = data;
     }).catch((error) => {

@@ -9,6 +9,9 @@
         background: $black;
         color: $white;
         padding: 12px 25px;
+        &.smaller {
+            padding: 5px 15px;
+        }
     }
     .productPrice {
         letter-spacing: 1px;

@@ -25,6 +25,8 @@ export interface IProduct {
     pricing: IPricing;
     extras: IExtras;
     img_urls?: string[];
+    created_at?: Date;
+    updated_at?: Date;
 }
 
 const productSchema = new Schema({
@@ -43,7 +45,9 @@ const productSchema = new Schema({
         details: { type: String },
         featured: { type: Boolean, default: false },
     },
-    img_urls: { type: Array }
+    img_urls: { type: Array },
+    created_at: { type: Date },
+    updated_at: { type: Date }
 });
 
 export const Product = models.Product || model('Product', productSchema, 'products');

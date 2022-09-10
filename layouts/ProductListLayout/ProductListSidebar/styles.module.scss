@@ -1,0 +1,19 @@
+.productListSidebar {
+    padding-right: 20px;
+    height: 100%;
+    .divider {
+        margin: 20px 0;
+    }
+    .filterList {
+        margin-bottom: -10px;
+        .filter {
+            padding: 5px 0;
+            cursor: pointer;
+            transition: color .2s ease-in-out;
+            &:hover,
+            &.active {
+                color: $turqoise;
+            }
+        }
+    }
+}

@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     await connect().then(() => {
         // @ts-ignore
-        return Product.find({ 'extras.featured': true });
+        return Product.find({ 'extras.featured': true }).sort({ updated_at: 'desc' })
     }).then((data: IProduct[] | []) => {
         featured = data;
     }).catch((error) => {

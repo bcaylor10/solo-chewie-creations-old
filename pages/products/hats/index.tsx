@@ -9,7 +9,7 @@ const Hats = () => {
     const [ hats, setHats ] = useState<IProduct[]|null>(null);
     const { data, isLoading, status } = useGetProducts(PRODUCT_TYPES.hat);
     
-    useEffect(() => {        
+    useEffect(() => {
         if (status === 'success') setHats(data?.data);
     }, [ status ]);
 

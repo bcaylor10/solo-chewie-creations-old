@@ -14,7 +14,9 @@
     ],
     "care": "This is some information about care",
     "details": "Some details about this product",
-    "featured": false
+    "featured": false,
+    "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+    "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
   }
 },{
   "name": "Scarf",
@@ -34,7 +36,9 @@
     "featured": true
   },
   "img_urls": "https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357356/adult-scarf_tztxvp.png",
-  "product_type": 1
+  "product_type": 1,
+  "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+  "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
 },{
   "name": "Hat",
   "description": "Hand-made hat with whatever custom colors you'd like.",
@@ -53,7 +57,9 @@
     "featured": true
   },
   "img_urls": "https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357356/kids-hat_ujyhgt.png",
-  "product_type": 0
+  "product_type": 0,
+  "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+  "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
 },{
   "name": "Hat",
   "description": "Hand-made hat with whatever custom colors you'd like.",
@@ -71,8 +77,9 @@
     "details": "Some details about this product",
     "featured": false
   },
-  "img_urls": "",
-  "product_type": 0
+  "product_type": 0,
+  "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+  "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
 },{
   "name": "Hat",
   "description": "Hand-made hat with whatever custom colors you'd like.",
@@ -90,7 +97,9 @@
     "details": "Some details about this product",
     "featured": false
   },
-  "product_type": 0
+  "product_type": 0,
+  "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+  "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
 },{
   "name": "Head Band",
   "description": "Hand-made head band with whatever custom colors you'd like.",
@@ -108,7 +117,9 @@
     "details": "Some details about this product",
     "featured": false
   },
-  "product_type": 2
+  "product_type": 2,
+  "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+  "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
 },{
   "name": "Head Band",
   "description": "Hand-made head band with whatever custom colors you'd like.",
@@ -127,5 +138,7 @@
     "featured": true
   },
   "product_type": 2,
+  "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+  "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
   "img_urls": "https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png, https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png, https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png,https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png"
 }]

@@ -46,7 +46,9 @@ export const menuStyles = createStyles(() => ({
     },
 }));
 
-export const buildProductUrl = (product: IProduct, size?: string): string => {
+export const buildProductUrl = (product?: IProduct, size?: string): string => {
+    if (!product) return '';
+
     const productType: string = product.name.toLowerCase();
     const productSize: string = size ? size.toLowerCase() : product.size.toLowerCase();
     let route: string = '';
@@ -80,6 +82,7 @@ export const formatPrice = (price: number | undefined): string => {
 
 export const formatImagesArray = (images: string[]): string[] => {
     if (images.length === 0) return [];
+
     const formatted: string[] = images[0].replace(/\s/g, '').split(',');
     return formatted;
 };
