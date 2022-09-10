@@ -1,0 +1,22 @@
+.ourProcess {
+    background: $blue-grey;
+    .iconColumn {
+        text-align: center;
+        @media (max-width: 768px) {
+            margin-top: 40px;
+        }
+        svg {
+            height: 200px;
+            // animation: rotation 4s infinite linear;
+        }
+    }
+}
+
+@keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+}

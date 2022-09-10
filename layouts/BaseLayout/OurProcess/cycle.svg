@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 744.09 850" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="d" color-interpolation-filters="sRGB">
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".5" result="flood"/>
+   <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite" result="blur" stdDeviation="2"/>
+   <feOffset dx="4" dy="4" result="offset"/>
+   <feComposite in="SourceGraphic" in2="offset" result="composite2"/>
+  </filter>
+  <filter id="c" color-interpolation-filters="sRGB">
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".5" result="flood"/>
+   <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite" result="blur" stdDeviation="2"/>
+   <feOffset dx="4" dy="4" result="offset"/>
+   <feComposite in="SourceGraphic" in2="offset" result="composite2"/>
+  </filter>
+  <filter id="b" color-interpolation-filters="sRGB">
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".5" result="flood"/>
+   <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite" result="blur" stdDeviation="2"/>
+   <feOffset dx="4" dy="4" result="offset"/>
+   <feComposite in="SourceGraphic" in2="offset" result="composite2"/>
+  </filter>
+  <filter id="a" color-interpolation-filters="sRGB">
+   <feFlood flood-color="rgb(0,0,0)" flood-opacity=".5" result="flood"/>
+   <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite1"/>
+   <feGaussianBlur in="composite" result="blur" stdDeviation="2"/>
+   <feOffset dx="4" dy="4" result="offset"/>
+   <feComposite in="SourceGraphic" in2="offset" result="composite2"/>
+  </filter>
+ </defs>
+ <path d="m394.38 91.125c26.469 30.479 52.94 60.956 79.406 91.438-25.934 26.361-51.885 52.695-77.844 79.031 69.964 14.561 124.01 72.514 132.78 144.44h-43.75l115.81 114.09 131.38-114.09h-34.219c-10.005-165.64-139.59-299-303.56-314.91z" fill-opacity=".96471" filter="url(#b)"/>
+ <path d="m351.53 50.906v38.75c-168.54 4.8779-306.11 133.45-325.03 298.09 29.11-25.28 58.244-50.569 87.281-75.781l0.65625-0.5625 0.75-0.65625c27.171 26.71 54.33 53.445 81.469 80.188 15.72-72.81 78.474-128.13 154.88-132.56v39.719l114.09-115.81-114.09-131.38z" fill-rule="evenodd" filter="url(#c)"/>
+ <path d="m114.91 318.91-131.34 114.06h40.781c3.1989 173.8 137.92 315.43 308.81 329.62-26.595-30.624-53.189-61.249-79.781-91.875 25.711-26.122 51.432-52.235 77.156-78.344-76.331-14.144-134.62-79.701-137.56-159.41h37.781l-115.84-114.06z" fill-rule="evenodd" filter="url(#d)"/>
+ <path d="m698.16 443.47c-32.553 28.27-65.101 56.545-97.656 84.812-24.374-23.991-48.761-47.968-73.125-71.969-13.208 74.403-75.201 131.93-151.75 138.31v-39.438l-114.09 115.81 114.09 131.38v-38.906c174.03-7.2123 314-146.32 322.53-320z" fill-rule="evenodd" filter="url(#a)"/>
+</svg>

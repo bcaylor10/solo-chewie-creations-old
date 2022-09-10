@@ -5,6 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Loader from "@/components/Loader";
 import { ContactModal } from "@/components/Modals";
+import OurProcess from "./OurProcess";
 
 const BaseLayout = ({ children }: any) => {
     const loading = useSelector((store: any) => store.site.loading);
@@ -17,7 +18,10 @@ const BaseLayout = ({ children }: any) => {
         >
             <Loader loading={loading} variant="bars" />
             <Header />
-            <main>{children}</main>
+            <main>
+                {children}
+                <OurProcess />
+            </main>
             <Footer />
             <ContactModal />
         </Auth0Provider>

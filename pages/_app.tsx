@@ -46,7 +46,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 styles: (theme) => ({
                   root: {
                     color: '#1a5545',
-                    fontFamily: 'Comfortaa'
+                    fontFamily: 'Comfortaa',
+                    fontWeight: 'bold'
                   },
                 }),
               },
@@ -55,7 +56,8 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                   root: {
                     color: '#1a5545',
                     fontFamily: 'Comfortaa',
-                    letterSpacing: '.6px'
+                    letterSpacing: '.6px',
+                    fontWeight: '300'
                   },
                 }),
               }

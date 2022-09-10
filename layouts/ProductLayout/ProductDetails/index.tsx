@@ -3,15 +3,17 @@ import { useRouter } from 'next/router';
 import { Text, Button, Select, Stack, Group, Loader, Center, Container } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useSelector, useDispatch } from 'react-redux';
+import { get } from 'lodash';
+import cn from 'classnames';
 
 import { IProductLayout } from '..';
 import ReviewStars from '@/components/ReviewStars';
 import DetailsAccordion from './DetailsAccordion';
-import { buildProductUrl, getRatingInfo, IRating } from '@/helpers';
+import { buildProductUrl, getRatingInfo, IRating, formatPrice } from '@/helpers';
 import { useGetSizesForProduct } from '@/queries/products';
+import { setCart } from '@/redux/cart';
 
 import styles from './styles.module.scss';
-import { setCart } from '@/redux/cart';
 
 interface ISize {
     label: string;
@@ -28,8 +30,8 @@ const ProductDetails = ({ product }: IProductLayout) => {
     const [ loading, setLoading ] = useState<boolean>(false);
     const [ size, setSize ] = useState<string>('');
     const [ sizes, setSizes ] = useState<ISize[]>([]);
-
-    console.log(product)
+    const price = get(product, [ 'pricing', 'price' ]);
+    const salePrice = get(product, [ 'pricing', 'sale_price' ]);
 
     useEffect(() => {
         if (!product) return;
@@ -109,6 +111,18 @@ const ProductDetails = ({ product }: IProductLayout) => {
                         onChange={(val) => handleSizeChange(val)}
                         data={sizes}
                     />
+                    <Text>
+                        <>
+                            Price: 
+                            <span className={cn(styles.productPrice, salePrice !== 0 && styles.onSale)}>
+                                {formatPrice(price)}
+                            </span>
+                            {salePrice !== 0 && formatPrice(salePrice)}
+                        </>
+                    </Text>
+                    <Text className={styles.notification} size="xs">
+                        *Price is subject to change if specialty yarn is requested/required*
+                    </Text>
                     <Button size="xl" variant="filled" disabled={loading} color="green" onClick={addToCart}>
                         {loading ? <Loader color="green" variant="dots" /> : 'Add to Cart'}
                     </Button>

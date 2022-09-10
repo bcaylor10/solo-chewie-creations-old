@@ -7,13 +7,19 @@
     .description {
         margin-bottom: 30px;
     }
-    .sizes {
-        margin-bottom: 30px;
-    }
     .reviews {
         margin-bottom: 20px;
         .stars {
             color: $dark-green;
+        }
+    }
+    .sizes {
+        margin-bottom: 30px;
+    }
+    .productPrice {
+        margin: 0 10px;
+        &.onSale {
+            text-decoration: line-through;
         }
     }
 }
