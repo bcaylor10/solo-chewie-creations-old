@@ -1,5 +1,20 @@
 import { Schema, models, model, ObjectId } from "mongoose";
 
+interface IPricing {
+    price: number;
+    sale_price?: number;
+}
+
+interface IRating {
+    amount: number;
+}
+interface IExtras {
+    rating: IRating[];
+    care?: string;
+    details?: string;
+    featured: boolean;
+}
+
 export interface IProduct {
     _id?: ObjectId;
     product_type: number;
@@ -7,11 +22,8 @@ export interface IProduct {
     description: string;
     size: string;
     labor_hours: number;
-    price: number;
-    sale_price?: number;
-    featured: boolean;
-    care?: string;
-    details?: string;
+    pricing: IPricing;
+    extras: IExtras;
     img_urls?: string[];
 }
 
@@ -21,11 +33,16 @@ const productSchema = new Schema({
     size: { type: String, required: true },
     labor_hours: { type: Number, required: true },
     product_type: { type: Number, required: true },
-    price: { type: Number, required: true},
-    sale_price: { type: Number },
-    featured: { type: Boolean, default: false },
-    care: { type: String },
-    details: { type: String },
+    pricing: {
+        price: { type: Number, required: true},
+        sale_price: { type: Number },
+    },
+    extras: {
+        rating: { type: Array, required: true },
+        care: { type: String },
+        details: { type: String },
+        featured: { type: Boolean, default: false },
+    },
     img_urls: { type: Array }
 });
 

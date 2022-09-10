@@ -1,32 +1,32 @@
 import { Accordion } from "@mantine/core";
+import { get } from "lodash";
 
 import { IProductLayout } from "../..";
 
 import styles from './styles.module.scss';
 
 const DetailsAccordion = ({ product }: IProductLayout) => {
-    if (!product?.care && !product?.details) return <></>;
+    if (!get(product, [ 'extras', 'care' ]) && !get(product, [ 'extras', 'details' ])) return <></>;
 
     return (
         <Accordion radius="xs" chevronPosition="left" multiple>
-            {product?.care && (
+            {get(product, [ 'extras', 'care' ]) && (
                 <Accordion.Item value="care" >
                     <Accordion.Control className={styles.accordionControl}>
                         Care
                     </Accordion.Control>
                     <Accordion.Panel>
-                        Colors, fonts, shadows and many other parts are customizable to fit your design needs
+                        {get(product, [ 'extras', 'care' ])}
                     </Accordion.Panel>
                 </Accordion.Item>
             )}
-            {product?.details && (
+            {get(product, [ 'extras', 'details' ]) && (
                 <Accordion.Item value="details">
                     <Accordion.Control className={styles.accordionControl}>
                         Details
                     </Accordion.Control>
                     <Accordion.Panel>
-                        Configure components appearance and behavior with vast amount of settings or overwrite 
-                        any part of component styles
+                        {get(product, [ 'extras', 'details' ])}
                     </Accordion.Panel>
                 </Accordion.Item>
             )}  

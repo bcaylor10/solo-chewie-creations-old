@@ -11,7 +11,7 @@ interface IProductTitle {
 }
 
 const ProductTitle = ({ product }: IProductTitle) => {
-    const onSale = product?.sale_price !== 0 || !product?.sale_price;
+    const onSale = product?.pricing?.sale_price !== 0;
 
     return (
         <div className={styles.productInfo}>
@@ -19,12 +19,10 @@ const ProductTitle = ({ product }: IProductTitle) => {
                 <span className={styles.productTitle}>{product?.name} - {product?.size}</span>
             </Title>
             <Text size="sm" weight={600}>
-                <span className={cn(styles.productPrice, onSale && styles.onSale)}>
-                    {formatPrice(product?.price)}
+                <span className={styles.productPrice}>
+                    <span className={cn(onSale && styles.onSale)}>{formatPrice(product?.pricing?.price)}</span>
+                    {onSale && formatPrice(product?.pricing?.sale_price)}
                 </span>
-                {onSale && (
-                    <span>{formatPrice(product?.sale_price)}</span>
-                )}
             </Text>
         </div>
     )

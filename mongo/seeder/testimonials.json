@@ -1,0 +1,13 @@
+[{
+    "rating": 2.5,
+    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "author": "Sarika Lucretias"
+  },{
+    "rating": 5,
+    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit!",
+    "author": "Aleixo Per"
+  },{
+    "rating": 4.5,
+    "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sed do eiusmod tempor!",
+    "author": "Devaraja Caroline"
+}]

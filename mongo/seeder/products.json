@@ -1,0 +1,131 @@
+[{
+  "name": "Scarf",
+  "description": "Hand-made scarf with whatever custom colors you'd like.",
+  "size": "Kids",
+  "labor_hours": 12,
+  "product_type": 1,
+  "pricing": {
+    "price": 45,
+    "sale_price": 0
+  },
+  "extras": {
+    "rating": [
+      3, 4, 5, 4, 3, 3, 5, 5, 5, 1
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": false
+  }
+},{
+  "name": "Scarf",
+  "description": "Hand-made scarf with whatever custom colors you'd like.",
+  "size": "Adults",
+  "labor_hours": 12,
+  "pricing": {
+    "price": 45,
+    "sale_price": 0
+  },
+  "extras": {
+    "rating": [
+      3, 4, 5, 4
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": true
+  },
+  "img_urls": "https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357356/adult-scarf_tztxvp.png",
+  "product_type": 1
+},{
+  "name": "Hat",
+  "description": "Hand-made hat with whatever custom colors you'd like.",
+  "size": "Kids",
+  "labor_hours": 2,
+  "pricing": {
+    "price": 30,
+    "sale_price": 23
+  },
+  "extras": {
+    "rating": [
+      4, 4, 4, 4, 5, 3, 1
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": true
+  },
+  "img_urls": "https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357356/kids-hat_ujyhgt.png",
+  "product_type": 0
+},{
+  "name": "Hat",
+  "description": "Hand-made hat with whatever custom colors you'd like.",
+  "size": "Womens",
+  "labor_hours": 2,
+  "pricing": {
+    "price": 35,
+    "sale_price": 0
+  },
+  "extras": {
+    "rating": [
+      5, 5, 5, 5, 3
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": false
+  },
+  "img_urls": "",
+  "product_type": 0
+},{
+  "name": "Hat",
+  "description": "Hand-made hat with whatever custom colors you'd like.",
+  "size": "Mens",
+  "labor_hours": 2,
+  "pricing": {
+    "price": 35,
+    "sale_price": 0
+  },
+  "extras": {
+    "rating": [
+      3, 5
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": false
+  },
+  "product_type": 0
+},{
+  "name": "Head Band",
+  "description": "Hand-made head band with whatever custom colors you'd like.",
+  "size": "Kids",
+  "labor_hours": 4,
+  "pricing": {
+    "price": 20,
+    "sale_price": 0
+  },
+  "extras": {
+    "rating": [
+      4
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": false
+  },
+  "product_type": 2
+},{
+  "name": "Head Band",
+  "description": "Hand-made head band with whatever custom colors you'd like.",
+  "size": "Adults",
+  "labor_hours": 4,
+  "pricing": {
+    "price": 25,
+    "sale_price": 0
+  },
+  "extras": {
+    "rating": [
+      4, 4, 5, 5, 3
+    ],
+    "care": "This is some information about care",
+    "details": "Some details about this product",
+    "featured": true
+  },
+  "product_type": 2,
+  "img_urls": "https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png, https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png, https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png,https://res.cloudinary.com/dz8cflxmf/image/upload/v1662357107/adult-head-band_nzhuz3.png"
+}]

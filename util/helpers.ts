@@ -5,6 +5,17 @@ import { ICartItem } from '@/redux/cart';
 
 import routes from "@/routes";
 
+export interface IRating {
+    count: number;
+    amount: number;
+}
+
+export const PRODUCT_TYPES = {
+    hat: 0,
+    scarf: 1,
+    headBand: 2
+}
+
 export const calculateWaitTime = (shipping = false): number => {
     const hoursPerWeek = 5;
     const backedHours = 0; // TODO: create function to query all products
@@ -81,15 +92,20 @@ export const calculateTotalPrice = (cart: ICartItem[]): string => {
     let price = 0;
     
     cart.forEach((c: ICartItem) => {
-        const amount = c.product.price * c.quantity;
+        const pricing = c.product.pricing;
+        const itemPrice = pricing.sale_price !== 0 ? pricing.sale_price : pricing.price;
+        // @ts-ignore
+        const amount = itemPrice * c.quantity;
+
         price += amount;
     });
 
     return formatPrice(price);
 }
 
-export const PRODUCT_TYPES = {
-    hat: 0,
-    scarf: 1,
-    headBand: 2
+export const getRatingInfo = (ratingArray: number[]): IRating => {
+    return {
+        count: ratingArray.reduce((a, b) => a + b) / ratingArray.length,
+        amount: ratingArray.length
+    }
 }

@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IProductLayout } from '..';
 import ReviewStars from '@/components/ReviewStars';
 import DetailsAccordion from './DetailsAccordion';
-import { buildProductUrl } from '@/helpers';
+import { buildProductUrl, getRatingInfo, IRating } from '@/helpers';
 import { useGetSizesForProduct } from '@/queries/products';
 
 import styles from './styles.module.scss';
@@ -24,15 +24,19 @@ const ProductDetails = ({ product }: IProductLayout) => {
     const cart = useSelector((store: any) => store.cart);
     // @ts-expect-error
     const { data: sizeData, isLoading: sizesLoading } = useGetSizesForProduct(product?.product_type);
+    const [ rating, setRating ] = useState<IRating>({ count: 0, amount: 0 });
     const [ loading, setLoading ] = useState<boolean>(false);
     const [ size, setSize ] = useState<string>('');
     const [ sizes, setSizes ] = useState<ISize[]>([]);
 
-    // TODO: add current review stars for review system, add care and details, add available sizes
+    console.log(product)
 
     useEffect(() => {
         if (!product) return;
+
         setSize(product.size);
+        // @ts-ignore
+        setRating(getRatingInfo(product.extras.rating));
     }, [ product, router.query.slug ]);
 
     useEffect(() => {
@@ -46,7 +50,7 @@ const ProductDetails = ({ product }: IProductLayout) => {
         });
 
         setSizes(sizeOptions);
-    }, [ sizeData ])
+    }, [ sizeData ]);
 
     const addToCart = () => {
         setLoading(true);
@@ -92,12 +96,12 @@ const ProductDetails = ({ product }: IProductLayout) => {
             ) : (
                 <Stack>
                     <Text className={styles.description}>{product?.description}</Text>
-                    {/* <div className={styles.reviews}>
+                    <div className={styles.reviews}>
                         <Group position="apart">
-                            <ReviewStars rating={4.5} className={styles.stars} />
-                            <Text size="sm">36 reviews</Text>
+                            <ReviewStars rating={rating.count} className={styles.stars} />
+                            <Text size="sm">{rating.amount} review(s)</Text>
                         </Group>
-                    </div> */}
+                    </div>
                     <Select
                         className={styles.sizes}
                         label="Size Selection"

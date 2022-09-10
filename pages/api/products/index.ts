@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
+import mongoose from 'mongoose';
 
 import connect from 'mongo';
 import { Product, IProduct } from 'mongo/models/Product';
@@ -31,7 +32,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         products = data;
     }).catch((error) => {
         res.status(500).json({ error });
-    });
+    })
+    // .finally(() => mongoose.connection.close());
 
     res.status(200).json(products);
 };

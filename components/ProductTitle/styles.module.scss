@@ -12,6 +12,10 @@
     }
     .productPrice {
         letter-spacing: 1px;
+        .onSale {
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
     }
     .productTitle {
         min-width: 200px;

@@ -47,7 +47,9 @@ const CartList = ({ cart }: ICartList) => {
                 const name = `${product.name} - ${product.size}`;
                 const image = product.img_urls ? formatImagesArray(product.img_urls)[0] : '';
                 const url = buildProductUrl(product);
-                const productPrice = formatPrice(quantity * product.price);
+                const price = product.pricing.sale_price !== 0 ? product.pricing.sale_price : product.pricing.price;
+                // @ts-ignore
+                const productPrice = formatPrice(quantity * price);
 
                 return (
                     <div className={styles.cartListItem} key={i}>

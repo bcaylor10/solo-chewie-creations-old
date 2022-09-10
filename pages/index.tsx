@@ -1,13 +1,13 @@
 import { NextPage } from "next/types";
 
 import Hero from "@/components/Hero";
-import Reviews from "@/components/Reviews";
+import Testimonials from "@/components/Testimonials";
 
 const Home: NextPage = () => {
     return (
         <>
             <Hero />
-            <Reviews />
+            <Testimonials />
         </>
     )
 };
