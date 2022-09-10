@@ -10,7 +10,7 @@ import { useGetSizesForProduct } from '@/queries/products';
 
 import styles from './styles.module.scss';
 interface IProductListLayout {
-    productType: number;
+    productType?: number;
     products: IProduct[] | null;
     productName: string;
     isLoading: boolean;

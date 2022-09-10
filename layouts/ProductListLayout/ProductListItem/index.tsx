@@ -19,7 +19,6 @@ const ProductListItem = ({ product, background = 0 }: IProductListItem) => {
     const [ images, setImages ] = useState<string[]>([]);
     const backgrounds: string[] = [ 'turqoise', 'green', 'tan' ];
 
-
     useEffect(() => {
         if (!product) return;
         if (product.img_urls) setImages(formatImagesArray(product.img_urls));

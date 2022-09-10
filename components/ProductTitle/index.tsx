@@ -7,7 +7,7 @@ import { formatPrice } from '../../util/helpers';
 import styles from './styles.module.scss';
 
 interface IProductTitle {
-    product?: IProduct;
+    product?: IProduct | null | undefined;
     smaller?: boolean;
 }
 

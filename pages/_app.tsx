@@ -52,6 +52,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                 }),
               },
               Text: {
+                // @ts-ignore
                 styles: (theme) => ({
                   root: {
                     color: '#1a5545',
