@@ -7,6 +7,8 @@ import Loader from "@/components/Loader";
 import { ContactModal } from "@/components/Modals";
 import OurProcess from "./OurProcess";
 
+export const API_URL = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2`;
+
 const BaseLayout = ({ children }: any) => {
     const loading = useSelector((store: any) => store.site.loading);
 
@@ -15,6 +17,8 @@ const BaseLayout = ({ children }: any) => {
             domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN || ''}
             clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID || ''}
             redirectUri={process.env.NEXT_PUBLIC_DOMAIN || ''}
+            audience={`${API_URL}/`}
+            scope="update:users_app_metadata"
         >
             <Loader loading={loading} variant="bars" />
             <Header />

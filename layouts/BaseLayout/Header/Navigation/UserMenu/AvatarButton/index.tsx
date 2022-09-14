@@ -11,6 +11,7 @@ export interface IUser {
     email?: string | undefined;
     email_verified?: boolean | undefined;
     given_name?: string | undefined;
+    family_name?: string | undefined;
     locale?: string | undefined;
     name?: string | undefined;
     nickname?: string | undefined;
