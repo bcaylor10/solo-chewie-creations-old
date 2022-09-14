@@ -36,6 +36,7 @@ const Profile = ({ panelName, user }: IAccountTab) => {
         const submitData = data;
         getAccessTokenSilently({ scope: 'update:current_user' }).then((data) => {
             updateUser({
+                // @ts-ignore
                 id: user.sub,
                 data: submitData,
                 token: data
