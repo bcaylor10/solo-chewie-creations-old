@@ -15,7 +15,7 @@ interface IProfileData {
 
 // TODO: add email verification
 
-const Profile = ({ panelName, user }: IAccountTab) => {
+const Profile = ({ panelName, user }: IAccountTab) => {    
     const { getAccessTokenSilently } = useAuth0();
     const { mutate: updateUser, isLoading, status } = useUpdateUser();
 
@@ -36,8 +36,7 @@ const Profile = ({ panelName, user }: IAccountTab) => {
         const submitData = data;
         getAccessTokenSilently({ scope: 'update:current_user' }).then((data) => {
             updateUser({
-                // @ts-ignore
-                id: user.sub,
+                id: user?.sub,
                 data: submitData,
                 token: data
             })

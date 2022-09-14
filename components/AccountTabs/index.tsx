@@ -6,7 +6,7 @@ import OrderHistory from "./OrderHistory";
 
 export interface IAccountTab {
     panelName: string;
-    user: IUser;
+    user: IUser | undefined;
 }
 
 export { Profile, ProductReviews, ShippingBilling, OrderHistory };

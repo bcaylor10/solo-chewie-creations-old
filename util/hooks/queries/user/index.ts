@@ -7,7 +7,7 @@ import { API_URL } from '@/layouts/BaseLayout';
 const USERS_URL = `${API_URL}/users`;
 
 interface IUpdate {
-    id: string;
+    id: string | undefined;
     data: IUser;
     token: string;
 }
