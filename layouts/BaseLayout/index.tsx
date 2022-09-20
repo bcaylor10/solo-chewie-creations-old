@@ -1,16 +1,14 @@
 import { Auth0Provider } from "@auth0/auth0-react";
-import { useSelector } from "react-redux"; 
 
-import Header from "./Header";
-import Footer from "./Footer";
 import Loader from "@/components/Loader";
-import { ContactModal } from "@/components/Modals";
-import OurProcess from "./OurProcess";
+import { useIsAdminRoute } from "util/hooks";
+import StoreLayout from "../StoreLayout";
+import AdminLayout from "../AdminLayout";
 
 export const API_URL = `https://${process.env.NEXT_PUBLIC_AUTH0_DOMAIN}/api/v2`;
 
 const BaseLayout = ({ children }: any) => {
-    const loading = useSelector((store: any) => store.site.loading);
+    const isAdminRoute = useIsAdminRoute();
 
     return (
         <Auth0Provider
@@ -20,14 +18,15 @@ const BaseLayout = ({ children }: any) => {
             audience={`${API_URL}/`}
             scope="update:users_app_metadata"
         >
-            <Loader loading={loading} variant="bars" />
-            <Header />
-            <main>
-                {children}
-                <OurProcess />
-            </main>
-            <Footer />
-            <ContactModal />
+            {isAdminRoute ? (
+                <AdminLayout>
+                    {children}
+                </AdminLayout>
+            ) : (
+                <StoreLayout>
+                    {children}
+                </StoreLayout>
+            )}
         </Auth0Provider>
     )
 };

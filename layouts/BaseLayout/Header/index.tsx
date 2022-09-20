@@ -4,10 +4,13 @@ import Image from "next/image";
 
 import { DesktopMenu, UserMenu } from "./Navigation";
 import Logo from '@/images/logo.png';
+import { useIsAdminRoute } from "util/hooks";
 
 import styles from './styles.module.scss';
 
 const Header = () => {
+    const isAdminRoute = useIsAdminRoute();
+
     return (
         <MantineHeader height={70} p="sm" className={styles.header}>
             <Container className={styles.container} fluid>
@@ -24,7 +27,7 @@ const Header = () => {
                                 />
                             </a>
                         </Link>
-                        <DesktopMenu />
+                        {!isAdminRoute && <DesktopMenu />}
                     </Grid.Col>
                     <Grid.Col span={8} className={styles.userMenuContainer}>
                         <UserMenu />

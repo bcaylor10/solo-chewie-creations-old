@@ -8,11 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import AvatarButton from "./AvatarButton";
 import { MobileMenu } from "..";
 import { setLoading } from "@/redux/site";
-import routes from '@/routes';
 import CartDrawer from "../CartDrawer";
+import { useIsAdminRoute } from "util/hooks";
 
 import styles from './styles.module.scss';
-
 
 const UserMenu = () => {
     const { user, isLoading, loginWithPopup } = useAuth0();
@@ -21,6 +20,7 @@ const UserMenu = () => {
     const [ showCart, setShowCart ] = useState<boolean>(false);
     const cart = useSelector((store: any) => store.cart);
     const dispatch = useDispatch();
+    const isAdminRoute = useIsAdminRoute();
 
     const calculateCartAmount = (): number => {
         let quantity: number = 0;
@@ -67,17 +67,19 @@ const UserMenu = () => {
     return (
         <>
             <Group position="right">
-                <span role="button" className={styles.cartButton} onClick={() => setShowCart(true)}>
-                    <FiShoppingCart 
-                        className={styles.cart} 
-                        aria-label="Cart" 
-                    />
-                    <span className={styles.cartAmount}>{cartAmount}</span>
-                </span>
+                {!isAdminRoute && (
+                    <span role="button" className={styles.cartButton} onClick={() => setShowCart(true)}>
+                        <FiShoppingCart 
+                            className={styles.cart} 
+                            aria-label="Cart" 
+                        />
+                        <span className={styles.cartAmount}>{cartAmount}</span>
+                    </span>
+                )}
                 {user ? <AvatarButton user={user} /> : (
                     <Button color="green" variant="light" onClick={handleLogin}>Log In</Button>
                 )}
-                <MobileMenu />
+                {!isAdminRoute && <MobileMenu />}
             </Group>
             <CartDrawer open={showCart} setOpen={setShowCart} />
         </>

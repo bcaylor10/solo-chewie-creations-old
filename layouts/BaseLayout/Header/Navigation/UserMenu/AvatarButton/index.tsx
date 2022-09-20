@@ -27,6 +27,7 @@ interface IAvatarButton {
 const AvatarButton = ({ user }: IAvatarButton) => {
     const { logout } = useAuth0();
     const { classes } = menuStyles();
+    const isAdmin = true;
     
     return (
         <Menu classNames={classes} shadow="md" position="bottom-end" width={170}>
@@ -45,6 +46,8 @@ const AvatarButton = ({ user }: IAvatarButton) => {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
+                {isAdmin && <Menu.Item component={NextLink} href={routes.admin.base}>Admin Panel</Menu.Item>}
+                <Menu.Divider />
                 <Menu.Item component={NextLink} href={routes.account.base}>Account</Menu.Item>
                 <Menu.Item component={NextLink} href={routes.account.orderHistory}>Order History</Menu.Item>
                 <Menu.Item onClick={() => logout({ returnTo: process.env.NEXT_PUBLIC_DOMAIN })}>Log Out</Menu.Item>

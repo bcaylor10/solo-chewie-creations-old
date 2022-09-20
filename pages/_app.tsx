@@ -11,6 +11,7 @@ import BaseLayout from '@/layouts/BaseLayout';
 import rootReducer from '@/redux/index';
 
 import '../styles/app.scss';
+import AdminLayout from '@/layouts/AdminLayout';
 
 const queryClient = new QueryClient();
 const store = configureStore({ reducer: rootReducer });
@@ -18,6 +19,7 @@ const store = configureStore({ reducer: rootReducer });
 export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const matches = useMediaQuery('(max-width: 768px)');
+  const isAdmin = true;
 
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
