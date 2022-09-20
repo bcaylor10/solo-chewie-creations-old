@@ -1,3 +1,4 @@
 import ContactModal from "./ContactModal";
+import UserModal from "./UserModal";
 
-export { ContactModal };
+export { ContactModal, UserModal };

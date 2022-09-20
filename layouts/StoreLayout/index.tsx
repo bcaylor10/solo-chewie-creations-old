@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Header from "../BaseLayout/Header";
 import OurProcess from "./OurProcess";
 import Footer from "./Footer";
-import { ContactModal } from "@/components/Modals";
+import { ContactModal, UserModal } from "@/components/Modals";
 import Loader from "@/components/Loader";
 
 const StoreLayout = ({ children }: any) => {
@@ -19,6 +19,7 @@ const StoreLayout = ({ children }: any) => {
             </main>
             <Footer />
             <ContactModal />
+            <UserModal />
         </>
     )
 };

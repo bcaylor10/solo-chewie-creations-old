@@ -1,33 +1,22 @@
 import { Avatar, UnstyledButton, Group, Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
 
 import { menuStyles } from "util/helpers";
 import routes from "@/routes";
+import { IUser } from "@/redux/user";
+import { removeUser } from "@/redux/user";
 
 import styles from './styles.module.scss';
-
-export interface IUser {
-    email?: string | undefined;
-    email_verified?: boolean | undefined;
-    given_name?: string | undefined;
-    family_name?: string | undefined;
-    locale?: string | undefined;
-    name?: string | undefined;
-    nickname?: string | undefined;
-    picture?: string | undefined;
-    sub?: string | undefined;
-    updated_at?: string | undefined;
-};
 
 interface IAvatarButton {
     user: IUser;
 }
 
 const AvatarButton = ({ user }: IAvatarButton) => {
-    const { logout } = useAuth0();
+    const dispatch = useDispatch();
     const { classes } = menuStyles();
-    const isAdmin = true;
+    const isAdmin = false;
     
     return (
         <Menu classNames={classes} shadow="md" position="bottom-end" width={170}>
@@ -39,7 +28,7 @@ const AvatarButton = ({ user }: IAvatarButton) => {
                             radius="xl" 
                             variant="filled" 
                             color="green" 
-                            src={user.picture} 
+                            src={user.photoURL} 
                             alt="Profile Icon" 
                         />
                     </Group>
@@ -50,7 +39,7 @@ const AvatarButton = ({ user }: IAvatarButton) => {
                 <Menu.Divider />
                 <Menu.Item component={NextLink} href={routes.account.base}>Account</Menu.Item>
                 <Menu.Item component={NextLink} href={routes.account.orderHistory}>Order History</Menu.Item>
-                <Menu.Item onClick={() => logout({ returnTo: process.env.NEXT_PUBLIC_DOMAIN })}>Log Out</Menu.Item>
+                <Menu.Item onClick={() => dispatch(removeUser())}>Log Out</Menu.Item>
             </Menu.Dropdown>
         </Menu>
     )

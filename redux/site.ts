@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    loading: true,
+    loading: false,
     error: null,
     success: null,
     title: '',
-    contactModal: false
+    contactModal: false,
+    userModal: false,
 };
 
 const siteSlice = createSlice({
@@ -26,9 +27,12 @@ const siteSlice = createSlice({
         },
         setContactModal: (slice, action) => {
             slice.contactModal = action.payload
+        },
+        setUserModal: (slice, action) => {
+            slice.userModal = action.payload
         }
     }
 });
 
-export const { setLoading, setSuccess, setError, setTitle, setContactModal } = siteSlice.actions;
+export const { setLoading, setSuccess, setError, setTitle, setContactModal, setUserModal, } = siteSlice.actions;
 export default siteSlice.reducer;

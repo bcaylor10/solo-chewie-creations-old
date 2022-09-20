@@ -5,7 +5,6 @@ import { FiShoppingBag } from 'react-icons/fi';
 import Link from 'next/link';
 import cn from 'classnames';
 
-import { IUser } from '../UserMenu/AvatarButton';
 import CartList from '@/layouts/BaseLayout/Header/Navigation/CartDrawer/CartList';
 import { calculateTotalPrice} from '@/helpers';
 import routes from '@/routes';

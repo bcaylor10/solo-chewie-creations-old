@@ -1,6 +1,5 @@
 import { Tabs, Button, Group, TextInput, Textarea } from "@mantine/core";
 import { useForm } from '@mantine/form';
-import { useAuth0 } from '@auth0/auth0-react';
 
 import { IAccountTab } from "..";
 import { useUpdateUser } from '@/queries/user';
@@ -16,39 +15,39 @@ interface IProfileData {
 // TODO: add email verification
 
 const Profile = ({ panelName, user }: IAccountTab) => {    
-    const { getAccessTokenSilently } = useAuth0();
-    const { mutate: updateUser, isLoading, status } = useUpdateUser();
+    // const { mutate: updateUser, isLoading, status } = useUpdateUser();
 
-    const form = useForm<IProfileData>({
-        initialValues: {
-            given_name: user?.given_name || '',
-            family_name: user?.family_name || '',
-            email: user?.email || '',
-        },
-        validate: {
-            given_name: (value) => value.length > 0 ? null : 'First name required',
-            family_name: (value) => value.length > 0 ? null : 'Last name required',
-            email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Valid email required'),
-        }
-    });
+    // const form = useForm<IProfileData>({
+    //     initialValues: {
+    //         given_name: user?.given_name || '',
+    //         family_name: user?.family_name || '',
+    //         email: user?.email || '',
+    //     },
+    //     validate: {
+    //         given_name: (value) => value.length > 0 ? null : 'First name required',
+    //         family_name: (value) => value.length > 0 ? null : 'Last name required',
+    //         email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Valid email required'),
+    //     }
+    // });
 
-    const submit = (data: IProfileData) => {
-        const submitData = data;
-        getAccessTokenSilently({ scope: 'update:current_user' }).then((data) => {
-            updateUser({
-                id: user?.sub,
-                data: submitData,
-                token: data
-            })
-        }).catch((err) => console.log(err))
+    // const submit = (data: IProfileData) => {
+    //     const submitData = data;
+    //     getAccessTokenSilently({ scope: 'update:current_user' }).then((data) => {
+    //         updateUser({
+    //             id: user?.sub,
+    //             data: submitData,
+    //             token: data
+    //         })
+    //     }).catch((err) => console.log(err))
         
-    };
+    // };
 
     // console.log(user);
     
     return (
         <Tabs.Panel value={panelName} className={styles.accountTab}>
-            <form onSubmit={form.onSubmit(submit)}>
+            <h1>test</h1>
+            {/* <form onSubmit={form.onSubmit(submit)}>
                 <TextInput
                     className={styles.input}
                     withAsterisk
@@ -73,7 +72,7 @@ const Profile = ({ panelName, user }: IAccountTab) => {
                 <Button variant="light" color="green" type="submit">
                     Save Profile
                 </Button>
-            </form>
+            </form> */}
         </Tabs.Panel>
     )
 };

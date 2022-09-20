@@ -1,7 +1,7 @@
 import { useQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { IUser } from '@/layouts/BaseLayout/Header/Navigation/UserMenu/AvatarButton';
+import { IUser } from "@/redux/user";
 import { API_URL } from '@/layouts/BaseLayout';
 
 const USERS_URL = `${API_URL}/users`;

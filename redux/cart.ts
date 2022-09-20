@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { isEmpty, groupBy, values, find } from 'lodash';
+import { isEmpty, groupBy, values } from 'lodash';
 
 import { IProduct } from '@/mongo/models/Product';
 

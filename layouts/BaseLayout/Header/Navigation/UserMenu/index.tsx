@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react";
 import { FiShoppingCart } from 'react-icons/fi';
 import { Group, Button } from "@mantine/core";
-import { showNotification } from '@mantine/notifications';
-import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
+import { isEmpty } from "lodash";
 
 import AvatarButton from "./AvatarButton";
 import { MobileMenu } from "..";
-import { setLoading } from "@/redux/site";
 import CartDrawer from "../CartDrawer";
 import { useIsAdminRoute } from "util/hooks";
+import { setUserModal } from "@/redux/site";
 
 import styles from './styles.module.scss';
 
 const UserMenu = () => {
-    const { user, isLoading, loginWithPopup } = useAuth0();
-    const [ showSuccess, setShowSuccess ] = useState<boolean>(false);
     const [ cartAmount, setCartAmount ] = useState<number>(0);
     const [ showCart, setShowCart ] = useState<boolean>(false);
+    const [ showAvatar, setShowAvatar ] = useState<boolean>(false);
     const cart = useSelector((store: any) => store.cart);
+    const user = useSelector((store: any) =>store.user)
     const dispatch = useDispatch();
     const isAdminRoute = useIsAdminRoute();
 
@@ -37,32 +36,9 @@ const UserMenu = () => {
         setCartAmount(calculateCartAmount());
     }, [ cart ]);
 
-    const handleLogin = () => {
-        loginWithPopup()
-        .then(() => setShowSuccess(true))
-        .catch((err) => {
-            console.log(err);
-            showNotification({
-                title: 'Login failed',
-                message: `There was an issue with logging in. Please try again`,
-                color: 'red'
-            });
-        })        
-    }
-
     useEffect(() => {
-        if (showSuccess && user) {
-            showNotification({
-                title: 'Login successful',
-                message: `Welcome, ${user?.nickname}!`,
-                color: 'green'
-            });
-        }
-    }, [ showSuccess ]);
-
-    useEffect(() => {
-        dispatch(setLoading(isLoading));
-    }, [ isLoading ]);
+        setShowAvatar(!isEmpty(user));
+    }, [ user ]);
 
     return (
         <>
@@ -76,8 +52,10 @@ const UserMenu = () => {
                         <span className={styles.cartAmount}>{cartAmount}</span>
                     </span>
                 )}
-                {user ? <AvatarButton user={user} /> : (
-                    <Button color="green" variant="light" onClick={handleLogin}>Log In</Button>
+                {showAvatar ? <AvatarButton user={user} /> : (
+                    <Button color="green" variant="light" onClick={() => dispatch(setUserModal(true))}>
+                        Log In / Sign Up
+                    </Button>
                 )}
                 {!isAdminRoute && <MobileMenu />}
             </Group>

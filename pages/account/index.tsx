@@ -1,13 +1,13 @@
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Container, Grid, Title, Tabs } from "@mantine/core";
 import { FiList, FiUser, FiMapPin, FiMessageCircle } from 'react-icons/fi';
+import { useSelector } from "react-redux";
 
 import Loader from '@/components/Loader';
 import { OrderHistory, Profile, ShippingBilling, ProductReviews } from '@/components/AccountTabs';
 
 const Account = () => {
-    const { user } = useAuth0();
-
+    const user = useSelector((store: any) => store.user);
+    
     return (
         <section>
             <Container>
@@ -29,7 +29,3 @@ const Account = () => {
         </section>
     )
 };
-
-export default withAuthenticationRequired(Account, {
-    onRedirecting: () => <Loader loading={true} />
-})

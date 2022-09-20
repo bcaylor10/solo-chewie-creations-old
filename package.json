@@ -11,7 +11,6 @@
     "seed": "ts-node --project tsconfig.seeder.json ./mongo/seeder/index.ts"
   },
   "dependencies": {
-    "@auth0/auth0-react": "^1.10.2",
     "@emotion/react": "^11.10.4",
     "@emotion/server": "^11.10.0",
     "@mantine/carousel": "^5.2.5",
@@ -29,6 +28,7 @@
     "dotenv": "^16.0.2",
     "embla-carousel-autoplay": "^7.0.2",
     "embla-carousel-react": "^7.0.2",
+    "firebase": "^9.10.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.5.4",
     "next": "12.2.5",
@@ -36,7 +36,9 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
     "react-redux": "^8.0.2",
-    "sass": "^1.54.8"
+    "sass": "^1.54.8",
+    "yup": "^0.32.11",
+    "yup-password": "^0.2.2"
   },
   "devDependencies": {
     "@types/node": "18.7.14",
