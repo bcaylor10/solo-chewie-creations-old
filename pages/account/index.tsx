@@ -1,12 +1,13 @@
-import { Container, Grid, Title, Tabs } from "@mantine/core";
+import { Container, Title, Tabs } from "@mantine/core";
 import { FiList, FiUser, FiMapPin, FiMessageCircle } from 'react-icons/fi';
-import { useSelector } from "react-redux";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-import Loader from '@/components/Loader';
 import { OrderHistory, Profile, ShippingBilling, ProductReviews } from '@/components/AccountTabs';
+import { firebaseAuth } from 'util/firebase';
+
 
 const Account = () => {
-    const user = useSelector((store: any) => store.user);
+    const [ user ] = useAuthState(firebaseAuth);
     
     return (
         <section>

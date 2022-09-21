@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Modal, LoadingOverlay, Button, Alert, Divider, Group } from "@mantine/core";
 import { useSelector, useDispatch } from 'react-redux';
-import { GoogleAuthProvider, signInWithPopup, signOut} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, sendEmailVerification } from "firebase/auth";
 import { showNotification } from '@mantine/notifications';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -29,6 +29,8 @@ const UserModal = () => {
         dispatch(setUserModal(false));
         setTimeout(() => {
             setCurrentForm(0);
+            setError('');
+            setLoading(false);
         }, 200);
     };
 
@@ -49,13 +51,21 @@ const UserModal = () => {
                     uid: userData.uid
                 };
 
+                if (!user.emailVerified) {
+                    return sendEmailVerification(userData);
+                } else {
+                    setLoading(false);
+                    handleClose();
+                    showNotification({
+                        title: 'Login successful!',
+                        message: user.displayName ? `Welcome, ${user.displayName}` : 'Welcome',
+                        color: 'green',
+                    });
+                }
+            })
+            .then(() => {
                 setLoading(false);
-                handleClose();
-                showNotification({
-                    title: 'Login successful!',
-                    message: user.displayName ? `Welcome, ${user.displayName}` : 'Welcome',
-                    color: 'green',
-                });
+                setError('Please verify your email before logging in');
             })
             .catch((err) => {
                 setLoading(false);

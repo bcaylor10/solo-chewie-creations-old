@@ -19,7 +19,6 @@ interface ILoginData {
 
 const LoginForm = ({ setCurrentForm, setLoading, hideModal }: IForm) => {
     const [ error, setError ] = useState<string>('');
-    const dispatch = useDispatch();
     const schema = Yup.object().shape({
         email: validators.email,
         password: validators.password

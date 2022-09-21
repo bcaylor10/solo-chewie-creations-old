@@ -1,75 +1,51 @@
-import { Tabs, Button, Group, TextInput, Textarea } from "@mantine/core";
-import { useForm } from '@mantine/form';
+import { useEffect, useState } from "react";
+import { Tabs, SegmentedControl, Transition } from "@mantine/core";
 
 import { IAccountTab } from "..";
+import BasicInfoForm from "./BasicInfoForm";
+import EmailForm from "./EmailForm";
+import PasswordForm from "./PasswordForm";
 
 import styles from '../styles.module.scss';
 
-interface IProfileData {
-    given_name: string;
-    family_name: string;
-    email: string;
-}
-
-// TODO: add email verification
-
-const Profile = ({ panelName, user }: IAccountTab) => {    
-    // const form = useForm<IProfileData>({
-    //     initialValues: {
-    //         given_name: user?.given_name || '',
-    //         family_name: user?.family_name || '',
-    //         email: user?.email || '',
-    //     },
-    //     validate: {
-    //         given_name: (value) => value.length > 0 ? null : 'First name required',
-    //         family_name: (value) => value.length > 0 ? null : 'Last name required',
-    //         email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Valid email required'),
-    //     }
-    // });
-
-    // const submit = (data: IProfileData) => {
-    //     const submitData = data;
-    //     getAccessTokenSilently({ scope: 'update:current_user' }).then((data) => {
-    //         updateUser({
-    //             id: user?.sub,
-    //             data: submitData,
-    //             token: data
-    //         })
-    //     }).catch((err) => console.log(err))
-        
-    // };
-
-    // console.log(user);
+const Profile = ({ panelName, user }: IAccountTab) => {
+    const [ value, setValue ] = useState<string>('basic');
+    const controlData = [
+        { label: 'Basic Info', value: 'basic' },
+        { label: 'Update Email', value: 'email' },
+        { label: 'Update Password', value: 'password' }
+    ];
     
     return (
         <Tabs.Panel value={panelName} className={styles.accountTab}>
-            <h1>test</h1>
-            {/* <form onSubmit={form.onSubmit(submit)}>
-                <TextInput
-                    className={styles.input}
-                    withAsterisk
-                    label="First Name"
-                    placeholder="First Name"
-                    {...form.getInputProps('given_name')}
-                />
-                <TextInput
-                    className={styles.input}
-                    withAsterisk
-                    label="Last Name"
-                    placeholder="Last Name"
-                    {...form.getInputProps('family_name')}
-                />
-                <TextInput
-                    className={styles.input}
-                    withAsterisk
-                    label="Primary Email"
-                    placeholder="your@email.com"
-                    {...form.getInputProps('email')}
-                />
-                <Button variant="light" color="green" type="submit">
-                    Save Profile
-                </Button>
-            </form> */}
+            <SegmentedControl
+                value={value}
+                onChange={setValue}
+                data={controlData}
+                fullWidth
+                color="turqoise"
+            />
+            <Transition mounted={value === 'basic'} transition="fade" timingFunction="ease">
+                {(style) => (
+                    <div style={{ ...style, paddingTop: '20px' }}>
+                        <BasicInfoForm user={user} />
+                    </div>
+                )}
+            </Transition>
+            <Transition mounted={value === 'email'} transition="fade" timingFunction="ease">
+                {(style) => (
+                    <div style={{ ...style, paddingTop: '20px' }}>
+                        <EmailForm user={user} />
+                    </div>
+                )}
+            </Transition>
+            <Transition mounted={value === 'password'} transition="fade" timingFunction="ease">
+                {(style) => (
+                    <div style={{ ...style, paddingTop: '20px' }}>
+                        <PasswordForm />
+                    </div>
+                )}
+            </Transition>
         </Tabs.Panel>
     )
 };

@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { TextInput, PasswordInput, Button, Alert, Group, UnstyledButton, Text } from "@mantine/core";
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { useDispatch } from "react-redux";
 import { useForm, yupResolver } from '@mantine/form';
-import { showNotification } from '@mantine/notifications';
 import * as Yup from 'yup';
 
 import { firebaseAuth } from "util/firebase";
@@ -15,21 +13,23 @@ import styles from '../styles.module.scss';
 interface ILoginData {
     email: string;
     password: string;
+    passwordConfirm: string;
 }
 
 const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
     const [ success, setSuccess ] = useState<boolean>(false);
     const [ error, setError ] = useState<string>('');
-    const dispatch = useDispatch();
     const schema = Yup.object().shape({
         email: validators.email,
-        password: validators.password
+        password: validators.password,
+        passwordConfirm: validators.passwordConfirm
     });
     const form = useForm<ILoginData>({
         validate: yupResolver(schema),
         initialValues: {
             email: '',
-            password: ''
+            password: '',
+            passwordConfirm: ''
         }
     })
 
@@ -80,6 +80,13 @@ const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
                 label="Password"
                 placeholder="Your password"
                 {...form.getInputProps('password')}
+            />
+            <PasswordInput
+                className={styles.input}
+                withAsterisk
+                label="Confirm Password"
+                placeholder="Confirm password"
+                {...form.getInputProps('passwordConfirm')}
             />
             <Group position="right">
                 <UnstyledButton onClick={() => setCurrentForm(0)}>

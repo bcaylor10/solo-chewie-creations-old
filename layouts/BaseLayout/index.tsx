@@ -15,12 +15,14 @@ const BaseLayout = ({ children }: any) => {
     const isAdminRoute = useIsAdminRoute();
 
     useEffect(() => {
-        if (user) {
-            setCookie('authed', true);
-        } else {
-            deleteCookie('authed');
+        if (!loading) {
+            if (user && user.emailVerified) {
+                setCookie('authed', true);
+            } else {
+                deleteCookie('authed');
+            }
         }
-    }, [ user ]);
+    }, [ loading, user ]);
 
     useEffect(() => {
         dispatch(setLoading(loading));

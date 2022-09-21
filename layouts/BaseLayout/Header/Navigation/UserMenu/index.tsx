@@ -58,7 +58,7 @@ const UserMenu = () => {
                         <span className={styles.cartAmount}>{cartAmount}</span>
                     </span>
                 )}
-                {user ? <AvatarButton user={user} signOutUser={signOutUser} /> : (
+                {user && user.emailVerified ? <AvatarButton user={user} signOutUser={signOutUser} /> : (
                     <Button color="green" variant="light" onClick={() => dispatch(setUserModal(true))}>
                         Log In / Sign Up
                     </Button>
