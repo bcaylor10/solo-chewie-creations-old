@@ -26,16 +26,22 @@ const BaseLayout = ({ children }: any) => {
         dispatch(setLoading(loading));
     }, [ loading ]);
 
+    // return (
+    //     isAdminRoute ? (
+    //         <AdminLayout>
+    //             {children}
+    //         </AdminLayout>
+    //     ) : (
+    //         <StoreLayout>
+    //             {children}
+    //         </StoreLayout>
+    //     )
+    // )
+
     return (
-        isAdminRoute ? (
-            <AdminLayout>
-                {children}
-            </AdminLayout>
-        ) : (
-            <StoreLayout>
-                {children}
-            </StoreLayout>
-        )
+        <StoreLayout>
+            {children}
+        </StoreLayout>
     )
 };
 

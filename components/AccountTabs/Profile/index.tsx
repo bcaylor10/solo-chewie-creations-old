@@ -2,7 +2,6 @@ import { Tabs, Button, Group, TextInput, Textarea } from "@mantine/core";
 import { useForm } from '@mantine/form';
 
 import { IAccountTab } from "..";
-import { useUpdateUser } from '@/queries/user';
 
 import styles from '../styles.module.scss';
 
@@ -15,8 +14,6 @@ interface IProfileData {
 // TODO: add email verification
 
 const Profile = ({ panelName, user }: IAccountTab) => {    
-    // const { mutate: updateUser, isLoading, status } = useUpdateUser();
-
     // const form = useForm<IProfileData>({
     //     initialValues: {
     //         given_name: user?.given_name || '',
