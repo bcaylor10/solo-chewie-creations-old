@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 
 import { firebaseAuth } from "util/firebase";
 import validators from 'util/validators';
-import { setUser } from "@/redux/user";
 import { IForm } from '..';
 
 import styles from '../styles.module.scss';
@@ -61,7 +60,6 @@ const LoginForm = ({ setCurrentForm, setLoading, hideModal }: IForm) => {
                     return sendEmailVerification(userData);
                 } else {
                     setLoading(false);
-                    dispatch(setUser(user));
                     handleClose();
                     showNotification({
                         title: 'Login successful!',

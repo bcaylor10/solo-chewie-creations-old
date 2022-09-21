@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 const middleware = (req: any) => {
-    // const user = window.localStorage.getItem('user');
     const url = req.url;
     const home = req.nextUrl.origin;
     const authed = req.cookies.get('authed');

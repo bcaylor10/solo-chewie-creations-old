@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { Modal, LoadingOverlay, Button, Alert, Divider, Group } from "@mantine/core";
 import { useSelector, useDispatch } from 'react-redux';
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut} from "firebase/auth";
 import { showNotification } from '@mantine/notifications';
 import { FcGoogle } from 'react-icons/fc';
 
 import { setUserModal } from "@/redux/site";
-import { setUser } from '@/redux/user';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import { firebaseAuth } from 'util/firebase';
@@ -51,7 +50,6 @@ const UserModal = () => {
                 };
 
                 setLoading(false);
-                dispatch(setUser(user));
                 handleClose();
                 showNotification({
                     title: 'Login successful!',

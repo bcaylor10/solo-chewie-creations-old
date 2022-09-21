@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 
 import { firebaseAuth } from "util/firebase";
 import validators from 'util/validators';
-import { setUser } from "@/redux/user";
 import { IForm } from '..';
 
 import styles from '../styles.module.scss';

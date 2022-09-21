@@ -16,10 +16,26 @@ const firebaseConfig = {
 };
 
 // 403488502106-f0pi60s38vft2hp3q5654i0auqijtsu6.apps.googleusercontent.com
-// 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
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
 
 export { firebaseApp, firebaseAuth };
+
+// import { initializeApp } from "firebase/app";
+// import { getAuth } from "firebase/auth";
+
+// const firebaseConfig = {
+//   apiKey: process.env.NEXT_PUBLICFIREBASE_API_KEY,
+//   authDomain: process.env.NEXT_PUBLICFIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.NEXT_PUBLICFIREBASE_PROJECT_ID,
+//   storageBucket: process.env.NEXT_PUBLICFIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.NEXT_PUBLICFIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.NEXT_PUBLICFIREBASE_APP_ID
+// };
+
+// const firebaseApp = initializeApp(firebaseConfig);
+// const firebaseAuth = getAuth(firebaseApp);
+
+// export { firebaseApp, firebaseAuth };
