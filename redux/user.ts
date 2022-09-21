@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { setCookie, deleteCookie } from 'cookies-next';
 
 export interface IUser {
     displayName: string;
@@ -19,11 +20,13 @@ const userSlice = createSlice({
         setUser: (slice, action) => {
             const user = action.payload;
             window.localStorage.setItem('user', JSON.stringify(user));
+            setCookie('authed', true);
             
             return user;
         },
         removeUser: (): any => {
             window.localStorage.removeItem('user');
+            deleteCookie('authed');
 
             return {};
         },

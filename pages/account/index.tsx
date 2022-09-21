@@ -29,3 +29,5 @@ const Account = () => {
         </section>
     )
 };
+
+export default Account;
