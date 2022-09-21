@@ -11,7 +11,7 @@ import styles from './styles.module.scss';
 
 const ContactModal = () => {
     const open = useSelector((store: any) => store.site.contactModal);
-    const { mutate: sendEmail, isLoading, status, reset } = useSendEmail();
+    const { mutate: sendEmail, isLoading, status } = useSendEmail();
     const dispatch = useDispatch();
     const form = useForm<IContactData>({
         initialValues: {

@@ -1,0 +1,70 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+
+import { Address, IAddress } from '@/mongo/models/Address';
+import connect from 'mongo';
+import { verifyUserToken } from '@/helpers';
+
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const authToken = req.headers.authorization;
+
+    if (!authToken) return res.status(401).end();
+
+    if (req.method === 'POST') {
+        const {
+            userId,
+            address1,
+            city,
+            state,
+            zip
+        }: IAddress = req.body;
+        const verified = await verifyUserToken(userId, authToken);
+
+        if (!verified) return res.status(401).json('Unauthorized');
+        if (!userId || !address1 || !city || !state || !zip) return res.status(422).end();
+        
+        await createAddress(req.body)
+            .then((data) => res.status(200).json(data))
+            .catch((err) => res.status(500).json(err));
+    } else if (req.method === 'GET') {
+        const { userId } = req.query;
+        if (!userId) return res.status(422).end();
+
+        const verified = await verifyUserToken(userId.toString(), authToken);
+        if (!verified) return res.status(401).json('Unauthorized');
+
+        await getAddresses(userId.toString())
+            .then((data) => res.status(200).json(data))
+            .catch((err) => res.status(500).json(err));
+    } else {
+        return res.status(405).end();
+    }
+};
+
+const createAddress = (address: IAddress) => new Promise(async (resolve, reject) => {
+    await connect().then(() => {
+        const now = new Date();
+        // @ts-ignore
+        return Address.create({
+            userId: address.userId,
+            address1: address.address1,
+            address2: address?.address2 || '',
+            city: address.city,
+            state: address.state,
+            zip: address.zip,
+            created_at: now,
+            updated_at: now
+        });
+    })
+    .then((data: IAddress) => resolve(data))
+    .catch((err) => reject(err));
+});
+
+const getAddresses = (userId: string) => new Promise(async (resolve, reject) => {
+    await connect().then(() => {
+        return Address.find({ userId }).sort({ updated_at: 'desc' })
+    })
+    .then((data: IAddress[]) => resolve(data))
+    .catch((err) => reject(err));
+});
+
+export default handler;

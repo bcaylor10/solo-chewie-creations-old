@@ -1,9 +1,11 @@
 import { createStyles } from "@mantine/core"; 
 import { get, orderBy } from 'lodash';
+// @ts-ignore
+import { verify } from 'jsonwebtoken';
+import axios from 'axios';
 
 import { IProduct } from '@/mongo/models/Product';
 import { ICartItem } from '@/redux/cart';
-
 import routes from "@/routes";
 
 export interface IRating {
@@ -200,4 +202,19 @@ export const filterProductsBySize = (size: string, products?: IProduct[]): IProd
     }
 
     return ordered;
+}
+
+export const verifyUserToken = async (userId: string, token: string) => {
+    try {
+        const { data } = await axios.get('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com');
+        const header64 = token.split('.')[0];
+        const header = JSON.parse(Buffer.from(header64, 'base64').toString('ascii'));
+        const decoded = verify(token, data[header.kid]);
+
+        return decoded && decoded.user_id === userId;
+    } catch (err) {
+        console.log('Error verifying token: ', err);
+    }
+
+    return null;
 }

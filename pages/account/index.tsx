@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Container, Title, Tabs } from "@mantine/core";
 import { FiList, FiUser, FiMapPin, FiMessageCircle } from 'react-icons/fi';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -13,7 +14,7 @@ const Account = () => {
         <section>
             <Container>
                 <Title align="center" order={2}>Account Settings</Title>
-                <Tabs radius="xs" color="green" variant="pills" orientation="vertical" defaultValue="profile">
+                <Tabs radius="xs" color="green" variant="pills" orientation="vertical" defaultValue="shipping-billing">
                     <Tabs.List>
                         <Tabs.Tab value="order-history" icon={<FiList size={24} />}>Order History</Tabs.Tab>
                         <Tabs.Tab value="profile" icon={<FiUser size={24} />}>Profile</Tabs.Tab>
