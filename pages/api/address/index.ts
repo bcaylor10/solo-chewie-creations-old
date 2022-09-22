@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Address, IAddress } from '@/mongo/models/Address';
 import connect from 'mongo';
 import { verifyUserToken } from '@/helpers';
+import { changeDefaultAddress } from './[...id]';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const authToken = req.headers.authorization;
@@ -10,20 +11,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!authToken) return res.status(401).end();
 
     if (req.method === 'POST') {
-        const {
-            userId,
-            address1,
-            city,
-            state,
-            zip
-        }: IAddress = req.body;
+        const { userId, address } = req.body
+        const { address1, city,  state, zip }: IAddress = address;
         const verified = await verifyUserToken(userId, authToken);
 
         if (!verified) return res.status(401).json('Unauthorized');
         if (!userId || !address1 || !city || !state || !zip) return res.status(422).end();
         
-        await createAddress(req.body)
-            .then((data) => res.status(200).json(data))
+        await createAddress(userId, address)
+            .then((data) => res.status(201).json(data))
             .catch((err) => res.status(500).json(err));
     } else if (req.method === 'GET') {
         const { userId } = req.query;
@@ -40,7 +36,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 };
 
-const createAddress = (address: IAddress) => new Promise(async (resolve, reject) => {
+const createAddress = (userId: string, address: IAddress) => new Promise(async (resolve, reject) => {
+    let created: IAddress | null = null;
+
     await connect().then(() => {
         const now = new Date();
         // @ts-ignore
@@ -51,11 +49,18 @@ const createAddress = (address: IAddress) => new Promise(async (resolve, reject)
             city: address.city,
             state: address.state,
             zip: address.zip,
+            default: address.default,
             created_at: now,
             updated_at: now
         });
     })
-    .then((data: IAddress) => resolve(data))
+    .then((data) => {
+        created = data;
+        if (data.default) {
+            return changeDefaultAddress(userId, data);
+        }
+    })
+    .then(() => resolve(created))
     .catch((err) => reject(err));
 });
 

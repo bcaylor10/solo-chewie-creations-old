@@ -1,14 +1,14 @@
-import { Schema, models, model } from "mongoose";
+import { Schema, models, model, ObjectId } from "mongoose";
 
 export interface IAddress {
+    _id?: ObjectId;
     userId: string;
     address1: string;
     address2?: string;
     city: string;
     state: string;
-    zip: number;
+    zip: number | string;
     default?: boolean;
-    deliveryInstructions?: string;
     created_at?: Date;
     updated_at?: Date;
 }
@@ -21,7 +21,6 @@ const addressSchema = new Schema({
     state: { type: String, required: true },
     zip: { type: Number, required: true },
     default: { type: Boolean, default: false },
-    deliveryInstructions: { type: String },
     created_at: { type: Date },
     updated_at: { type: Date }
 });

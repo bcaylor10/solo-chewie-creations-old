@@ -60,7 +60,7 @@ const UserMenu = () => {
                 )}
                 {user && user.emailVerified ? <AvatarButton user={user} signOutUser={signOutUser} /> : (
                     <Button color="green" variant="light" onClick={() => dispatch(setUserModal(true))}>
-                        Log In / Sign Up
+                        Log In
                     </Button>
                 )}
                 {!isAdminRoute && <MobileMenu />}

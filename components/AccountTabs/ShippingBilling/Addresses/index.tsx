@@ -1,17 +1,22 @@
-import { useEffect } from "react";
-import { Loader, Grid, Card, Text, Button } from '@mantine/core';
+import { useState, useEffect } from "react";
+import { Loader, Grid, Card, Text, Button, Chip } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import cn from 'classnames';
+import { showNotification } from '@mantine/notifications';
 
-import { useGetAddresses } from "@/queries/account";
+import { useGetAddresses, useUpdateAddress } from "@/queries/account/addresses";
 import { IAddress } from "@/mongo/models/Address";
+import AddressForm from "./AddressForm";
 
 import styles from './styles.module.scss';
 
 const Addresses = ({ user }: any) => {
     const { mutate: getAddresses, data, isLoading, status } = useGetAddresses();
+    const { mutate: updateAddress, isLoading: updateLoading, status: updateStatus } = useUpdateAddress();
+    const [ open, setOpen ] = useState<boolean>(false);
+    const [ updated, setUpdated ] = useState<boolean>(false);
+    const [ currentAddress, setCurrentAddress ] = useState<IAddress|null>(null);
 
-    // TODO: add in delivery instructions
     useEffect(() => {
         if (user) {
             user.getIdToken(true).then((token: string) => {
@@ -20,30 +25,75 @@ const Addresses = ({ user }: any) => {
                     token
                 });
             })
-            .catch((err: any) => console.log('Error: ', err))
+            .catch((err: any) => console.log('Error: ', err));
+
+            setUpdated(false)
         }
-    }, [ user ]);
+    }, [ user, updated ]);
+
+    const closeForm = () => {
+        setOpen(false);
+        setTimeout(() => {
+            setCurrentAddress(null);
+        }, 200)
+    }
 
     const editAddress = (address: IAddress) => {
-        console.log(address)
-        // will bring up address form via a modal with address' info
-        // will have google places + optional manual entry
-        // have option to delete
+        setCurrentAddress(address);
+        setOpen(true);
     }
 
     const setDefaultAddress = (address: IAddress) => {
-        console.log(address)
-        // will set default address and remove default from all others
+        user.getIdToken(true).then((token: string) => {
+            updateAddress({
+                userId: user.uid,
+                token: token,
+                address: {
+                    ...address,
+                    default: true
+                }
+            });
+        })
+        .then(() => setUpdated(true))
+        .catch((err: any) => console.log('Error: ', err));
     };
 
-    const addAddress = () => {
-        // will bring up address form via a modal
-        // will have google places + optional manual entry
-    };
+    useEffect(() => {
+        if (status === 'error') {
+            showNotification({
+                title: 'Error!',
+                message: 'Error getting addresses',
+                color: 'green',
+            });
+        }
+    }, [ status ]);
+
+    useEffect(() => {
+        if (updateStatus === 'success') {
+            showNotification({
+                title: 'Success!',
+                message: 'Successfully updated default address',
+                color: 'green',
+            });
+        } else if (updateStatus === 'error') {
+            showNotification({
+                title: 'Error!',
+                message: 'Error updating default address',
+                color: 'green',
+            });
+        }
+    }, [ updateStatus ])
 
     return (
         <>
-            {isLoading && <Loader color="teal" variant="dots" />}
+            {isLoading || updateLoading && <Loader color="teal" variant="dots" />}
+            <AddressForm 
+                setUpdated={setUpdated}
+                user={user} 
+                open={open} 
+                onClose={closeForm} 
+                address={currentAddress} 
+            />
             <Grid align="stretch">
                 <Grid.Col span={4}>
                     <Card 
@@ -51,7 +101,7 @@ const Addresses = ({ user }: any) => {
                         shadow="md" 
                         radius="md" 
                         withBorder
-                        onClick={addAddress}
+                        onClick={() => setOpen(true)}
                     >
                         <FiPlusCircle className={styles.icon} color="green" />
                     </Card>
@@ -75,17 +125,17 @@ const Addresses = ({ user }: any) => {
                                     >
                                         Edit
                                     </Button>
-                                    {!d.default && (
-                                        <Button 
-                                            variant="light"
-                                            color="green" 
-                                            compact 
-                                            size="xs" 
-                                            onClick={() => setDefaultAddress(d)}
-                                        >
-                                            Make Default
-                                        </Button>
-                                    )}
+                                    <Chip
+                                        role={d.default ? 'contentinfo' : 'button'}
+                                        className={cn(d.default && styles.defaultChip)}
+                                        checked={d.default} 
+                                        onChange={() => !d.default ? setDefaultAddress(d) : null}
+                                        size="xs"
+                                        radius="sm"
+                                        variant="filled"
+                                    >
+                                        {d.default ? 'Default' : 'Make Default'}
+                                    </Chip>
                                 </div>
                             </Card>
                         </Grid.Col>

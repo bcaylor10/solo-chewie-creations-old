@@ -16,6 +16,8 @@ const validators = {
     passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                 .required('Password confirmation is required'),
     displayName: Yup.string().required('Full name is required'),
+    zip: Yup.string().required().min(5, 'Zip code must be 5 digits').max(5, 'Zip code must be 5 digits')
+                .matches(/^[0-9]+$/, "Zip code should only be numbers"),
 };
 
 export default validators;
