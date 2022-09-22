@@ -1,8 +1,9 @@
 const routes = {
     account: {
-        base: '/account',
-        orderHistory: '/account/order-history',
-        settings: '/account/settings'
+        profile: '/account?profile',
+        orderHistory: '/account?order-history',
+        shippingBilling: '/account?shipping-billing',
+        productReviews: '/account?product-reviews'
     },
     about: '/about',
     checkout: '/checkout',

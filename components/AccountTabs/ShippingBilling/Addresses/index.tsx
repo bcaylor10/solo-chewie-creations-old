@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Loader, Grid, Card, Text, Button, Chip } from '@mantine/core';
+import { Grid, Card, Text, Button, Chip } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import cn from 'classnames';
 import { showNotification } from '@mantine/notifications';
@@ -7,6 +7,7 @@ import { showNotification } from '@mantine/notifications';
 import { useGetAddresses, useUpdateAddress } from "@/queries/account/addresses";
 import { IAddress } from "@/mongo/models/Address";
 import AddressForm from "./AddressForm";
+import Loader from "@/components/Loader";
 
 import styles from './styles.module.scss';
 
@@ -27,7 +28,7 @@ const Addresses = ({ user }: any) => {
             })
             .catch((err: any) => console.log('Error: ', err));
 
-            setUpdated(false)
+            setUpdated(false);
         }
     }, [ user, updated ]);
 
@@ -82,11 +83,10 @@ const Addresses = ({ user }: any) => {
                 color: 'green',
             });
         }
-    }, [ updateStatus ])
+    }, [ updateStatus ]);
 
     return (
-        <>
-            {isLoading || updateLoading && <Loader color="teal" variant="dots" />}
+        <>            
             <AddressForm 
                 setUpdated={setUpdated}
                 user={user} 
@@ -95,6 +95,7 @@ const Addresses = ({ user }: any) => {
                 address={currentAddress} 
             />
             <Grid align="stretch">
+                
                 <Grid.Col span={4}>
                     <Card 
                         className={cn(styles.addressCard, styles.addAddress)} 
@@ -106,6 +107,11 @@ const Addresses = ({ user }: any) => {
                         <FiPlusCircle className={styles.icon} color="green" />
                     </Card>
                 </Grid.Col>
+                {(isLoading || updateLoading) && (
+                    <Grid.Col span={8} className={styles.loaderColumn}>
+                        <Loader loading absolute />
+                    </Grid.Col>
+                )}
                 {data?.data.sort((x: IAddress, y: IAddress) => x.default ? -1 : y.default ? 1 : 0).map((d: IAddress, i: number) => {
                     return (
                         <Grid.Col key={i} span={4}>

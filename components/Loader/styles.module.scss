@@ -4,6 +4,18 @@
     width: 100vw;
     background: $white;
     z-index: 100;
+    &.absolute {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .loader {
+            position: static;
+            transform: none;
+        }
+    }
     .loader {
         position: fixed;
         top: 50%;
