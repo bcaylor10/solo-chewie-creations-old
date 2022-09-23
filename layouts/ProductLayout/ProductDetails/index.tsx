@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { Text, Button, Select, Stack, Group, Loader, Center, Container } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useSelector, useDispatch } from 'react-redux';
-import { get } from 'lodash';
 import cn from 'classnames';
 
 import { IProductLayout } from '..';
@@ -30,9 +29,6 @@ const ProductDetails = ({ product }: IProductLayout) => {
     const [ loading, setLoading ] = useState<boolean>(false);
     const [ size, setSize ] = useState<string>('');
     const [ sizes, setSizes ] = useState<ISize[]>([]);
-    const price = get(product, [ 'pricing', 'price' ]);
-    const salePrice = get(product, [ 'pricing', 'sale_price' ]);
-    const onSale = (salePrice !== undefined && salePrice !== 0);
 
     useEffect(() => {
         if (!product) return;
@@ -112,15 +108,7 @@ const ProductDetails = ({ product }: IProductLayout) => {
                         onChange={(val) => handleSizeChange(val)}
                         data={sizes}
                     />
-                    <Text>
-                        <>
-                            Price: 
-                            <span className={cn(styles.productPrice, onSale && styles.onSale)}>
-                                {formatPrice(price)}
-                            </span>
-                            {onSale && formatPrice(salePrice)}
-                        </>
-                    </Text>
+                    <Text>Price: {formatPrice(product?.price)}</Text>
                     <Text className={styles.notification} size="xs">
                         *Price is subject to change if specialty yarn is requested/required*
                     </Text>

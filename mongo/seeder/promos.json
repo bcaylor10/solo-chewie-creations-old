@@ -1,0 +1,30 @@
+[
+    {
+        "name": "50% Off Scarves",
+        "code": "SCARF50",
+        "type": 1,
+        "discount_amount": "50",
+        "start_date": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
+    },
+    {
+        "name": "$5 Off Entire Order",
+        "code": "5OFF",
+        "type": 0,
+        "discount_amount": "5",
+        "start_date": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
+    },
+    {
+        "name": "Expired 100% Off",
+        "code": "FREE",
+        "type": 1,
+        "discount_amount": "100",
+        "start_date": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "expiration_date": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "created_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)",
+        "updated_at": "Fri Sep 09 2022 21:40:09 GMT-0400 (Eastern Daylight Time)"
+    }
+]

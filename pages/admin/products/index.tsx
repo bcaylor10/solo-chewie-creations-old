@@ -52,7 +52,7 @@ const Products = () => {
                                 <td>{d.size}</td>
                                 <td>{d.labor_hours}</td>
                                 <td>{renderProductType(d.product_type)}</td>
-                                <td>{d.pricing.price}</td>
+                                <td>{d.price}</td>
                             </tr>
                         )
                     })}

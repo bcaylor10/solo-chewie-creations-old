@@ -2,9 +2,7 @@ import { useDispatch } from "react-redux";
 import { Avatar, Grid, Title, Text, CloseButton, Group, ActionIcon, ScrollArea } from '@mantine/core';
 import { filter, findIndex } from "lodash";
 import { FiPlus, FiMinus } from 'react-icons/fi';
-import { get } from 'lodash';
 import Link from "next/link";
-
 
 import { IProduct } from '@/mongo/models/Product';
 import { ICartItem, setCart } from "@/redux/cart";
@@ -23,7 +21,6 @@ const CartList = ({ cart }: ICartList) => {
         let updatedCart: ICartItem[] = filter(cart, (c) => c.product._id !== product._id);
 
         if (updatedCart.length === 0) updatedCart = [];
-
         dispatch(setCart(updatedCart));
     };
 
@@ -49,12 +46,6 @@ const CartList = ({ cart }: ICartList) => {
                 const name = `${product.name} - ${product.size}`;
                 const image = product.img_urls ? formatImagesArray(product.img_urls)[0] : '';
                 const url = buildProductUrl(product);
-                const normalPrice = get(product, [ 'pricing', 'price' ]);
-                const salePrice = get(product, [ 'pricing', 'sale_price' ]);
-                const onSale = (salePrice !== undefined && salePrice !== 0);
-                const price = onSale ? salePrice : normalPrice;
-                const originalPrice = onSale ? formatPrice(quantity * normalPrice) : null; 
-                const productPrice = formatPrice(quantity * price);
 
                 return (
                     <div className={styles.cartListItem} key={i}>
@@ -71,10 +62,7 @@ const CartList = ({ cart }: ICartList) => {
                                     <Group position="apart">
                                         <Title order={5}>{product.name}</Title>
                                         <Text size="xs">
-                                            {originalPrice && (
-                                                <span className={styles.originalPrice}>{originalPrice}</span>
-                                            )}
-                                            {productPrice}
+                                            {formatPrice(product.price)}
                                         </Text>
                                     </Group>
                                     <Text size="xs">Size: {product.size}</Text>

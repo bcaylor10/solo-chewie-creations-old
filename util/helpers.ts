@@ -98,11 +98,8 @@ export const calculateTotalPrice = (cart: ICartItem[]): string => {
     let price = 0;
     
     cart.forEach((c: ICartItem) => {
-        const normal = get(c.product, [ 'pricing', 'price' ]);
-        const onSale = get(c.product, [ 'pricing', 'sale_price' ]);
-        const itemPrice = (onSale !== undefined && onSale !== 0) ? onSale : normal;
         // @ts-ignore
-        const amount = itemPrice * c.quantity;
+        const amount = c.price * c.quantity;
 
         price += amount;
     });
@@ -127,28 +124,10 @@ export const orderProducts = (order: string, products?: IProduct[]): IProduct[] 
             ordered = ordered;
             break;
         case 'priceLowToHigh':
-            ordered = orderBy(products, (p) => {
-                const normal = get(p, [ 'pricing', 'price' ]);
-                const onSale = get(p, [ 'pricing', 'sale_price' ]);
-
-                if (onSale !== undefined && onSale !== 0) {
-                    return onSale;
-                } else {
-                    return normal;
-                }
-            }, ['asc']);
+            ordered = orderBy(products, (p) => p.price, ['asc']);
             break;
         case 'priceHighToLow':
-            ordered = orderBy(products, (p) => {
-                const normal = get(p, [ 'pricing', 'price' ]);
-                const onSale = get(p, [ 'pricing', 'sale_price' ]);
-
-                if (onSale !== undefined && onSale !== 0) {
-                    return onSale;
-                } else {
-                    return normal;
-                }
-            }, ['desc']);
+            ordered = orderBy(products, (p) => p.price, ['desc']);
             break;
     }
 

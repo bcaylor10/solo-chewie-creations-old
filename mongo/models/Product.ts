@@ -1,10 +1,5 @@
 import { Schema, models, model, ObjectId } from "mongoose";
 
-interface IPricing {
-    price: number;
-    sale_price?: number;
-}
-
 interface IRating {
     amount: number;
 }
@@ -22,7 +17,7 @@ export interface IProduct {
     description: string;
     size: string;
     labor_hours: number;
-    pricing: IPricing;
+    price: number;
     extras: IExtras;
     img_urls?: string[];
     created_at?: Date;
@@ -35,10 +30,7 @@ const productSchema = new Schema({
     size: { type: String, required: true },
     labor_hours: { type: Number, required: true },
     product_type: { type: Number, required: true },
-    pricing: {
-        price: { type: Number, required: true},
-        sale_price: { type: Number },
-    },
+    price: { type: Number, required: true},
     extras: {
         rating: { type: Array, required: true },
         care: { type: String },

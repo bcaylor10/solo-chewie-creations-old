@@ -4,9 +4,11 @@ import * as dotenv from 'dotenv';
 import connect from "..";
 import { Product } from "../models/Product";
 import { Testimonial } from "../models/Testimonial";
+import { Promo } from "../models/Promo";
 
 import productData from './products.json';
 import testimonialData from './testimonials.json';
+import promoData from './promos.json';
 
 dotenv.config();
 
@@ -22,9 +24,15 @@ const seedTestimonials = async () => {
     await Testimonial.insertMany(testimonialData);
 };
 
+const seedPromos = async () => {
+    await Promo.deleteMany({});
+    await Promo.insertMany(promoData);
+};
+
 const seedDB = async () => {
     await seedProducts();
     await seedTestimonials();
+    await seedPromos();
 };
 
 seedDB().then(() => mongoose.connection.close());

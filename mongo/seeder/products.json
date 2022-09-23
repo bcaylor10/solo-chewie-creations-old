@@ -4,10 +4,7 @@
   "size": "Kids",
   "labor_hours": 12,
   "product_type": 1,
-  "pricing": {
-    "price": 45,
-    "sale_price": 0
-  },
+  "price": 45,
   "extras": {
     "rating": [
       3, 4, 5, 4, 3, 3, 5, 5, 5, 1
@@ -23,10 +20,7 @@
   "description": "Hand-made scarf with whatever custom colors you'd like.",
   "size": "Adults",
   "labor_hours": 12,
-  "pricing": {
-    "price": 45,
-    "sale_price": 0
-  },
+  "price": 45,
   "extras": {
     "rating": [
       3, 4, 5, 4
@@ -44,10 +38,7 @@
   "description": "Hand-made hat with whatever custom colors you'd like.",
   "size": "Kids",
   "labor_hours": 2,
-  "pricing": {
-    "price": 30,
-    "sale_price": 23
-  },
+  "price": 30,
   "extras": {
     "rating": [
       4, 4, 4, 4, 5, 3, 1
@@ -65,10 +56,7 @@
   "description": "Hand-made hat with whatever custom colors you'd like.",
   "size": "Womens",
   "labor_hours": 2,
-  "pricing": {
-    "price": 35,
-    "sale_price": 0
-  },
+  "price": 35,
   "extras": {
     "rating": [
       5, 5, 5, 5, 3
@@ -85,10 +73,7 @@
   "description": "Hand-made hat with whatever custom colors you'd like.",
   "size": "Mens",
   "labor_hours": 2,
-  "pricing": {
-    "price": 35,
-    "sale_price": 0
-  },
+  "price": 35,
   "extras": {
     "rating": [
       3, 5
@@ -105,10 +90,7 @@
   "description": "Hand-made head band with whatever custom colors you'd like.",
   "size": "Kids",
   "labor_hours": 4,
-  "pricing": {
-    "price": 20,
-    "sale_price": 0
-  },
+  "price": 20,
   "extras": {
     "rating": [
       4
@@ -125,10 +107,7 @@
   "description": "Hand-made head band with whatever custom colors you'd like.",
   "size": "Adults",
   "labor_hours": 4,
-  "pricing": {
-    "price": 25,
-    "sale_price": 0
-  },
+  "price": 25,
   "extras": {
     "rating": [
       4, 4, 5, 5, 3
