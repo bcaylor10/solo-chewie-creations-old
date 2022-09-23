@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { FiShoppingCart } from 'react-icons/fi';
 import { Group, Button } from "@mantine/core";
 import { useDispatch, useSelector } from "react-redux";
-import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 import { signOut } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';

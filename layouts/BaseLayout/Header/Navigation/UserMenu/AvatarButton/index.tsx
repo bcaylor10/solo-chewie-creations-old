@@ -32,8 +32,12 @@ const AvatarButton = ({ user, signOutUser }: IAvatarButton) => {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-                {isAdmin && <Menu.Item component={NextLink} href={routes.admin.base}>Admin Panel</Menu.Item>}
-                <Menu.Divider />
+                {isAdmin && (
+                    <>
+                        <Menu.Item component={NextLink} href={routes.admin.base}>Admin Panel</Menu.Item>
+                        <Menu.Divider />
+                    </>
+                )}
                 <Menu.Item component={NextLink} href={routes.account.profile}>Profile</Menu.Item>
                 <Menu.Item component={NextLink} href={routes.account.orderHistory}>Order History</Menu.Item>
                 <Menu.Item component={NextLink} href={routes.account.shippingBilling}>Shipping &amp; Billing</Menu.Item>

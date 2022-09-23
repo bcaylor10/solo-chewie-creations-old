@@ -14,7 +14,7 @@ const Checkout = () => {
     const cart = useSelector((store: any) => store.cart);
 
     const handleStepClick = (step: number) => {
-        if (step > 0 && cart.length === 0) return;
+        if (step > 0 && (cart && cart.cartItems.length === 0)) return;
         if ( step === 1 && !confirmed && local) return setOpen(true);
 
         setActive(step);
