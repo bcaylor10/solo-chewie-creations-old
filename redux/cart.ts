@@ -2,30 +2,41 @@ import { createSlice } from '@reduxjs/toolkit';
 import { isEmpty, groupBy, values } from 'lodash';
 
 import { IProduct } from '@/mongo/models/Product';
+import { IPromo } from '@/mongo/models/Promo';
 
+export interface ICart {
+    cartItems: ICartItem[];
+    promo?: IPromo;
+}
 export interface ICartItem {
     product: IProduct;
     quantity: number;
 }
 
+const defaultCart = {
+    cartItems: [],
+    promo: null
+}
+
 // @ts-ignore
-const initialState: ICartItem[] = typeof window !== 'undefined' ? JSON.parse(window?.localStorage.getItem('cart')) : [];
+const initialState: ICart = typeof window !== 'undefined' ? JSON.parse(window?.localStorage.getItem('cart')) : defaultCart;
 
 const cartSlice = createSlice({
     name: 'cart',
-    initialState: initialState || [],
+    initialState: initialState || defaultCart,
     reducers: { // @ts-ignore
         setCart: (slice, action) => {
-            const cartItems: ICartItem[] = action.payload;
+            const cartItems: ICartItem[] = action.payload.cartItems;
+            const promo = action.payload.promo;
             let cart: ICartItem[] = [];
             let currentCartItems: IProduct[] = [];
 
             if (isEmpty(cartItems)) {
                 if (typeof window !== 'undefined') {
-                    localStorage.removeItem('cart');
+                    window.localStorage.setItem('cart', JSON.stringify(defaultCart)); 
                 }
                
-                return [];
+                return defaultCart;
             }
 
             cartItems.forEach((c: any) => {
@@ -34,12 +45,18 @@ const cartSlice = createSlice({
                 for (let i = 0; i < c.quantity; i++) {
                     currentCartItems.push(c.product);
                 }
-            })
+            });
+
 
             cart = values(groupBy(currentCartItems, '_id')).map(c => ({ product: c[0], quantity: c.length}));
 
-            window.localStorage.setItem('cart', JSON.stringify(cart));            
-            return cart;
+            const newCart = {
+                cartItems: cart,
+                promo: promo
+            };
+
+            window.localStorage.setItem('cart', JSON.stringify(newCart));            
+            return newCart;
         },
     }
 });

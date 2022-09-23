@@ -5,8 +5,10 @@ import { verify } from 'jsonwebtoken';
 import axios from 'axios';
 
 import { IProduct } from '@/mongo/models/Product';
-import { ICartItem } from '@/redux/cart';
+import { ICart, ICartItem } from '@/redux/cart';
+import { PROMO_TYPES } from "@/mongo/models/Promo";
 import routes from "@/routes";
+import { IPromo } from '../mongo/models/Promo';
 
 export interface IRating {
     count: number;
@@ -94,15 +96,66 @@ export const capitalizeFirstLetter = (string: string): string => {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const calculateTotalPrice = (cart: ICartItem[]): string => {
-    let price = 0;
-    
-    cart.forEach((c: ICartItem) => {
-        // @ts-ignore
-        const amount = c.price * c.quantity;
+export const promoIsValid = (promo: IPromo): boolean => {
+    const currentDate = new Date();
+    const startDate = new Date(promo.start_date)
+    const expirationDate = promo?.expiration_date ? new Date(promo.expiration_date) : null;
 
+    if (startDate < currentDate ) {
+        if (!expirationDate || (expirationDate && expirationDate > currentDate)) {
+            return true;
+        }
+    }
+
+    return false;
+};
+
+export const calculatePromoCost = (product: IProduct, quantity: number, promo: IPromo, formatted = false): string | number => {
+    let price = product.price * quantity;
+
+    if (promoIsValid(promo)) {
+        if (product.promos && product.promos.length > 0) {
+            if (product.promos.includes(promo.code)) {
+                if (promo.type === 0) {
+                    // fixed amount off
+                    const newPrice = product.price - promo.discount_amount;
+                    price = newPrice * quantity;
+                } else {
+                    // percentage off
+                    const newPrice = (promo.discount_amount / 100) * product.price;
+                    price = newPrice * quantity;
+                }
+            }
+        }
+    }
+    
+    return formatted ? formatPrice(price) : price;
+};
+
+export const calculateTotalPrice = (cart: ICart, includeShipping = false, original = false): string => {
+    let price = 0;
+    if (!cart.cartItems) return formatPrice(price);
+    const { promo } = cart;
+
+    /*
+        1, check if promo is listed on item
+        2. check if promo has started
+        3. check if promo has ended
+    */
+
+    cart.cartItems.forEach((c: ICartItem) => {
+        const product = c.product;
+        let amount = product.price * c.quantity;
+
+        if (promo && !original) {
+            // @ts-ignore
+            amount = calculatePromoCost(product, c.quantity, promo);
+        }
+        
         price += amount;
     });
+
+    if (includeShipping) price += 7.99;
 
     return formatPrice(price);
 }

@@ -1,0 +1,48 @@
+.total {
+    letter-spacing: 1px;
+    span {
+        display: block;
+        &.oldPrice {
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.radioGroup {
+    margin-bottom: 30px;
+}
+
+.promoGroup {
+    align-items: flex-end !important;
+    margin-bottom: 20px;
+    .input {
+        label {
+            color: $dark-green;
+            margin-bottom: 5px;
+        }
+    }
+    .icon {
+        font-size: 2rem;
+        margin-bottom: 3px;
+        color: #2F9D7E !important;
+    }
+}
+
+.emptyCart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .cartIcon {
+        height: 100px;
+        width: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: $turqoise;
+        border-radius: 100%;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: $white;
+    }
+}

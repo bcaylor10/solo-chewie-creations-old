@@ -5,7 +5,7 @@ import { FiShoppingBag } from 'react-icons/fi';
 import Link from 'next/link';
 import cn from 'classnames';
 
-import CartList from '@/layouts/BaseLayout/Header/Navigation/CartDrawer/CartList';
+import CartList from '@/components/CartList';
 import { calculateTotalPrice} from '@/helpers';
 import routes from '@/routes';
 
@@ -28,7 +28,7 @@ const CartDrawer = ({ open, setOpen }: ICartDrawer) => {
             padding="xl"
             size={matches ? 'full' : 'lg'}
         >
-            {cart && cart.length > 0 ? (
+            {cart.cartItems && cart.cartItems.length > 0 ? (
                 <div className={cn(styles.validCart, styles.cartWrapper)}>
                     <Title order={3} className={styles.cartTitle}>My Cart</Title>
                     <CartList cart={cart} />
@@ -42,7 +42,15 @@ const CartDrawer = ({ open, setOpen }: ICartDrawer) => {
                             <Text size="xs">{calculateTotalPrice(cart)}</Text>
                         </Group>
                         <Link href={routes.checkout}>
-                            <Button fullWidth size="lg" variant="filled" color="green">Checkout</Button>
+                            <Button 
+                                onClick={() => setOpen(false)} 
+                                fullWidth 
+                                size="lg" 
+                                variant="filled" 
+                                color="green"
+                            >
+                                Checkout
+                            </Button>
                         </Link>
                     </div>
                 </div>

@@ -29,8 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         products = data;
     }).catch((error) => {
         res.status(500).json({ error });
-    })
-    // .finally(() => mongoose.connection.close());
+    });
 
     res.status(200).json(products);
 };

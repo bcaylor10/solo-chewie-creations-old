@@ -5,12 +5,21 @@
         background: $blue-grey;
         padding: 10px;
         border-radius: 4px;
+        &.large {
+            .productDetails {
+                margin: 0;
+                padding-left: 0;
+            }
+        }
         .productDetails {
             display: flex;
             flex-direction: column;
             justify-content: center;
             padding: 0 10px;
             margin-left: 10px;
+            .promoPrice {
+                margin-right: 5px;
+            }
         }
         .quantityControls {
             display: flex;

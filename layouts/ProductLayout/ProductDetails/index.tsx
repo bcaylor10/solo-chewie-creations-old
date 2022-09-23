@@ -53,12 +53,13 @@ const ProductDetails = ({ product }: IProductLayout) => {
 
     const addToCart = () => {
         setLoading(true);
-        
+        const payload = {
+            promo: cart?.promo,
+            cartItems: [ ...cart.cartItems, product ]
+        };
+
         new Promise((resolve) => {
-            resolve(dispatch(setCart([
-                ...cart,
-                product
-            ])));
+            resolve(dispatch(setCart(payload)))
         }).then((res) => {
             setLoading(false);
             showNotification({
@@ -66,7 +67,6 @@ const ProductDetails = ({ product }: IProductLayout) => {
                 message: `Successfully added ${product?.name} - ${product?.size} to cart`,
                 color: 'green'
             });
-
         }).catch((err) => {
             console.log(err);
             setLoading(false);

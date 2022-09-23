@@ -18,13 +18,15 @@ const Header = () => {
                     <Grid.Col span={4} className={styles.logoContainer}>
                         <Link href="/">
                             <a className={styles.logo}>
-                                <Image 
-                                    layout="fixed" 
-                                    src={Logo} 
-                                    alt="Go to home" 
-                                    height={55} 
-                                    width={70} 
-                                />
+                                <h1>
+                                    <Image 
+                                        layout="fixed" 
+                                        src={Logo} 
+                                        alt="Go to home" 
+                                        height={55} 
+                                        width={70} 
+                                    />
+                                </h1>
                             </a>
                         </Link>
                         {!isAdminRoute && <DesktopMenu />}

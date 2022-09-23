@@ -28,8 +28,8 @@ const UserMenu = () => {
     const calculateCartAmount = (): number => {
         let quantity: number = 0;
         
-        if (cart.length > 0) {
-            cart.forEach((c: any) => quantity += c.quantity);
+        if (cart.cartItems &&cart.cartItems.length > 0) {
+            cart.cartItems.forEach((c: any) => quantity += c.quantity);
         }
 
         return quantity;

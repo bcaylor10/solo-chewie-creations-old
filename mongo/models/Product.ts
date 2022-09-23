@@ -18,6 +18,7 @@ export interface IProduct {
     size: string;
     labor_hours: number;
     price: number;
+    promos?: string[];
     extras: IExtras;
     img_urls?: string[];
     created_at?: Date;
@@ -31,6 +32,7 @@ const productSchema = new Schema({
     labor_hours: { type: Number, required: true },
     product_type: { type: Number, required: true },
     price: { type: Number, required: true},
+    promos: { type: Array },
     extras: {
         rating: { type: Array, required: true },
         care: { type: String },
