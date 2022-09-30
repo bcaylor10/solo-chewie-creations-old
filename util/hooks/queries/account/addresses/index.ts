@@ -1,13 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { IAddress } from '@/mongo/models/Address';
+import { IAuthedRequest } from '..';
 
-interface IAuthedRequest {
-    userId: string;
-    token: string;
-    address?: IAddress;
-}
 
 const getAddresses = ({ userId, token }: IAuthedRequest) => axios.get('/api/address', 
     { 

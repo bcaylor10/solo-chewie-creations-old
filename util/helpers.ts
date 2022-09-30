@@ -243,7 +243,10 @@ export const verifyUserToken = async (userId: string, token: string) => {
         const header = JSON.parse(Buffer.from(header64, 'base64').toString('ascii'));
         const decoded = verify(token, data[header.kid]);
 
-        return decoded && decoded.user_id === userId;
+        // @ts-ignore
+        if (!decoded || decoded.user_id !== userId) return null;
+
+        return decoded;
     } catch (err) {
         console.log('Error verifying token: ', err);
     }
