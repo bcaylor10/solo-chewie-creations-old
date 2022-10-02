@@ -7,7 +7,6 @@ import { showNotification } from '@mantine/notifications';
 import { ImageUpload } from '../../Forms';
 import { uploadImages } from "@/queries/admin";
 import { firebaseAuth } from 'util/firebase';
-import { setLoading } from '@/redux/site';
 
 interface IUploadImagesModal {
     open: boolean;

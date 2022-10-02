@@ -1,20 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { get } from "lodash";
+import { get, indexOf } from "lodash";
 import { showNotification } from '@mantine/notifications';
 import { useForm, yupResolver } from "@mantine/form";
 import * as Yup from 'yup';
-import { TextInput, Textarea, Grid, Title, NumberInput, Button, Group, ActionIcon, Divider, Switch } from '@mantine/core';
+import { TextInput, Textarea, Grid, Title, NumberInput, Button, Group, Image, Divider, Switch } from '@mantine/core';
+import { Modal } from "@mantine/core";
 import cn from 'classnames';
 
 import { useGetProduct } from "@/queries/products";
 import Loader from '@/components/Loader';
 import { IProduct } from '@/mongo/models/Product';
-import { RepeatableGroup, ImageUpload } from "@/components/Forms";
+import { RepeatableGroup, ImageSelector } from "@/components/Forms";
+import { IImage } from "util/aws";
 
 import styles from './styles.module.scss';
 
 const ViewProduct = () => {
+    const [ open, setOpen ] = useState<boolean>(false);
     const router = useRouter();
     const slug = get(router, [ 'query', 'slug' ]);
     const { data, isLoading, status } = useGetProduct(slug ? slug[0] : '', slug ? slug[1] : '');
@@ -182,15 +185,47 @@ const ViewProduct = () => {
                                 />
                             </Grid.Col>
                             <Grid.Col>
-                                <ImageUpload />
+                                    <Group>
+                                        <Title order={3} style={{ marginBottom: '50px' }}>Images</Title>
+                                        <Button onClick={() => setOpen(true)}>Add</Button>
+                                    </Group>
+                                <Grid>
+                                    {form.values.img_urls.length > 0 && form.values.img_urls.map((img: string, i: number) => (
+                                        <Grid.Col className={styles.productImage} span={3} key={i}>
+                                            <Image src={img} alt="Product image" />
+                                        </Grid.Col>
+                                    ))}
+                                </Grid>
                             </Grid.Col>
                         </Grid>
                         <Group position="right">
-                            <Button color="green" type="submit">Save Product</Button>
+                            <Button color="green" type="submit" style={{ margin: '100px 0' }}>Save Product</Button>
                         </Group>
                     </form>
                 </Grid.Col>
             </Grid>
+            <Modal
+                opened={open}
+                onClose={() => setOpen(false)}
+                title="Select Images"
+                size="70%"
+                padding="xl"
+            >
+                <ImageSelector
+                    onClick={(img: IImage) => {
+                        // @ts-ignore
+                        if (form.values.img_urls && form.values.img_urls.includes(img.url)) {
+                            const index = indexOf(form.values.img_urls, img.url);
+                            // console.log(form.values.img_urls, img.url, index);
+                            form.removeListItem('img_urls', index);
+                        } else {
+                            form.insertListItem('img_urls', img.url)
+                        }
+                    }}
+                    onClickTitle="Add Image"
+                    selected={form.values.img_urls}
+                />
+            </Modal>
         </div>
     )
 };
