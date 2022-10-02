@@ -25,7 +25,7 @@ const DeleteModal = ({ setUpdated, user, address, open, onClose }: IDeleteModal)
             deleteAddress({
                 userId: user.uid,
                 token: token,
-                address: address
+                data: address
             });
         })
         .then(() => setUpdated(true))

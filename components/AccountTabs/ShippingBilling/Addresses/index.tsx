@@ -49,7 +49,7 @@ const Addresses = ({ user }: any) => {
             updateAddress({
                 userId: user.uid,
                 token: token,
-                address: {
+                data: {
                     ...address,
                     default: true
                 }

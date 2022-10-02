@@ -1,12 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { IAddress } from '@/mongo/models/Address';
-
 export interface IAuthedRequest {
     userId: string;
     token: string;
-    address?: IAddress;
+    data?: any;
 }
 
 const getAdminUser = ({ token, userId }: IAuthedRequest) => axios.get('/api/admin', {

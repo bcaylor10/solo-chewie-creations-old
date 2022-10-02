@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { Dropzone, FileWithPath, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { Group, Text, Image, SimpleGrid } from '@mantine/core';
+import { Group, Text, Image, SimpleGrid, Button } from '@mantine/core';
 import { FiUploadCloud, FiCloudOff, FiImage } from 'react-icons/fi';
 
 import styles from './styles.module.scss';
 
-const ImageUpload = () => {
+interface IImageUpload {
+    submit: any;
+    cancel: any;
+}
+
+const ImageUpload = ({ submit, cancel }: IImageUpload) => {
     const [currentFiles, setCurrentFiles] = useState<FileWithPath[]>([]);
 
     const previews = currentFiles.map((file, index) => {
@@ -24,10 +29,11 @@ const ImageUpload = () => {
     return (
         <>
             <Dropzone
-                onDrop={(files) => setCurrentFiles([ ...currentFiles, files[0] ])}
+                onDrop={(files) => setCurrentFiles([ ...currentFiles, ...files ])}
                 maxSize={3 * 1024 ** 2}
                 accept={IMAGE_MIME_TYPE}
                 className={styles.imageUpload}
+                multiple
             >
                 <Group position="center" spacing="xl" style={{ minHeight: 220, pointerEvents: 'none' }}>
                     <Dropzone.Accept>
@@ -48,7 +54,15 @@ const ImageUpload = () => {
                         </Text>
                     </div>
                 </Group>
-        </Dropzone>
+            </Dropzone>
+            <Group position="right">
+                <Button color="red" variant="light" onClick={cancel}>
+                    Cancel
+                </Button>
+                <Button color="green" onClick={() => submit(currentFiles)}>
+                    Upload
+                </Button>
+            </Group>
             <SimpleGrid
                 cols={4}
                 breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
