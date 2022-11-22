@@ -11,7 +11,8 @@ import cn from 'classnames';
 import { useGetProduct } from "@/queries/products";
 import Loader from '@/components/Loader';
 import { IProduct } from '@/mongo/models/Product';
-import { RepeatableGroup, ImageSelector } from "@/components/Forms";
+import { RepeatableGroup, ImageSelector, OrderableImageList } from "@/components/Forms";
+import { AddButton } from "@/components/Buttons";
 import { IImage } from "util/aws";
 
 import styles from './styles.module.scss';
@@ -185,16 +186,16 @@ const ViewProduct = () => {
                                 />
                             </Grid.Col>
                             <Grid.Col>
-                                    <Group>
-                                        <Title order={3} style={{ marginBottom: '50px' }}>Images</Title>
-                                        <Button onClick={() => setOpen(true)}>Add</Button>
-                                    </Group>
+                                <Group align="center">
+                                    <Title order={3}>Images</Title>
+                                    <AddButton onClick={() => setOpen(true)} text="Choose" />
+                                </Group>
+                            </Grid.Col>
+                            <Grid.Col>
                                 <Grid>
-                                    {form.values.img_urls.length > 0 && form.values.img_urls.map((img: string, i: number) => (
-                                        <Grid.Col className={styles.productImage} span={3} key={i}>
-                                            <Image src={img} alt="Product image" />
-                                        </Grid.Col>
-                                    ))}
+                                    {form.values.img_urls.length > 0 && (
+                                        <OrderableImageList images={form.values.img_urls} form={form} />
+                                    )}
                                 </Grid>
                             </Grid.Col>
                         </Grid>
@@ -216,7 +217,6 @@ const ViewProduct = () => {
                         // @ts-ignore
                         if (form.values.img_urls && form.values.img_urls.includes(img.url)) {
                             const index = indexOf(form.values.img_urls, img.url);
-                            // console.log(form.values.img_urls, img.url, index);
                             form.removeListItem('img_urls', index);
                         } else {
                             form.insertListItem('img_urls', img.url)

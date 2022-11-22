@@ -2,6 +2,8 @@ import { Grid, TextInput, ActionIcon, Group, Button } from '@mantine/core';
 import { FiPlusCircle, FiTrash } from 'react-icons/fi';
 import cn from 'classnames';
 
+import { AddButton } from '@/components/Buttons';
+
 import styles from './styles.module.scss';
 
 interface IRepeatableGroup {
@@ -16,6 +18,7 @@ const RepeatableGroup = ({ label, name, placeholder, fields, form }: IRepeatable
     return (
         <>
             <label className={styles.groupLabel} htmlFor={name}>{label}</label>
+            <div className={styles.addableContainer}>
             {fields.map((f: string, i: number) => (
                 <Grid key={i} align="center" className={styles.addableGroup}>
                     <Grid.Col span={11}>
@@ -33,17 +36,12 @@ const RepeatableGroup = ({ label, name, placeholder, fields, form }: IRepeatable
                     </Grid.Col>
                 </Grid>
             ))}
-            <Group position="center">
-                <Button 
-                    color="turqoise"
+            </div>
+            <Group position="left">
+                <AddButton
                     onClick={() => form.insertListItem(name, '')}
                     className={styles.groupButton}
-                >
-                    <Group className={styles.groupButtonContent}>
-                        <FiPlusCircle size={16} />
-                        <span>Add</span>
-                    </Group>
-                </Button>
+                />
             </Group>
         </>
     )

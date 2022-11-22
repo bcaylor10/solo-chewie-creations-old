@@ -2,10 +2,15 @@
     position: relative;
 }
 
-.addableGroup {
-    margin-bottom: 20px !important;
-    .deleteButton {
-        text-align: right;
+.addableContainer {
+    .addableGroup {
+        margin-bottom: 15px !important;
+        &:last-of-type {
+            margin-bottom: 5px !important;
+        }
+        .deleteButton {
+            text-align: right;
+        }
     }
 }
 
@@ -32,11 +37,4 @@
 
 .groupButton {
     margin-bottom: 20px;
-}
-
-.groupButtonContent {
-    span {
-        margin-left: -9px;
-        margin-bottom: -3px;
-    }
 }
