@@ -12,7 +12,7 @@ import rootReducer from '@/redux/index';
 
 import '../styles/app.scss';
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 const store = configureStore({ reducer: rootReducer });
 
 export default function MyApp({ Component, pageProps }: AppProps) {

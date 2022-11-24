@@ -12,3 +12,17 @@ export const uploadImages = ({ userId, token, data }: IAuthedRequest) => axios.p
         withCredentials: true
     }
 );
+
+const getAllPromos = ({ userId, token }: IAuthedRequest) => axios.get(`/api/admin/promos`, 
+    { 
+        headers: {
+            'Authorization': token
+        },
+        params: { userId },
+        withCredentials: true
+    }
+);
+
+export const useGetAllPromos = () => useMutation(getAllPromos, {
+    onSuccess: (data) => data?.data
+});

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Center, Loader, Grid, Title } from '@mantine/core';
-import { useQueryClient, QueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { IProduct } from '@/mongo/models/Product';
 import ProductListSidebar from './ProductListSidebar';

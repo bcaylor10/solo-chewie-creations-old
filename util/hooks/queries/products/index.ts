@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 import { PRODUCT_TYPES } from "@/helpers";
+import { IAuthedRequest } from "../account";
 
 const getProduct = (type: number, size: string) => axios.get(`/api/products`, { 
     params: {
@@ -13,7 +14,35 @@ const getProducts = (type: number) => axios.get('/api/products', { params: { typ
 const getAllProducts = () => axios.get('/api/products');
 const getProductSizes = (type: number) => axios.get('/api/products/sizes', { params: { type: type } })
 const getFeaturedProducts = () => axios.get('/api/products/featured');
-
+const deleteProduct = ({ userId, token, data }: IAuthedRequest) => axios.delete(`/api/admin/products?id=${data.id}`, {
+    headers: {
+        'Authorization': token,
+    },
+    params: {
+        userId
+    },
+    withCredentials: true
+});
+const createProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/products`, {
+    data,
+    headers: {
+        'Authorization': token,
+    },
+    params: {
+        userId
+    },
+    withCredentials: true
+});
+const updateProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/products?id=${data.id}`, {
+    data,
+    headers: {
+        'Authorization': token,
+    },
+    params: {
+        userId
+    },
+    withCredentials: true
+})
 export const useGetProducts = (type: number) => {
     const query = useQuery([`products-${type}`], async () => await getProducts(type));
     return query;
@@ -57,4 +86,8 @@ export const useGetProduct = (type: string, size: string) => {
         [ queryName ],
         async () => await getProduct(productType, size) 
     );
-}
+};
+
+export const useDeleteProduct = () => useMutation(deleteProduct);
+export const useCreateProduct = () => useMutation(createProduct);
+export const useUpdateProduct = () => useMutation(updateProduct);

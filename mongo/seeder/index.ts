@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import * as dotenv from 'dotenv';
+import path from "path";
 
 import connect from "..";
 import { Product } from "../models/Product";
@@ -10,7 +11,7 @@ import productData from './products.json';
 import testimonialData from './testimonials.json';
 import promoData from './promos.json';
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../../.env.local') });
 
 connect();
 

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { get, indexOf } from "lodash";
+import { get, indexOf, isEmpty } from "lodash";
 import { showNotification } from '@mantine/notifications';
 import { useForm, yupResolver } from "@mantine/form";
 import * as Yup from 'yup';
 import { TextInput, Textarea, Grid, Title, NumberInput, Button, Group, Image, Divider, Switch } from '@mantine/core';
 import { Modal } from "@mantine/core";
-import cn from 'classnames';
+import { useQueryClient } from "@tanstack/react-query";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-import { useGetProduct } from "@/queries/products";
+import { firebaseAuth } from "util/firebase";
+import { useGetProduct, useDeleteProduct, useUpdateProduct } from "@/queries/products";
 import Loader from '@/components/Loader';
+import { ConfirmModal } from "@/components/Modals";
 import { IProduct } from '@/mongo/models/Product';
 import { RepeatableGroup, ImageSelector, OrderableImageList } from "@/components/Forms";
 import { AddButton } from "@/components/Buttons";
@@ -18,7 +21,12 @@ import { IImage } from "util/aws";
 import styles from './styles.module.scss';
 
 const ViewProduct = () => {
+    const queryClient = useQueryClient();
+    const [ user ] = useAuthState(firebaseAuth)
+    const { mutate: deleteProduct, isLoading: deleteLoading } = useDeleteProduct();
+    const { mutate: updateProduct, isLoading: updateLoading } = useUpdateProduct();
     const [ open, setOpen ] = useState<boolean>(false);
+    const [ showDelete, setShowDelete ] = useState<boolean>(false);
     const router = useRouter();
     const slug = get(router, [ 'query', 'slug' ]);
     const { data, isLoading, status } = useGetProduct(slug ? slug[0] : '', slug ? slug[1] : '');
@@ -60,6 +68,10 @@ const ViewProduct = () => {
                 color: 'red',
             });
         } else if (status === 'success') {
+            if (isEmpty(data?.data)) {
+                router.push('/404');
+            }
+
             const { 
                 product_type, 
                 name, 
@@ -91,8 +103,35 @@ const ViewProduct = () => {
     }, [ status ]);
 
     const submit = (data: any) => {
-        console.log(form.values)
+        if (!user) return;
+
+        user.getIdToken(true).then((token: string) => {
+            return updateProduct({
+                userId: user.uid,
+                token,
+                data
+            })
+        })
+        .then(() => queryClient.invalidateQueries({ queryKey: [] }))
+        .catch((err) => console.log('Error updating product: ', err));
     };
+
+    const handleDelete = () => {
+        if (!user) return;
+
+        user.getIdToken(true).then((token: string) => {
+            return deleteProduct({
+                userId: user.uid,
+                token,
+                data: {
+                    id: data?.data[0]?._id
+                }
+            });
+        })
+        .then(() => queryClient.invalidateQueries())
+        .then(() => router.push('/admin/products'))
+        .catch((err) => console.log('Error deleting product: ', err));
+    }
 
     return (
         <div className={styles.productLayout}>
@@ -199,8 +238,9 @@ const ViewProduct = () => {
                                 </Grid>
                             </Grid.Col>
                         </Grid>
-                        <Group position="right">
-                            <Button color="green" type="submit" style={{ margin: '100px 0' }}>Save Product</Button>
+                        <Group position="right" style={{ marginTop: '100px' }}>
+                            <Button color="red" variant="light" onClick={() => setShowDelete(true)}>Delete Product</Button>
+                            <Button color="green" type="submit">Save Product</Button>
                         </Group>
                     </form>
                 </Grid.Col>
@@ -226,6 +266,14 @@ const ViewProduct = () => {
                     selected={form.values.img_urls}
                 />
             </Modal>
+            <ConfirmModal
+                open={showDelete}
+                onConfirm={handleDelete}
+                onClose={() => setShowDelete(false)}
+                title="Delete Product"
+                content="Are you sure you want to delete this product? It cannot be undone."
+                isLoading={deleteLoading}
+            />
         </div>
     )
 };
