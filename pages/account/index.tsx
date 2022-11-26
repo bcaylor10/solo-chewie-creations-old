@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Container, Title, Tabs } from "@mantine/core";
 import { FiList, FiUser, FiMapPin, FiMessageCircle } from 'react-icons/fi';
 import { useAuthState } from 'react-firebase-hooks/auth';

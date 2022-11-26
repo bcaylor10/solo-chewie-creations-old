@@ -1,0 +1,63 @@
+.imageSelector {
+    position: relative;
+    .titleGroup {
+        margin-bottom: 20px;
+        .title {
+            margin: 0 20px 0 0 !important;
+        }
+    }
+    .imageCard {
+        height: 300px;
+        display: flex !important;
+        flex-direction: column;
+        .image {
+            flex: 1 1 80%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            user-select: none;
+            background-image: url('../../../images/no-pattern.png');
+            background-repeat: repeat;
+            padding: 20px;
+            position: relative;
+            cursor: pointer;
+            height: 230px;
+            overflow: hidden;
+            &:hover {
+                .hover {
+                    opacity: 1;
+                }
+            }
+            img {
+                max-height: 190px;
+                max-width: calc(100% - 40px);
+            }
+            .hover {
+                transition: opacity .2s ease-in-out;
+                opacity: 0;
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                flex-direction: column;
+                background: rgba($turqoise, .5);
+                .hoverText {
+                    position: relative;
+                    z-index: 2;
+                    padding: 16px;
+                    background: rgba($turqoise, .8);
+                    color: $white;
+                    font-weight: $font-bold;
+                }
+            }
+        }
+        .caption {
+            user-select: none;
+        }
+    }
+}

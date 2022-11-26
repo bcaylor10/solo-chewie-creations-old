@@ -48,6 +48,7 @@ const routes = {
             view: (slug: string) => `/admin/testimonials/${slug}`,
             edit: (slug: string) => `/admin/testimonials/${slug}/edit`,
         },
+        mediaLibrary: '/admin/media-library'
     }
 };
 

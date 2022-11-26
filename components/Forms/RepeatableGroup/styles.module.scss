@@ -1,0 +1,40 @@
+.productLayout {
+    position: relative;
+}
+
+.addableContainer {
+    .addableGroup {
+        margin-bottom: 15px !important;
+        &:last-of-type {
+            margin-bottom: 5px !important;
+        }
+        .deleteButton {
+            text-align: right;
+        }
+    }
+}
+
+.input {
+    margin-bottom: 20px;
+    &.addableInput {
+        margin-bottom: 0;
+    }
+    label {
+        color: $dark-green;
+        margin-bottom: 5px;
+    }
+    textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+}
+
+.groupLabel {
+    color: $dark-green;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.groupButton {
+    margin-bottom: 20px;
+}

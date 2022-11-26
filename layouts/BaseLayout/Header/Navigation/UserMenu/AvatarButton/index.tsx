@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
 import { Avatar, UnstyledButton, Group, Menu } from "@mantine/core";
 import { NextLink } from "@mantine/next";
 
 import { menuStyles } from "util/helpers";
 import routes from "@/routes";
+
+import { useGetAdminUser } from '@/queries/account';
 
 import styles from './styles.module.scss';
 
@@ -13,7 +16,24 @@ interface IAvatarButton {
 
 const AvatarButton = ({ user, signOutUser }: IAvatarButton) => {
     const { classes } = menuStyles();
-    const isAdmin = false;
+    const  [ isAdmin, setIsAdmin ] = useState<boolean>(false);
+    const { mutate: getAdminUser, data, status } = useGetAdminUser();
+
+    useEffect(() => {
+        if (user) {
+            user.getIdToken(true).then((token: string) => {
+                getAdminUser({
+                    userId: user.uid,
+                    token
+                });
+            })
+            .catch((err) => console.log(err));
+        }
+    }, [ user ]);
+
+    useEffect(() => {
+        if (status === 'success' && data?.data) setIsAdmin(true);
+    }, [ status ])
     
     return (
         <Menu classNames={classes} shadow="md" position="bottom-end" width={170}>

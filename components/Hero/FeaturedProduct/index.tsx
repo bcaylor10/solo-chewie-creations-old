@@ -14,6 +14,7 @@ interface IFeaturedProduct {
 }
 
 const FeaturedProduct = ({ product, large = false, background = 'tan' }: IFeaturedProduct) => {
+    if (!product) return <></>;
     const url: string = buildProductUrl(product);
     let image: string = '';
 

@@ -1,13 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 
-import { IAddress } from '@/mongo/models/Address';
+import { IAuthedRequest } from '..';
 
-interface IAuthedRequest {
-    userId: string;
-    token: string;
-    address?: IAddress;
-}
 
 const getAddresses = ({ userId, token }: IAuthedRequest) => axios.get('/api/address', 
     { 
@@ -19,10 +14,10 @@ const getAddresses = ({ userId, token }: IAuthedRequest) => axios.get('/api/addr
     }
 );
 
-const createAddress = ({ userId, token, address }: IAuthedRequest) => axios.post('/api/address', 
+const createAddress = ({ userId, token, data }: IAuthedRequest) => axios.post('/api/address', 
     {
         userId: userId,
-        address: address
+        address: data
     },
     {
         headers: {
@@ -32,7 +27,7 @@ const createAddress = ({ userId, token, address }: IAuthedRequest) => axios.post
     }
 );
 
-const deleteAddress = ({ userId, token, address }: IAuthedRequest) => axios.delete(`/api/address/${address?._id}`, 
+const deleteAddress = ({ userId, token, data }: IAuthedRequest) => axios.delete(`/api/address/${data?._id}`, 
     {
         headers: {
             'Authorization': token
@@ -44,10 +39,10 @@ const deleteAddress = ({ userId, token, address }: IAuthedRequest) => axios.dele
     }
 );
 
-const updateAddress = ({ userId, token, address }: IAuthedRequest) => axios.put(`/api/address/${address?._id}`, 
+const updateAddress = ({ userId, token, data }: IAuthedRequest) => axios.put(`/api/address/${data?._id}`, 
     {
         userId: userId,
-        address: address
+        address: data
     },
     {
         headers: {

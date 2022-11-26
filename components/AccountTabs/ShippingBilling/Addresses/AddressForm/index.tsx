@@ -59,7 +59,7 @@ const AddressForm = ({ setUpdated, user, address, open, onClose }: IAddressForm)
             const payload = {
                 token: token,
                 userId: user.uid,
-                address: data
+                data
             };
 
             address ? updateAddress(payload) : createAddress(payload);

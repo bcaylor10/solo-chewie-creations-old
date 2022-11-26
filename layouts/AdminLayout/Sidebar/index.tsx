@@ -1,7 +1,7 @@
 import { Navbar, NavLink, ActionIcon } from "@mantine/core";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { FiUser, FiTag, FiDollarSign, FiHome, FiArchive, FiStar } from 'react-icons/fi';
+import { FiUser, FiTag, FiDollarSign, FiHome, FiArchive, FiStar, FiImage } from 'react-icons/fi';
 
 import routes from "@/routes";
 
@@ -90,6 +90,19 @@ const Sidebar = () => {
                     icon={
                         <ActionIcon color="teal" variant="light">
                             <FiStar />
+                        </ActionIcon>
+                    } 
+                />
+            </Link>
+            <Link href={admin.mediaLibrary} passHref>
+                <NavLink 
+                    className={styles.navLink}
+                    component="a" 
+                    label="Media Library" 
+                    active={router.pathname === admin.mediaLibrary} 
+                    icon={
+                        <ActionIcon color="blue" variant="light">
+                            <FiImage />
                         </ActionIcon>
                     } 
                 />
