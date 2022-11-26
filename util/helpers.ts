@@ -54,18 +54,18 @@ export const menuStyles = createStyles(() => ({
 export const buildProductUrl = (product?: IProduct, size?: string): string => {
     if (!product) return '';
 
-    const productType: string = product.name.toLowerCase();
+    const productType: number = product.product_type;
     const productSize: string = size ? size.toLowerCase() : product.size.toLowerCase();
     let route: string = '';
 
     switch (productType) {
-        case 'hat':
+        case 0:
             route = routes.products.hatsView(productSize);
             break;
-        case 'scarf':
+        case 1:
             route = routes.products.scarvesView(productSize);
             break;
-        case 'head band':
+        case 2:
             route = routes.products.headBandsView(productSize);
             break;
     }

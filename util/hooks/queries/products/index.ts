@@ -33,16 +33,19 @@ const createProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/
     },
     withCredentials: true
 });
-const updateProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/products?id=${data.id}`, {
-    data,
-    headers: {
-        'Authorization': token,
+const updateProduct = ({ userId, token, data }: IAuthedRequest) => axios.put(`/api/admin/products?id=${data.id}`,
+    {
+        userId: userId,
+        product: data.productData
     },
-    params: {
-        userId
-    },
-    withCredentials: true
-})
+    {
+        headers: {
+            'Authorization': token
+        },
+        withCredentials: true,
+    }
+);
+
 export const useGetProducts = (type: number) => {
     const query = useQuery([`products-${type}`], async () => await getProducts(type));
     return query;

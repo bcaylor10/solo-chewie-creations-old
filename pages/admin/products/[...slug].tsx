@@ -4,7 +4,7 @@ import { get, indexOf, isEmpty } from "lodash";
 import { showNotification } from '@mantine/notifications';
 import { useForm, yupResolver } from "@mantine/form";
 import * as Yup from 'yup';
-import { TextInput, Textarea, Grid, Title, NumberInput, Button, Group, Image, Divider, Switch } from '@mantine/core';
+import { TextInput, Textarea, Grid, Title, NumberInput, Button, Group, Select, Divider, Switch } from '@mantine/core';
 import { Modal } from "@mantine/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -13,10 +13,10 @@ import { firebaseAuth } from "util/firebase";
 import { useGetProduct, useDeleteProduct, useUpdateProduct } from "@/queries/products";
 import Loader from '@/components/Loader';
 import { ConfirmModal } from "@/components/Modals";
-import { IProduct } from '@/mongo/models/Product';
 import { RepeatableGroup, ImageSelector, OrderableImageList } from "@/components/Forms";
 import { AddButton } from "@/components/Buttons";
 import { IImage } from "util/aws";
+import AdminFormLayout from "@/layouts/AdminFormLayout";
 
 import styles from './styles.module.scss';
 
@@ -81,9 +81,7 @@ const ViewProduct = () => {
                 price,
                 promos,
                 img_urls,
-                care,
-                details,
-                featured
+                extras
             } = data?.data[0];
 
             form.setValues({
@@ -95,25 +93,37 @@ const ViewProduct = () => {
                 price,
                 promos,
                 img_urls,
-                care,
-                details,
-                featured
+                care: extras.care,
+                details: extras.details,
+                featured: extras.featured
             })
         }
     }, [ status ]);
 
-    const submit = (data: any) => {
+    const submit = (productData: any) => {
         if (!user) return;
 
         user.getIdToken(true).then((token: string) => {
             return updateProduct({
                 userId: user.uid,
                 token,
-                data
+                data: {
+                    id: data?.data[0]._id,
+                    productData
+                }
             })
         })
-        .then(() => queryClient.invalidateQueries({ queryKey: [] }))
-        .catch((err) => console.log('Error updating product: ', err));
+        .then(() => queryClient.invalidateQueries())
+        .then(() => showNotification({
+            title: 'Success!',
+            message: 'Product updated successfully',
+            color: 'green',
+        }))
+        .catch((err) => showNotification({
+            title: 'Error!',
+            message: 'Error updating product',
+            color: 'red',
+        }));
     };
 
     const handleDelete = () => {
@@ -134,117 +144,127 @@ const ViewProduct = () => {
     }
 
     return (
-        <div className={styles.productLayout}>
-            <Loader loading={isLoading} absolute={true} />
-            <Title order={2}>{data?.data && !isLoading ? 'Edit Product' : 'Create Product'}</Title>
-            <Grid>
-                <Grid.Col span={8}>
-                    <form onSubmit={form.onSubmit(submit)}>
-                        <Grid>
-                            <Grid.Col>
-                                <TextInput
-                                    className={styles.input}
-                                    withAsterisk
-                                    label="Product Name"
-                                    placeholder="Name of the product"
-                                    type="name"
-                                    {...form.getInputProps('name')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col>
-                                <Textarea
-                                    className={styles.input}
-                                    withAsterisk
-                                    label="Product Description"
-                                    placeholder="Description of the product"
-                                    {...form.getInputProps('description')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col span={6}>
-                                <NumberInput
-                                    className={styles.input}
-                                    withAsterisk
-                                    label="Product Price"
-                                    placeholder="Price of the product"
-                                    parser={(value: string) => value.replace(/\$\s?|(,*)/g, '')}
-                                    formatter={(value: string) =>
-                                        !Number.isNaN(parseFloat(value))
-                                          ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                                          : '$ '
-                                    }
-                                    {...form.getInputProps('price')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col span={6}>
-                                <NumberInput
-                                    className={styles.input}
-                                    withAsterisk
-                                    label="Product Labor Hours"
-                                    placeholder="Labor hours of the product"
-                                    {...form.getInputProps('labor_hours')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col span={6}>
-                                <RepeatableGroup 
-                                    label="Product Promos"
-                                    name="promos"
-                                    placeholder="Promo Code"
-                                    form={form}
-                                    fields={form.values.promos}
-                                />
-                            </Grid.Col>
-                            <Grid.Col span={6}>
-                                <Switch
-                                    label="Feature Product"
-                                    color="green"
-                                    {...form.getInputProps('featured')}
-                                />
-                            </Grid.Col>
-                        </Grid>
-                        <Divider my="xl" />
-                        <Grid>
-                            <Grid.Col>
-                                <Title order={3}>Extras</Title>
-                            </Grid.Col>
-                            <Grid.Col>
-                                <Textarea
-                                    className={styles.input}
-                                    withAsterisk
-                                    label="Product Care"
-                                    placeholder="Care of the product"
-                                    {...form.getInputProps('care')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col>
-                                <Textarea
-                                    className={styles.input}
-                                    withAsterisk
-                                    label="Product Details"
-                                    placeholder="Details of the product"
-                                    {...form.getInputProps('details')}
-                                />
-                            </Grid.Col>
-                            <Grid.Col>
-                                <Group align="center">
-                                    <Title order={3}>Images</Title>
-                                    <AddButton onClick={() => setOpen(true)} text="Choose" />
-                                </Group>
-                            </Grid.Col>
-                            <Grid.Col>
-                                <Grid>
-                                    {form.values.img_urls.length > 0 && (
-                                        <OrderableImageList images={form.values.img_urls} form={form} />
-                                    )}
-                                </Grid>
-                            </Grid.Col>
-                        </Grid>
-                        <Group position="right" style={{ marginTop: '100px' }}>
-                            <Button color="red" variant="light" onClick={() => setShowDelete(true)}>Delete Product</Button>
-                            <Button color="green" type="submit">Save Product</Button>
+        <AdminFormLayout 
+            loading={isLoading || updateLoading}
+            title={data?.data && !isLoading ? 'Edit Product' : 'Create Product'}
+        >
+            <form onSubmit={form.onSubmit(submit)}>
+                <Grid>
+                    <Grid.Col>
+                        <TextInput
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Name"
+                            description="What the user will see the title of the product as"
+                            placeholder="Name of the product"
+                            {...form.getInputProps('name')}
+                        />
+                        <Select 
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Type"
+                            placeholder="Type of the product"
+                            {...form.getInputProps('product_type')}
+                            data={[
+                                { label: 'Hat', value: 0 },
+                                { label: 'Scarf', value: 1 },
+                                { label: 'Head Band', value: 2 }
+                            ]}
+                        />
+                    </Grid.Col>
+                    <Grid.Col>
+                        <Textarea
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Description"
+                            placeholder="Description of the product"
+                            {...form.getInputProps('description')}
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <NumberInput
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Price"
+                            placeholder="Price of the product"
+                            parser={(value: string) => value.replace(/\$\s?|(,*)/g, '')}
+                            formatter={(value: string) =>
+                                !Number.isNaN(parseFloat(value))
+                                    ? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                    : '$ '
+                            }
+                            {...form.getInputProps('price')}
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <NumberInput
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Labor Hours"
+                            placeholder="Labor hours of the product"
+                            {...form.getInputProps('labor_hours')}
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <RepeatableGroup 
+                            label="Product Promos"
+                            name="promos"
+                            placeholder="Promo Code"
+                            form={form}
+                            fields={form.values.promos}
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <Switch
+                            label="Feature Product"
+                            color="turqoise"
+                            checked={form.values.featured}
+                            {...form.getInputProps('featured')}
+                        />
+                    </Grid.Col>
+                </Grid>
+                <Divider my="xl" />
+                <Grid>
+                    <Grid.Col>
+                        <Title order={3}>Extras</Title>
+                    </Grid.Col>
+                    <Grid.Col>
+                        <Textarea
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Care"
+                            placeholder="Care of the product"
+                            {...form.getInputProps('care')}
+                        />
+                    </Grid.Col>
+                    <Grid.Col>
+                        <Textarea
+                            className={styles.input}
+                            withAsterisk
+                            label="Product Details"
+                            placeholder="Details of the product"
+                            {...form.getInputProps('details')}
+                        />
+                    </Grid.Col>
+                    <Grid.Col>
+                        <Group align="center">
+                            <Title order={3}>Images</Title>
+                            <AddButton onClick={() => setOpen(true)} text="Choose" />
                         </Group>
-                    </form>
-                </Grid.Col>
-            </Grid>
+                    </Grid.Col>
+                    <Grid.Col>
+                        <Grid>
+                            {form.values.img_urls.length > 0 && (
+                                <OrderableImageList images={form.values.img_urls} form={form} />
+                            )}
+                        </Grid>
+                    </Grid.Col>
+                </Grid>
+                <Group position="right" style={{ marginTop: '100px' }}>
+                    <Button color="red" variant="light" onClick={() => setShowDelete(true)}>Delete Product</Button>
+                    <Button color="green" type="submit">Save Product</Button>
+                </Group>
+            </form>
             <Modal
                 opened={open}
                 onClose={() => setOpen(false)}
@@ -274,7 +294,7 @@ const ViewProduct = () => {
                 content="Are you sure you want to delete this product? It cannot be undone."
                 isLoading={deleteLoading}
             />
-        </div>
+        </AdminFormLayout>
     )
 };
 
