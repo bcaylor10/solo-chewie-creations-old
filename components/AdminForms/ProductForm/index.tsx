@@ -10,21 +10,18 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { firebaseAuth } from "util/firebase";
-import { useGetProduct, useDeleteProduct, useUpdateProduct } from "@/queries/products";
-import Loader from '@/components/Loader';
-import { ConfirmModal } from "@/components/Modals";
+import { useGetProduct, useUpdateProduct } from "@/queries/products";
 import { RepeatableGroup, ImageSelector, OrderableImageList } from "@/components/Forms";
 import { AddButton } from "@/components/Buttons";
 import { IImage } from "util/aws";
 import AdminFormLayout from "@/layouts/AdminFormLayout";
+import { IAdminForm } from "..";
 
-const ViewProduct = () => {
+const ProductForm = () => {
     const queryClient = useQueryClient();
     const [ user ] = useAuthState(firebaseAuth)
-    const { mutate: deleteProduct, isLoading: deleteLoading } = useDeleteProduct();
     const { mutate: updateProduct, isLoading: updateLoading } = useUpdateProduct();
     const [ open, setOpen ] = useState<boolean>(false);
-    const [ showDelete, setShowDelete ] = useState<boolean>(false);
     const router = useRouter();
     const slug = get(router, [ 'query', 'slug' ]);
     const { data, isLoading, status } = useGetProduct(slug ? slug[0] : '', slug ? slug[1] : '');
@@ -59,6 +56,8 @@ const ViewProduct = () => {
     });
 
     useEffect(() => {
+        if (isCreate) return;
+        
         if (status === 'error') {
             showNotification({
                 title: 'Error!',
@@ -66,9 +65,7 @@ const ViewProduct = () => {
                 color: 'red',
             });
         } else if (status === 'success') {
-            if (isEmpty(data?.data)) {
-                router.push('/404');
-            }
+            if (isEmpty(data?.data)) router.push('/404');
 
             const { 
                 product_type, 
@@ -94,7 +91,7 @@ const ViewProduct = () => {
                 care: extras.care,
                 details: extras.details,
                 featured: extras.featured
-            })
+            });
         }
     }, [ status ]);
 
@@ -117,29 +114,12 @@ const ViewProduct = () => {
             message: 'Product updated successfully',
             color: 'green',
         }))
-        .catch((err) => showNotification({
+        .catch(() => showNotification({
             title: 'Error!',
             message: 'Error updating product',
             color: 'red',
         }));
     };
-
-    const handleDelete = () => {
-        if (!user) return;
-
-        user.getIdToken(true).then((token: string) => {
-            return deleteProduct({
-                userId: user.uid,
-                token,
-                data: {
-                    id: data?.data[0]?._id
-                }
-            });
-        })
-        .then(() => queryClient.invalidateQueries())
-        .then(() => router.push('/admin/products'))
-        .catch((err) => console.log('Error deleting product: ', err));
-    }
 
     return (
         <AdminFormLayout loading={isLoading || updateLoading} title="Edit Product">
@@ -256,8 +236,7 @@ const ViewProduct = () => {
                     </Grid.Col>
                 </Grid>
                 <Group position="right" style={{ marginTop: '100px' }}>
-                    <Button color="red" variant="light" onClick={() => setShowDelete(true)}>Delete Product</Button>
-                    <Button color="green" type="submit">Save Product</Button>
+                    <Button color="green" type="submit">Create Product</Button>
                 </Group>
             </form>
             <Modal
@@ -281,16 +260,8 @@ const ViewProduct = () => {
                     selected={form.values.img_urls}
                 />
             </Modal>
-            <ConfirmModal
-                open={showDelete}
-                onConfirm={handleDelete}
-                onClose={() => setShowDelete(false)}
-                title="Delete Product"
-                content="Are you sure you want to delete this product? It cannot be undone."
-                isLoading={deleteLoading}
-            />
         </AdminFormLayout>
     )
 };
 
-export default ViewProduct;
+export default ProductForm;

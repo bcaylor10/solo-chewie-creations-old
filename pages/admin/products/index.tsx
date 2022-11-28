@@ -1,4 +1,4 @@
-import { Table } from "@mantine/core";
+import { Table, Button } from "@mantine/core";
 import { useRouter } from "next/router";
 
 import { useGetAllProducts } from "@/queries/products";
@@ -31,6 +31,13 @@ const Products = () => {
 
     return (
         <>
+            <Button 
+                onClick={() => router.push('/admin/products/create')}
+                color="green"
+                style={{ marginBottom: '20px' }}
+            >
+                Create Product
+            </Button>
             <Loader loading={isLoading} />
             <Table highlightOnHover verticalSpacing="md">
                 <thead>

@@ -2,8 +2,6 @@ import { Title, Grid } from '@mantine/core';
 
 import Loader from '@/components/Loader';
 
-import styles from './styles.module.scss';
-
 interface IAdminFormLayout {
     children: any;
     loading: boolean;

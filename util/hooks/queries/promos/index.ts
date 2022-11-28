@@ -32,16 +32,18 @@ const updatePromo = ({ userId, token, data }: IAuthedRequest) => axios.put(`/api
     }
 );
 
-const createPromo = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/promos`, {
-    data,
-    headers: {
-        'Authorization': token,
-    },
-    params: {
+const createPromo = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/promos`,
+    {
         userId,
+        promo: data
     },
-    withCredentials: true
-});
+    {
+        headers: {
+            'Authorization': token,
+        },
+        withCredentials: true
+    }
+);
 
 const getAllPromos = ({ userId, token }: IAuthedRequest) => axios.get(`/api/admin/promos`, 
     { 

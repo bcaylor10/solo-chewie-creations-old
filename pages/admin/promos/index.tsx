@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Table } from "@mantine/core";
+import { Table, Button } from "@mantine/core";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -28,6 +28,13 @@ const Promos = () => {
 
     return (
         <>
+            <Button 
+                onClick={() => router.push('/admin/promos/create')}
+                color="green"
+                style={{ marginBottom: '20px' }}
+            >
+                Create Promo
+            </Button>
             <Loader loading={isLoading} />
             <Table highlightOnHover verticalSpacing="md">
                 <thead>

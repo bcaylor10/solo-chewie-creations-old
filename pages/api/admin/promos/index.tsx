@@ -43,7 +43,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .then(({ data }) => res.status(200).json(data))
         .catch((err) => res.status(500).json(err));
     } else if (req.method === 'POST') {
-        
+        const { userId, promo } = req.body;
+
+        if (!userId) return res.status(401).json('Unauthorized');
+
+        await verifyUser(res, authToken, userId, adminEmails);
+
+        const data = mapToModelData(promo);
+
+        await connect().then(() => {
+            return Promo.create(data);
+        })
+        .then((data) => res.status(201).json(data))
+        .catch((err) => res.status(500).json(err));
     } else if (req.method === 'GET') {
         const { userId } = req.query;
 
@@ -64,6 +76,7 @@ const mapToModelData = (data: any, isUpdate = false) => {
 
     const mappedData = {
         ...data,
+        code: data.code.toUpperCase(),
         type: parseInt(data.type),
         start_date: new Date(data.start_date).toISOString(),
         expiration_date: data.expiration_date && new Date(data.expiration_date).toISOString(),
