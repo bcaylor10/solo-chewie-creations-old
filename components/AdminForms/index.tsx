@@ -1,5 +1,6 @@
 import ProductForm from "./ProductForm";
 import PromoForm from "./PromoForm";
+import TestimonialForm from "./TestimonialForm";
 
 export interface IAdminForm {
     onSubmit: any;
@@ -11,4 +12,4 @@ export interface IAdminForm {
     deleteLoading?: boolean;
 }
 
-export { ProductForm, PromoForm };
+export { ProductForm, PromoForm, TestimonialForm };
