@@ -67,7 +67,7 @@ const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
                 </Alert>
             )}
             <TextInput
-                className={styles.input}
+                className="input"
                 withAsterisk
                 label="Email"
                 placeholder="your@email.com"
@@ -75,14 +75,14 @@ const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
                 {...form.getInputProps('email')}
             />
             <PasswordInput
-                className={styles.input}
+                className="input"
                 withAsterisk
                 label="Password"
                 placeholder="Your password"
                 {...form.getInputProps('password')}
             />
             <PasswordInput
-                className={styles.input}
+                className="input"
                 withAsterisk
                 label="Confirm Password"
                 placeholder="Confirm password"

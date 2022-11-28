@@ -12,7 +12,7 @@ interface IAdminFormLayout {
 
 const AdminFormLayout = ({ children, loading, title }: IAdminFormLayout) => {
     return (
-        <div className={styles.adminFormLayout}>
+        <div style={{ position: 'relative' }}>
             <Loader loading={loading} absolute />
             <Title order={2}>{title}</Title>
             <Grid>

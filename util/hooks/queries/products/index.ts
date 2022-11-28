@@ -35,7 +35,7 @@ const createProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/
 });
 const updateProduct = ({ userId, token, data }: IAuthedRequest) => axios.put(`/api/admin/products?id=${data.id}`,
     {
-        userId: userId,
+        userId,
         product: data.productData
     },
     {

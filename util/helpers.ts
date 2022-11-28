@@ -253,3 +253,12 @@ export const verifyUserToken = async (userId: string, token: string) => {
 
     return null;
 }
+
+export const verifyUser = async (res: any, authToken: string, userId: string|string[], adminEmails: string[]) => {
+    const verified = await verifyUserToken(userId.toString(), authToken);
+
+    if (!verified) return res.status(401).json('Unauthorized');
+
+    // @ts-ignore
+    if (!adminEmails.includes(verified.email)) return res.status(401).json('Unauthorized');
+}

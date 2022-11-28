@@ -23,7 +23,7 @@ const RepeatableGroup = ({ label, name, placeholder, fields, form }: IRepeatable
                 <Grid key={i} align="center" className={styles.addableGroup}>
                     <Grid.Col span={11}>
                         <TextInput
-                            className={cn(styles.input, styles.addableInput)}
+                            className={cn('input', styles.addableInput)}
                             withAsterisk
                             placeholder={placeholder}
                             {...form.getInputProps(`${name}.${i}`)}

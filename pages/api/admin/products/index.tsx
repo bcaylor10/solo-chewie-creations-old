@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { verifyUserToken } from '@/helpers';
+import { verifyUser } from '@/helpers';
 import connect from 'mongo';
 import { Product } from 'mongo/models/Product';
 
@@ -50,15 +50,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }       
 };
 
-const verifyUser = async (res, authToken, userId, adminEmails) => {
-    const verified = await verifyUserToken(userId.toString(), authToken);
-
-    if (!verified) return res.status(401).json('Unauthorized');
-
-    // @ts-ignore
-    if (!adminEmails.includes(verified.email)) return res.status(401).json('Unauthorized');
-}
-
 const mapToModelData = (data: any, isUpdate = false) => {
     const currentDate = new Date().toISOString();
 
@@ -79,9 +70,7 @@ const mapToModelData = (data: any, isUpdate = false) => {
         }
     };
 
-    if (!isUpdate) {
-        mappedData.created_at = currentDate;
-    }
+    if (!isUpdate) mappedData.created_at = currentDate;
 
     return mappedData;
 };

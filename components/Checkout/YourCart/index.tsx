@@ -99,7 +99,7 @@ const YourCart = ({ cart, setLocal }: IYourCart) => {
                             <Group className={styles.promoGroup} position="left">
                                 <TextInput 
                                     label="Apply Promo"
-                                    className={styles.input}
+                                    className="input"
                                     placeholder="Enter promo code"
                                     {...form.getInputProps('code')}
                                 />

@@ -62,27 +62,27 @@ const ContactModal = () => {
             <Divider className={styles.divider} />
             <form onSubmit={form.onSubmit(submit)}>
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Name"
                     placeholder="Your name"
                     {...form.getInputProps('name')}
                 />
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Email"
                     placeholder="your@email.com"
                     {...form.getInputProps('email')}
                 />
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     label="Phone"
                     placeholder="Your phone number"
                     {...form.getInputProps('phone')}
                 />
                 <Textarea
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Message"
                     placeholder="Your message to us"

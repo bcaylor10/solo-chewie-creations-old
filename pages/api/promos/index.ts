@@ -8,11 +8,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET') return res.status(405).end();
 
     // do not want to get all, need to only search for one
-    if (!code) return res.status(404).end();
+    if (!code || code.toString().length === 0) return res.status(404).end();
 
     await connect().then(() => {
         // @ts-ignore
-        return Promo.find({ code: code.toString() });
+        return Promo.find({ code: { $regex: new RegExp(code.toString(), 'i') } });
     })
     .then((data) => {
         if (data.length > 0) {
