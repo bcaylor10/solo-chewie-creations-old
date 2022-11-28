@@ -19,23 +19,24 @@ const RepeatableGroup = ({ label, name, placeholder, fields, form }: IRepeatable
         <>
             <label className={styles.groupLabel} htmlFor={name}>{label}</label>
             <div className={styles.addableContainer}>
-            {fields.map((f: string, i: number) => (
-                <Grid key={i} align="center" className={styles.addableGroup}>
-                    <Grid.Col span={11}>
-                        <TextInput
-                            className={cn('input', styles.addableInput)}
-                            withAsterisk
-                            placeholder={placeholder}
-                            {...form.getInputProps(`${name}.${i}`)}
-                        />
-                    </Grid.Col>
-                    <Grid.Col span={1}>
-                        <ActionIcon className={styles.deleteButton} color="red" onClick={() => form.removeListItem(name, i)}>
-                            <FiTrash size={16} />
-                        </ActionIcon>
-                    </Grid.Col>
-                </Grid>
-            ))}
+                {fields.map((f: string, i: number) => (
+                    <Grid key={i} align="center" className={styles.addableGroup}>
+                        <Grid.Col span={11}>
+                            <TextInput
+                                className={cn('input', styles.addableInput)}
+                                style={{ marginBottom: 0 }}
+                                withAsterisk
+                                placeholder={placeholder}
+                                {...form.getInputProps(`${name}.${i}`)}
+                            />
+                        </Grid.Col>
+                        <Grid.Col span={1}>
+                            <ActionIcon className={styles.deleteButton} color="red" onClick={() => form.removeListItem(name, i)}>
+                                <FiTrash size={16} />
+                            </ActionIcon>
+                        </Grid.Col>
+                    </Grid>
+                ))}
             </div>
             <Group position="left">
                 <AddButton

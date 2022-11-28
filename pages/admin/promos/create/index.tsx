@@ -24,7 +24,7 @@ const CreatePromo = () => {
             });
         })
         .then(() => queryClient.invalidateQueries())
-        // .then(() => router.push('/admin/promos'))
+        .then(() => router.push('/admin/promos'))
         .then(() => showNotification({
             title: 'Success!',
             message: 'Promo created successfully',

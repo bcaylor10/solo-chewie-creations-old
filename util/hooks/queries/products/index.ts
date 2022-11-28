@@ -23,16 +23,18 @@ const deleteProduct = ({ userId, token, data }: IAuthedRequest) => axios.delete(
     },
     withCredentials: true
 });
-const createProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/products`, {
-    data,
-    headers: {
-        'Authorization': token,
+const createProduct = ({ userId, token, data }: IAuthedRequest) => axios.post(`/api/admin/products`, 
+    {
+        userId,
+        product: data
     },
-    params: {
-        userId
-    },
-    withCredentials: true
-});
+    {
+        headers: {
+            'Authorization': token,
+        },
+        withCredentials: true
+    }
+);
 const updateProduct = ({ userId, token, data }: IAuthedRequest) => axios.put(`/api/admin/products?id=${data.id}`,
     {
         userId,

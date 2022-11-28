@@ -25,6 +25,8 @@ export interface IProduct {
     updated_at?: Date;
 }
 
+export const SIZES = [ 'Kids', 'Mens', 'Womens', 'Adults' ];
+
 const productSchema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },

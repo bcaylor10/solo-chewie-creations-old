@@ -1,30 +1,20 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { get, indexOf, isEmpty } from "lodash";
-import { showNotification } from '@mantine/notifications';
+import { indexOf, isEmpty } from "lodash";
 import { useForm, yupResolver } from "@mantine/form";
 import * as Yup from 'yup';
 import { TextInput, Textarea, Grid, Title, NumberInput, Button, Group, Select, Divider, Switch } from '@mantine/core';
 import { Modal } from "@mantine/core";
-import { useQueryClient } from "@tanstack/react-query";
-import { useAuthState } from "react-firebase-hooks/auth";
 
-import { firebaseAuth } from "util/firebase";
-import { useGetProduct, useUpdateProduct } from "@/queries/products";
+import { ConfirmModal } from "@/components/Modals";
 import { RepeatableGroup, ImageSelector, OrderableImageList } from "@/components/Forms";
 import { AddButton } from "@/components/Buttons";
 import { IImage } from "util/aws";
 import AdminFormLayout from "@/layouts/AdminFormLayout";
 import { IAdminForm } from "..";
 
-const ProductForm = () => {
-    const queryClient = useQueryClient();
-    const [ user ] = useAuthState(firebaseAuth)
-    const { mutate: updateProduct, isLoading: updateLoading } = useUpdateProduct();
+const ProductForm = ({ onSubmit, loading, title, buttonTitle, formData, onDelete, deleteLoading }: IAdminForm) => {
     const [ open, setOpen ] = useState<boolean>(false);
-    const router = useRouter();
-    const slug = get(router, [ 'query', 'slug' ]);
-    const { data, isLoading, status } = useGetProduct(slug ? slug[0] : '', slug ? slug[1] : '');
+    const [ showDelete, setShowDelete ] = useState<boolean>(false);
     const schema = Yup.object().shape({
         product_type: Yup.number().required(),
         name: Yup.string().required(),
@@ -44,7 +34,7 @@ const ProductForm = () => {
             product_type: 0,
             name: '',
             description: '',
-            size: '',
+            size: 'Kids',
             labor_hours: 0,
             price: 0.00,
             promos: [],
@@ -55,18 +45,8 @@ const ProductForm = () => {
         }
     });
 
-    useEffect(() => {
-        if (isCreate) return;
-        
-        if (status === 'error') {
-            showNotification({
-                title: 'Error!',
-                message: 'Error retrieving product',
-                color: 'red',
-            });
-        } else if (status === 'success') {
-            if (isEmpty(data?.data)) router.push('/404');
-
+    useEffect(() => {        
+        if (!isEmpty(formData)) {
             const { 
                 product_type, 
                 name, 
@@ -77,7 +57,7 @@ const ProductForm = () => {
                 promos,
                 img_urls,
                 extras
-            } = data?.data[0];
+            } = formData;
 
             form.setValues({
                 product_type,
@@ -93,37 +73,11 @@ const ProductForm = () => {
                 featured: extras.featured
             });
         }
-    }, [ status ]);
-
-    const submit = (productData: any) => {
-        if (!user) return;
-
-        user.getIdToken(true).then((token: string) => {
-            return updateProduct({
-                userId: user.uid,
-                token,
-                data: {
-                    id: data?.data[0]._id,
-                    productData
-                }
-            })
-        })
-        .then(() => queryClient.invalidateQueries())
-        .then(() => showNotification({
-            title: 'Success!',
-            message: 'Product updated successfully',
-            color: 'green',
-        }))
-        .catch(() => showNotification({
-            title: 'Error!',
-            message: 'Error updating product',
-            color: 'red',
-        }));
-    };
+    }, [ formData ]);
 
     return (
-        <AdminFormLayout loading={isLoading || updateLoading} title="Edit Product">
-            <form onSubmit={form.onSubmit(submit)}>
+        <AdminFormLayout loading={loading} title={title}>
+            <form onSubmit={form.onSubmit(onSubmit)}>
                 <Grid>
                     <Grid.Col>
                         <TextInput
@@ -134,6 +88,8 @@ const ProductForm = () => {
                             placeholder="Name of the product"
                             {...form.getInputProps('name')}
                         />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
                         <Select 
                             className="input"
                             withAsterisk
@@ -145,6 +101,20 @@ const ProductForm = () => {
                                 { label: 'Scarf', value: 1 },
                                 { label: 'Head Band', value: 2 }
                             ]}
+                        />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                        <Select 
+                            className="input"
+                            withAsterisk
+                            label="Product Size"
+                            data={[
+                                { label: 'Kids', value: 'Kids' },
+                                { label: 'Womens', value: 'Womens' },
+                                { label: 'Mens', value: 'Mens' },
+                                { label: 'Adults', value: 'Adults' }
+                            ]}
+                            {...form.getInputProps('size')}
                         />
                     </Grid.Col>
                     <Grid.Col>
@@ -206,7 +176,6 @@ const ProductForm = () => {
                     <Grid.Col>
                         <Textarea
                             className="input"
-                            withAsterisk
                             label="Product Care"
                             placeholder="Care of the product"
                             {...form.getInputProps('care')}
@@ -215,7 +184,6 @@ const ProductForm = () => {
                     <Grid.Col>
                         <Textarea
                             className="input"
-                            withAsterisk
                             label="Product Details"
                             placeholder="Details of the product"
                             {...form.getInputProps('details')}
@@ -236,9 +204,22 @@ const ProductForm = () => {
                     </Grid.Col>
                 </Grid>
                 <Group position="right" style={{ marginTop: '100px' }}>
-                    <Button color="green" type="submit">Create Product</Button>
+                    {onDelete && (
+                        <Button color="red" variant="light" onClick={() => setShowDelete(true)}>
+                            Delete Product
+                        </Button>
+                    )}
+                    <Button color="green" type="submit">{buttonTitle || title}</Button>
                 </Group>
             </form>
+            <ConfirmModal
+                open={showDelete}
+                onConfirm={onDelete}
+                onClose={() => setShowDelete(false)}
+                title="Delete Product"
+                content="Are you sure you want to delete this product? It cannot be undone."
+                isLoading={deleteLoading || false}
+            />
             <Modal
                 opened={open}
                 onClose={() => setOpen(false)}

@@ -6,7 +6,7 @@ import { IProduct } from '@/mongo/models/Product';
 import ProductListSidebar from './ProductListSidebar';
 import ProductListItem from './ProductListItem';
 import { orderProducts, filterProductsByName, filterProductsBySize } from '@/helpers';
-import { useGetSizesForProduct } from '@/queries/products';
+import { useGetSizesForProduct } from "@/queries/products";
 
 import styles from './styles.module.scss';
 interface IProductListLayout {

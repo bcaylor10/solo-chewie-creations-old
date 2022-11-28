@@ -6,7 +6,6 @@ import axios from 'axios';
 
 import { IProduct } from '@/mongo/models/Product';
 import { ICart, ICartItem } from '@/redux/cart';
-import { PROMO_TYPES } from "@/mongo/models/Promo";
 import routes from "@/routes";
 import { IPromo } from '../mongo/models/Promo';
 

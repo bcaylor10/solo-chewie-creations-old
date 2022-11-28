@@ -44,7 +44,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .then(({ data }) => res.status(200).json(data))
         .catch((err) => res.status(500).json(err));
     } else if (req.method === 'POST') {
+        const { userId, product } = req.body;
 
+        console.log(userId, product);
+
+        if (!userId) return res.status(401).json('Unauthorized');
+
+        await verifyUser(res, authToken, userId, adminEmails);
+
+        const data = mapToModelData(product, true);
+
+        await connect().then(() => {
+            return Product.create(data);
+        })
+        .then(({ data }) => res.status(201).json(data))
+        .catch((err) => res.status(500).json(err));
     } else {
         return res.status(405).end();
     }       

@@ -74,6 +74,11 @@ const EditPromo = () => {
         })
         .then(() => queryClient.invalidateQueries())
         .then(() => router.push('/admin/promos'))
+        .then(() => showNotification({
+            title: 'Success!',
+            message: 'Promo deleted successfully',
+            color: 'green',
+        }))
         .catch(() => showNotification({
             title: 'Error!',
             message: 'Error deleting promo',
