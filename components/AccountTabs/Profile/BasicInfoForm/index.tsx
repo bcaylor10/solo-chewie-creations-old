@@ -65,14 +65,14 @@ const BasicInfoForm = ({ user }: any) => {
             {user?.emailVerified &&  <Badge size="md" style={{ marginBottom: '20px' }}>Email Verified</Badge>}
             <form onSubmit={form.onSubmit(submit)}>
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Full Name"
                     placeholder="Your first and last name"
                     {...form.getInputProps('displayName')}
                 />
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     label="Email"
                     placeholder="your@email.com"
                     disabled
@@ -80,7 +80,7 @@ const BasicInfoForm = ({ user }: any) => {
                     {...form.getInputProps('email')}
                 />
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     label="Profile Image URL"
                     placeholder="URL of the image you'd like to use"
                     {...form.getInputProps('photoURL')}

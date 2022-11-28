@@ -15,17 +15,8 @@
 }
 
 .input {
-    margin-bottom: 20px;
     &.addableInput {
         margin-bottom: 0;
-    }
-    label {
-        color: $dark-green;
-        margin-bottom: 5px;
-    }
-    textarea {
-        resize: vertical;
-        min-height: 150px;
     }
 }
 

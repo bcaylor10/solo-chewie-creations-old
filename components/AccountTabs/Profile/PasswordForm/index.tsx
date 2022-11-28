@@ -50,14 +50,14 @@ const PasswordForm = () => {
         <>
             <form onSubmit={form.onSubmit(submit)}>
                 <PasswordInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Password"
                     placeholder="Password"
                     {...form.getInputProps('password')}
                 />
                 <PasswordInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Confirm Password"
                     placeholder="Confirm password"

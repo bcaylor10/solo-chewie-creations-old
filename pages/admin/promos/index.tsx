@@ -4,13 +4,13 @@ import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { firebaseAuth } from "util/firebase";
-import { useGetAllPromos } from "@/queries/admin";
+import { useGetAllPromos } from "@/queries/promos";
 import Loader from "@/components/Loader";
 import { IPromo } from "@/mongo/models/Promo";
 
 const Promos = () => {
     const [ user ] = useAuthState(firebaseAuth);
-    const { mutate: getAllPromos, data, isLoading, status } = useGetAllPromos();
+    const { mutate: getAllPromos, data, isLoading } = useGetAllPromos();
     const router = useRouter();
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const Promos = () => {
                 </thead>
                 <tbody>
                     {data?.data && data.data.map((d: IPromo, i: number) => {
-                        const url = `/admin/${d.code.replace(' ', '-').toLowerCase()}`
+                        const url = `/admin/promos/${d.code.replace(' ', '-').toLowerCase()}`
                         return (
                             <tr 
                                 onClick={() => router.push(url)} 

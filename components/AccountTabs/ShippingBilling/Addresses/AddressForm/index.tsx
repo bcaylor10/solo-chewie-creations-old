@@ -153,7 +153,7 @@ const AddressForm = ({ setUpdated, user, address, open, onClose }: IAddressForm)
                     <Grid>
                         <Grid.Col span={12}>
                             <TextInput
-                                className={styles.input}
+                                className="input"
                                 withAsterisk
                                 label="Address 1"
                                 placeholder="Your street name"
@@ -163,7 +163,7 @@ const AddressForm = ({ setUpdated, user, address, open, onClose }: IAddressForm)
                         </Grid.Col>
                         <Grid.Col span={12}>
                             <TextInput
-                                className={styles.input}
+                                className="input"
                                 label="Address 2"
                                 placeholder="Your apartment number, building number, etc"
                                 type="text"
@@ -172,7 +172,7 @@ const AddressForm = ({ setUpdated, user, address, open, onClose }: IAddressForm)
                         </Grid.Col>
                         <Grid.Col span={4}>
                             <TextInput
-                                className={styles.input}
+                                className="input"
                                 withAsterisk
                                 label="City"
                                 placeholder="Your city"
@@ -182,7 +182,7 @@ const AddressForm = ({ setUpdated, user, address, open, onClose }: IAddressForm)
                         </Grid.Col>
                         <Grid.Col span={4}>
                             <TextInput
-                                className={cn(styles.input, styles.uppercase)}
+                                className={cn('input', styles.uppercase)}
                                 withAsterisk
                                 label="State"
                                 placeholder="Your state - ex: OH"
@@ -193,7 +193,7 @@ const AddressForm = ({ setUpdated, user, address, open, onClose }: IAddressForm)
                         </Grid.Col>
                         <Grid.Col span={4}>
                             <TextInput
-                                className={styles.input}
+                                className="input"
                                 withAsterisk
                                 label="Zip Code"
                                 placeholder="Your zip code"

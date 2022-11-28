@@ -11,16 +11,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { firebaseAuth } from "util/firebase";
 import { useGetProduct, useDeleteProduct, useUpdateProduct } from "@/queries/products";
-import Loader from '@/components/Loader';
 import { ConfirmModal } from "@/components/Modals";
 import { RepeatableGroup, ImageSelector, OrderableImageList } from "@/components/Forms";
 import { AddButton } from "@/components/Buttons";
 import { IImage } from "util/aws";
 import AdminFormLayout from "@/layouts/AdminFormLayout";
 
-import styles from './styles.module.scss';
-
-const ViewProduct = () => {
+const EditProduct = () => {
     const queryClient = useQueryClient();
     const [ user ] = useAuthState(firebaseAuth)
     const { mutate: deleteProduct, isLoading: deleteLoading } = useDeleteProduct();
@@ -96,7 +93,7 @@ const ViewProduct = () => {
                 care: extras.care,
                 details: extras.details,
                 featured: extras.featured
-            })
+            });
         }
     }, [ status ]);
 
@@ -119,7 +116,7 @@ const ViewProduct = () => {
             message: 'Product updated successfully',
             color: 'green',
         }))
-        .catch((err) => showNotification({
+        .catch(() => showNotification({
             title: 'Error!',
             message: 'Error updating product',
             color: 'red',
@@ -140,19 +137,20 @@ const ViewProduct = () => {
         })
         .then(() => queryClient.invalidateQueries())
         .then(() => router.push('/admin/products'))
-        .catch((err) => console.log('Error deleting product: ', err));
+        .catch(() => showNotification({
+            title: 'Error!',
+            message: 'Error deleting product',
+            color: 'red',
+        }));
     }
 
     return (
-        <AdminFormLayout 
-            loading={isLoading || updateLoading}
-            title={data?.data && !isLoading ? 'Edit Product' : 'Create Product'}
-        >
+        <AdminFormLayout loading={isLoading || updateLoading} title="Edit Product">
             <form onSubmit={form.onSubmit(submit)}>
                 <Grid>
                     <Grid.Col>
                         <TextInput
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Name"
                             description="What the user will see the title of the product as"
@@ -160,7 +158,7 @@ const ViewProduct = () => {
                             {...form.getInputProps('name')}
                         />
                         <Select 
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Type"
                             placeholder="Type of the product"
@@ -174,7 +172,7 @@ const ViewProduct = () => {
                     </Grid.Col>
                     <Grid.Col>
                         <Textarea
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Description"
                             placeholder="Description of the product"
@@ -183,7 +181,7 @@ const ViewProduct = () => {
                     </Grid.Col>
                     <Grid.Col span={6}>
                         <NumberInput
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Price"
                             placeholder="Price of the product"
@@ -198,7 +196,7 @@ const ViewProduct = () => {
                     </Grid.Col>
                     <Grid.Col span={6}>
                         <NumberInput
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Labor Hours"
                             placeholder="Labor hours of the product"
@@ -230,7 +228,7 @@ const ViewProduct = () => {
                     </Grid.Col>
                     <Grid.Col>
                         <Textarea
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Care"
                             placeholder="Care of the product"
@@ -239,7 +237,7 @@ const ViewProduct = () => {
                     </Grid.Col>
                     <Grid.Col>
                         <Textarea
-                            className={styles.input}
+                            className="input"
                             withAsterisk
                             label="Product Details"
                             placeholder="Details of the product"
@@ -262,7 +260,7 @@ const ViewProduct = () => {
                 </Grid>
                 <Group position="right" style={{ marginTop: '100px' }}>
                     <Button color="red" variant="light" onClick={() => setShowDelete(true)}>Delete Product</Button>
-                    <Button color="green" type="submit">Save Product</Button>
+                    <Button color="green" type="submit">Update Product</Button>
                 </Group>
             </form>
             <Modal
@@ -298,4 +296,4 @@ const ViewProduct = () => {
     )
 };
 
-export default ViewProduct;
+export default EditProduct;

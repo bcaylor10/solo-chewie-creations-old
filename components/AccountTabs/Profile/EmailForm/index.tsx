@@ -55,28 +55,28 @@ const EmailForm = ({ user }: any) => {
     return (
         <>
             <form onSubmit={form.onSubmit(submit)}>
-                <Text className={styles.input} size="sm">
+                <Text className="input" size="sm">
                     This is the primary email that you will receive emails with. If you&nbsp;
                     <strong><u>did not</u></strong> log in with Google, this is also the email you will
                     log in with. You will continue to log in with the same Google account if you previously
                     did so.
                 </Text>
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     disabled
                     label="Current Email"
                     placeholder="your@email.com"
                     {...form.getInputProps('currentEmail')}
                 />
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Email"
                     placeholder="your@email.com"
                     {...form.getInputProps('email')}
                 />
                 <TextInput
-                    className={styles.input}
+                    className="input"
                     withAsterisk
                     label="Confirm Email"
                     placeholder="your@email.com"
