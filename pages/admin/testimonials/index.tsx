@@ -9,8 +9,6 @@ const Testimonials = () => {
     const { data, isLoading } = useGetTestimonials();
     const router = useRouter();
 
-    console.log(data?.data)
-
     return (
         <>
             <Button 

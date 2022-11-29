@@ -8,19 +8,18 @@ import { Testimonial, ITestimonial } from 'mongo/models/Testimonial';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET') return res.status(405).end();
     
-    let testimonials: ITestimonial[] = [];
+    const { id } = req.query;
 
     await connect().then(() => {
-        // @ts-ignore
-        return Testimonial.find().sort({ updated_at: 'desc' });
-    }).then((data: ITestimonial[] | []) => {
-        testimonials = data;
-    }).catch((error) => {
-        res.status(500).json({ error });
-    });
-    // .finally(() => mongoose.connection.close());
-
-    res.status(200).json(testimonials)
+        if (id) {
+            return Testimonial.findById(id);
+        } else {
+            // @ts-ignore
+            return Testimonial.find({ id: id }).sort({ updated_at: 'desc' });
+        }
+    })
+    .then((data) => res.status(200).json(data))
+    .catch((err) => res.status(500).json(err));
 };
 
 export default handler;
