@@ -1,3 +1,4 @@
 import YourCart from "./YourCart";
+import Details from "./Details";
 
-export { YourCart };
+export { YourCart, Details };

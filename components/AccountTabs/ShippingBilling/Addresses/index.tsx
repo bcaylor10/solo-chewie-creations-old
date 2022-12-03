@@ -64,7 +64,7 @@ const Addresses = ({ user }: any) => {
             showNotification({
                 title: 'Error!',
                 message: 'Error getting addresses',
-                color: 'green',
+                color: 'red',
             });
         }
     }, [ status ]);
@@ -80,7 +80,7 @@ const Addresses = ({ user }: any) => {
             showNotification({
                 title: 'Error!',
                 message: 'Error updating default address',
-                color: 'green',
+                color: 'red',
             });
         }
     }, [ updateStatus ]);

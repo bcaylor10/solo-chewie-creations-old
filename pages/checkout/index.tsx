@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Container, Stepper, Title, Modal, Text, Button, Group} from '@mantine/core';
+import { Container, Stepper, Title, Modal, Text, Button, Group } from '@mantine/core';
 import { useSelector } from "react-redux";
 
-import { YourCart } from '@/components/Checkout';
+import { YourCart, Details } from '@/components/Checkout';
 
 import styles from './styles.module.scss';
 
 const Checkout = () => {
-    const [ active, setActive ] = useState<number>(0);
+    const [ active, setActive ] = useState<number>(1);
     const [ local, setLocal ] = useState<boolean>(false);
     const [ open, setOpen ] = useState<boolean>(false);
     const [ confirmed, setConfirmed ] = useState<boolean>(false);
@@ -30,7 +30,18 @@ const Checkout = () => {
         <>
             <section>
                 <Container>
-                    <Title order={2} size="h1" align="center">Checkout</Title>
+                    <Group position="apart" align="center" className={styles.titleContainer}>
+                        <Title order={2} size="h1" align="center">
+                            Checkout
+                        </Title>
+                        <Button 
+                            color="turqoise" 
+                            disabled={cart.cartItems.length === 0} 
+                            onClick={() => handleStepClick(active + 1)}
+                        >
+                            Continue
+                        </Button>
+                    </Group>
                     <Stepper active={active} color="green" onStepClick={handleStepClick}>
                         <Stepper.Step label="Your Cart">
                             <div className={styles.step}>
@@ -38,10 +49,13 @@ const Checkout = () => {
                             </div>
                         </Stepper.Step>
                         <Stepper.Step label="Checkout Details">
+                            <div className={styles.step}>
+                                <Details />
+                            </div>
                         </Stepper.Step>
                         <Stepper.Step label="Order Complete">
                         </Stepper.Step>
-                    </Stepper>
+                    </Stepper>            
                 </Container>
             </section>
             <Modal

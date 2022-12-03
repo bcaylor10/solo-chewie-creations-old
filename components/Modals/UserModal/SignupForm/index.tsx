@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { TextInput, PasswordInput, Button, Alert, Group, UnstyledButton, Text } from "@mantine/core";
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { TextInput, PasswordInput, Button, Alert, Group, UnstyledButton, Text, LoadingOverlay } from "@mantine/core";
+import { createUserWithEmailAndPassword, sendEmailVerification, User } from 'firebase/auth';
 import { useForm, yupResolver } from '@mantine/form';
 import * as Yup from 'yup';
 
 import { firebaseAuth } from "util/firebase";
 import validators from 'util/validators';
 import { IForm } from '..';
+import { useCreateCustomer } from "@/queries/stripe";
 
 import styles from '../styles.module.scss';
 
@@ -17,6 +18,7 @@ interface ILoginData {
 }
 
 const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
+    const { mutate: createCustomer, isLoading } = useCreateCustomer();
     const [ success, setSuccess ] = useState<boolean>(false);
     const [ error, setError ] = useState<string>('');
     const schema = Yup.object().shape({
@@ -37,11 +39,15 @@ const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
         setLoading(true);
         setSuccess(false);
         setError('');
+        let user: User;
 
         createUserWithEmailAndPassword(firebaseAuth, data.email, data.password)
             .then((userCredential) => {
+                user = userCredential.user;
                 return sendEmailVerification(userCredential.user);
-            }).then(() => {
+            })
+            .then(() => createCustomer(user.uid))
+            .then(() => {
                 setLoading(false);
                 setSuccess(true);
                 form.reset();
@@ -55,6 +61,7 @@ const SignupForm = ({ setCurrentForm, setLoading }: IForm) => {
 
     return (
         <form onSubmit={form.onSubmit(submit)}>
+            <LoadingOverlay visible={isLoading} />
             {error.length > 0 && (
                 <Alert className={styles.alert} color="red" title="Error signing up">
                     {error}

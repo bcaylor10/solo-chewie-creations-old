@@ -1,5 +1,8 @@
 .accountTab {
     padding: 10px 0 0 30px;
+    @media (max-width: 768px) {
+        padding: 40px 0 0;
+    }
     .alert {
         margin-bottom: 30px;
     }

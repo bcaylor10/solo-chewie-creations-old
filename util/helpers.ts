@@ -160,6 +160,14 @@ export const calculateTotalPrice = (cart: ICart, includeShipping = false, origin
 }
 
 export const getRatingInfo = (ratingArray: number[]): IRating => {
+    if (ratingArray.length === 0) {
+        return {
+            count: 0,
+            amount: 0
+        };
+    }
+
+
     return {
         count: ratingArray.reduce((a, b) => a + b) / ratingArray.length,
         amount: ratingArray.length

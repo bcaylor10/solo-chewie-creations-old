@@ -8,8 +8,6 @@ import { showNotification } from '@mantine/notifications';
 import validators from 'util/validators';
 import { firebaseAuth } from 'util/firebase';
 
-import styles from '../../styles.module.scss';
-
 interface IFormData {
     displayName: string;
     email: string;
