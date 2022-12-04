@@ -109,7 +109,7 @@ const Details = ({ local, totalPrice }: IDetails) => {
                                         </div>
                                     </>
                                 ) : (
-                                    <p>you don't have any addresses</p>
+                                    <p>you don&#39;t have any addresses</p>
                                 )}
                             </>
                         )}

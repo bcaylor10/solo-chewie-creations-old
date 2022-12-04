@@ -30,6 +30,7 @@ const ProductListItem = ({ product, background = 0 }: IProductListItem) => {
                 <div className={cn(styles.productListItem, styles[backgrounds[background]])}>
                     <ProductTitle product={product} smaller />
                     {images.length > 0 ? (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img 
                             src={images[0]} 
                             className={styles.productImage} 

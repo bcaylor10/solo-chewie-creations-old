@@ -27,7 +27,7 @@ const AvatarButton = ({ user, signOutUser }: IAvatarButton) => {
                     token
                 });
             })
-            .catch((err) => console.log(err));
+            .catch((err: any) => console.log(err));
         }
     }, [ user ]);
 

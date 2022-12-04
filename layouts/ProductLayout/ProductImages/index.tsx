@@ -47,6 +47,7 @@ const ProductImages = ({ product }: IProductLayout) => {
                                     if (i >= 5) return; // allow only a maxiumum of 5 images
                                     return (
                                         <Carousel.Slide key={i} className={styles.carouselSlide}>
+                                            {/* // eslint-disable-next-line @next/next/no-img-element */}
                                             <img 
                                                 src={img} 
                                                 alt={`${product?.name} - ${product?.size} Image`}
@@ -56,6 +57,7 @@ const ProductImages = ({ product }: IProductLayout) => {
                                 })}
                             </Carousel>
                         ) : (
+                            // eslint-disable-next-line @next/next/no-img-element
                             <img 
                                 src={images[0]} 
                                 alt={`${product?.name} - ${product?.size} Image`}
@@ -101,6 +103,7 @@ const ProductImages = ({ product }: IProductLayout) => {
                                             onClick={() => goToSlide(i)}
                                             className={cn(isActive && styles.active)}
                                         >
+                                            {/* // eslint-disable-next-line @next/next/no-img-element */}
                                             <img 
                                                 className={styles.productImage} 
                                                 src={img} 

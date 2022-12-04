@@ -60,6 +60,7 @@ const ImageSelector = ({ onClick, onClickTitle, selected = [], title = '' }: IIm
                                 size={30}
                             >
                                 <div className={styles.image}>
+                                    {/* // eslint-disable-next-line @next/next/no-img-element */}
                                     <img src={img.url} alt={img.name} />
                                     <div className={styles.hover} role="button" onClick={() => onClick(img)}>
                                         <Text align="center" size="sm" className={styles.hoverText}>

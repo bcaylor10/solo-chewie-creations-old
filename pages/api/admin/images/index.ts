@@ -30,7 +30,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     // @ts-ignore
     if (!adminEmails.includes(verified.email)) return res.status(401).json('Unauthorized');
 
-    const { images } = await new Promise((resolve, reject) => {
+    const { images }: any = await new Promise((resolve, reject) => {
         const form = new formidable.IncomingForm({
             multiples: true
         });
