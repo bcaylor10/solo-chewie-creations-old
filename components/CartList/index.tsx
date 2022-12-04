@@ -53,7 +53,7 @@ const CartList = ({ cart, large }: ICartList) => {
                 const promoPrice = cart?.promo ? calculatePromoCost(product, quantity, cart.promo, true) : '';
                 const originalPrice = formatPrice(product.price * quantity);
                 // @ts-ignore
-                const showPromo = promoPrice.trim().length > 0 && promoPrice !== originalPrice 
+                const showPromo = promoPrice.trim().length > 0 && promoPrice !== originalPrice;
 
                 return (
                     <div className={cn(styles.cartListItem, large && styles.large)} key={i}>

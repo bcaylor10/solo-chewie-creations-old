@@ -9,6 +9,7 @@ import styles from './styles.module.scss';
 const Checkout = () => {
     const [ active, setActive ] = useState<number>(1);
     const [ local, setLocal ] = useState<boolean>(false);
+    const [ totalPrice, setTotalPrice ] = useState<number>(0.00);
     const [ open, setOpen ] = useState<boolean>(false);
     const [ confirmed, setConfirmed ] = useState<boolean>(false);
     const cart = useSelector((store: any) => store.cart);
@@ -45,12 +46,18 @@ const Checkout = () => {
                     <Stepper active={active} color="green" onStepClick={handleStepClick}>
                         <Stepper.Step label="Your Cart">
                             <div className={styles.step}>
-                                <YourCart cart={cart} setLocal={setLocal} />
+                                <YourCart 
+                                    cart={cart} 
+                                    local={local} 
+                                    setLocal={setLocal}
+                                    totalPrice={totalPrice}
+                                    setTotalPrice={setTotalPrice}
+                                />
                             </div>
                         </Stepper.Step>
                         <Stepper.Step label="Checkout Details">
                             <div className={styles.step}>
-                                <Details />
+                                <Details local={local} totalPrice={totalPrice} />
                             </div>
                         </Stepper.Step>
                         <Stepper.Step label="Order Complete">

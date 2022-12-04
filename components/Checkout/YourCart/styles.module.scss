@@ -1,5 +1,10 @@
 .total {
     letter-spacing: 1px;
+    &:last-of-type {
+        span:last-of-type {
+            display: inline-block;
+        }
+    }
     span {
         display: block;
         &.oldPrice {

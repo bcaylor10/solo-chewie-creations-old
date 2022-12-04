@@ -1,27 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Grid, Text, TextInput, Divider, Button, Stack, Radio, Group } from '@mantine/core';
+import { isEmpty } from 'lodash';
 import { useForm } from '@mantine/form';
 import { FiShoppingBag, FiCheckCircle } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
 
 import CartList from '@/components/CartList';
-import { ICart } from '@/redux/cart';
-import { calculateTotalPrice, promoIsValid } from '@/helpers';
+import { calculateTotalPrice, promoIsValid, formatPrice } from '@/helpers';
 import { useGetPromo } from '@/queries/promos';
 import { setCart } from '@/redux/cart';
+import { ICheckout } from '..';
 
 import styles from './styles.module.scss';
-
-interface IYourCart {
-    cart: ICart;
-    setLocal: any;
-}
 
 interface IForm {
     code: string;
 }
 
-const YourCart = ({ cart, setLocal }: IYourCart) => {
+const YourCart = ({ cart, local, setLocal, totalPrice, setTotalPrice }: ICheckout) => {
+    // if (!cart || !local || !setLocal) return <></>;
+
     const dispatch = useDispatch();
     const { mutate: getPromo, isLoading, status, data } = useGetPromo();
     const [ shipping, setShipping ] = useState<string>('shipping');
@@ -30,6 +28,29 @@ const YourCart = ({ cart, setLocal }: IYourCart) => {
             code: ''
         }
     });
+
+    // BUG: updating product on admin panel forces user to remove and re-add to cart
+
+    const total = useMemo(() => {
+        const original = calculateTotalPrice(cart, !local, true);
+        const promo = calculateTotalPrice(cart, !local, false);
+
+        return { original, promo }
+    }, [ cart, local ]);
+
+    // TODO: loop through products and check if there is a promo that should be applied to not confused the user
+
+    useEffect(() => {
+        // verify cart is not empty, else it's 0
+        if (cart.cartItems.length === 0) {
+            setTotalPrice(0.00);
+        } else {
+            // total.promo will either be equal to original or discounted, so always use it
+            const price = parseFloat(total.promo.substring(1));
+            setTotalPrice(price || 0);
+        }
+
+    }, [ total ]);
 
     const submit = ({ code }: IForm) => {
         getPromo(code);
@@ -65,13 +86,23 @@ const YourCart = ({ cart, setLocal }: IYourCart) => {
                     <>
                         <CartList cart={cart} large />
                         <Divider my="lg" />
-                        <Text align="right" className={styles.total}>
-                            {cart && cart.promo && (
+                        {!local && (
+                            <Text align="right" className={styles.total}>
                                 <span className={styles.oldPrice}>
-                                    Original Due: <s>{calculateTotalPrice(cart, shipping === 'shipping', true)}</s>
+                                    Shipping: $7.99
+                                </span>
+                            </Text>
+                        )}
+                        <Text align="right" className={styles.total}>
+                            {!isEmpty(cart.promo) && (
+                                <span className={styles.oldPrice}>
+                                    Original Due: <s>{total.original}</s>
                                 </span>
                             )}
-                            <span>Total: {calculateTotalPrice(cart, shipping === 'shipping')}</span>
+                            <span>
+                                {(!local || !isEmpty(cart.promo)) && <Divider mb="md" />}
+                                Total: {formatPrice(totalPrice)}
+                            </span>
                         </Text>
                     </>
                 ) : (
@@ -95,7 +126,7 @@ const YourCart = ({ cart, setLocal }: IYourCart) => {
                             <Radio value="shipping" label="Shipping" />
                             <Radio value="local" label="Local Pickup (Columbus, OH)" />
                         </Radio.Group>
-                        <form onSubmit={form.onSubmit(submit)}>
+                        {/* <form onSubmit={form.onSubmit(submit)}>
                             <Group className={styles.promoGroup} position="left">
                                 <TextInput 
                                     label="Apply Promo"
@@ -112,7 +143,7 @@ const YourCart = ({ cart, setLocal }: IYourCart) => {
                             >
                                 Apply Promo
                             </Button>
-                        </form>
+                        </form> */}
                     </Stack>
                 </div>
             </Grid.Col>

@@ -1,0 +1,27 @@
+.title {
+    margin-bottom: 20px !important;
+}
+
+.addressList {
+    width: 80%;
+    border: 1px solid $green;
+    border-radius: 6px;
+    .addressListItem {
+        padding: 10px;
+        border-bottom: 1px solid $green;
+        cursor: pointer;
+        transition: background .2s ease-in-out;
+        &:hover, &:global(.selected) {
+            background: $blue-grey;
+        }
+        &:first-of-type {
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+        &:last-of-type {
+            border-bottom: 0;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+    }
+}
