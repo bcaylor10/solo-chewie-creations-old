@@ -1,0 +1,14 @@
+.maintenance {
+    padding: 20px 0 !important;
+    * {
+        font-family: $comfortaa !important;
+    }
+    .image {
+        max-width: 300px;
+        margin: 0 auto 40px;
+        display: block;
+    }
+    .title, .text {
+        margin-bottom: 20px;
+    }
+}
