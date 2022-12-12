@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import qs from 'qs';
 
 import { PRODUCT_TYPES } from "@/helpers";
 import { IAuthedRequest } from "../account";
@@ -10,6 +11,8 @@ const getProduct = (type: number, size: string) => axios.get(`/api/products`, {
         size: size
     } 
 });
+const getProductById = (id: string) => axios.get(`/api/products/${id}`);
+const getProductsById = (ids: string[]) => axios.get(`/api/products/list`, { params: { ids: qs.stringify(ids) } })
 const getProducts = (type: number) => axios.get('/api/products', { params: { type: type } });
 const getAllProducts = () => axios.get('/api/products');
 const getProductSizes = (type: number) => axios.get('/api/products/sizes', { params: { type: type } })
@@ -61,12 +64,12 @@ export const useGetAllProducts = () => {
 export const useGetSizesForProduct = (type: number) => {
     const query = useQuery([`product-${type}-sizes`], async () => await getProductSizes(type));
     return query;
-}
+};
 
 export const useFeaturedProducts = () => {
     const query = useQuery(['featured'], getFeaturedProducts);
     return query;
-}
+};
 
 export const useGetProduct = (type: string, size: string) => {
     let productType: number = 0;
@@ -93,6 +96,8 @@ export const useGetProduct = (type: string, size: string) => {
     );
 };
 
+export const useGetProductById = () => useMutation(getProductById);
+export const useGetProductsById = () => useMutation(getProductsById);
 export const useDeleteProduct = () => useMutation(deleteProduct);
 export const useCreateProduct = () => useMutation(createProduct);
 export const useUpdateProduct = () => useMutation(updateProduct);

@@ -55,7 +55,7 @@ const ProductDetails = ({ product }: IProductLayout) => {
         setLoading(true);
         const payload = {
             promo: cart?.promo,
-            cartItems: [ ...cart.cartItems, product ]
+            cartItems: [ ...cart.cartItems, product?._id ]
         };
 
         new Promise((resolve) => {

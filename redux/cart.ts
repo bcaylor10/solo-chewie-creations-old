@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { isEmpty, groupBy, values } from 'lodash';
+import { isEmpty, countBy, map } from 'lodash';
 
 import { IProduct } from '@/mongo/models/Product';
 import { IPromo } from '@/mongo/models/Promo';
@@ -9,8 +9,8 @@ export interface ICart {
     promo?: IPromo;
 }
 export interface ICartItem {
-    product: IProduct;
-    quantity: number;
+    product: string;
+    quantity?: number;
 }
 
 const defaultCart = {
@@ -46,9 +46,8 @@ const cartSlice = createSlice({
                     currentCartItems.push(c.product);
                 }
             });
-
-
-            cart = values(groupBy(currentCartItems, '_id')).map(c => ({ product: c[0], quantity: c.length}));
+            
+            cart = map(countBy(currentCartItems), (key, value) => ({ product: value, quantity: key }));
 
             const newCart = {
                 cartItems: cart,

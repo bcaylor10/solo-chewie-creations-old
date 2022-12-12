@@ -20,10 +20,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const matches = useMediaQuery('(max-width: 768px)');
 
-  if (process.env.NEXT_PUBLIC_MAINTENANCE) return <Maintenance />;
+  if (process.env.NEXT_PUBLIC_MAINTENANCE === 'true') return <Maintenance />;
 
   return (
-    <QueryClientProvider client={queryClient} contextSharing={true}>
+    <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <MantineStyles>
           <NotificationsProvider position={matches ? 'bottom-center' : 'bottom-right'}>

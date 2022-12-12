@@ -1,6 +1,7 @@
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { Avatar, Grid, Title, Text, CloseButton, Group, ActionIcon, ScrollArea } from '@mantine/core';
-import { filter, findIndex } from "lodash";
+import { filter, findIndex, find } from "lodash";
 import { FiPlus, FiMinus } from 'react-icons/fi';
 import Link from "next/link";
 import cn from 'classnames';
@@ -8,6 +9,7 @@ import cn from 'classnames';
 import { IProduct } from '@/mongo/models/Product';
 import { ICart, ICartItem, setCart } from "@/redux/cart";
 import { formatImagesArray, buildProductUrl, formatPrice, calculatePromoCost } from '@/helpers';
+import { useGetProductsById } from "@/queries/products";
 
 import styles from './styles.module.scss';
 
@@ -17,10 +19,19 @@ interface ICartList {
 }
 
 const CartList = ({ cart, large }: ICartList) => {
+    const { mutate: getProducts, isLoading, data } = useGetProductsById();
     const dispatch = useDispatch();
 
+    useMemo(() => {
+        if (cart.cartItems && cart.cartItems.length > 0) {
+            // @ts-ignore
+            getProducts(cart.cartItems.map((c: ICartItem) => c.product));
+        }
+    }, []);
+
     const removeAllFromCart = (product: IProduct) => {
-        let updatedCart: ICartItem[] = filter(cart.cartItems, (c) => c.product._id !== product._id);
+        // @ts-ignore
+        let updatedCart: ICartItem[] = filter(cart.cartItems, (c) => c.product === product?._id.toString());
 
         if (updatedCart.length === 0) updatedCart = [];
         dispatch(setCart(updatedCart));
@@ -29,7 +40,8 @@ const CartList = ({ cart, large }: ICartList) => {
     const updateProductQuantity = (product: IProduct, quantity: number) => {
         if (quantity === 0) return removeAllFromCart(product);
 
-        const index: number = findIndex(cart.cartItems, ((c) => c.product._id === product._id));
+        // @ts-ignore
+        const index: number = findIndex(cart.cartItems, ((c) => c.product === product?._id.toString()));
         let mutatableCart: ICart = {
             cartItems: [ ...cart.cartItems ],
             promo: cart.promo
@@ -45,18 +57,19 @@ const CartList = ({ cart, large }: ICartList) => {
 
     return (
         <ScrollArea className={styles.cartList} type="auto">
-            {cart.cartItems && cart.cartItems.map((c: ICartItem, i: number) => {
-                const { product, quantity } = c;
-                const name = `${product.name} - ${product.size}`;
-                const image = product.img_urls ? formatImagesArray(product.img_urls)[0] : '';
-                const url = buildProductUrl(product);
-                const promoPrice = cart?.promo ? calculatePromoCost(product, quantity, cart.promo, true) : '';
-                const originalPrice = formatPrice(product.price * quantity);
+            {data?.data && data?.data.map((p: IProduct, i: number) => {
+                // @ts-ignore
+                const { quantity } = find(cart.cartItems, (c) => c.product === p?._id.toString());
+                const name = `${p.name} - ${p.size}`;
+                const image = p.img_urls ? formatImagesArray(p.img_urls)[0] : '';
+                const url = buildProductUrl(p);
+                const promoPrice = cart?.promo ? calculatePromoCost(p, quantity, cart.promo, true) : '';
+                const originalPrice = formatPrice(p.price * quantity);
                 // @ts-ignore
                 const showPromo = promoPrice.trim().length > 0 && promoPrice !== originalPrice;
 
                 return (
-                    <div className={cn(styles.cartListItem, large && styles.large)} key={i}>
+                    <div className={cn(styles.cartListItem, large && styles.large)} key={p._id || i}>
                         <Grid>
                             <Grid.Col span={2}>
                                 <Link href={url}>
@@ -68,7 +81,7 @@ const CartList = ({ cart, large }: ICartList) => {
                             <Grid.Col span={10}>
                                 <div className={styles.productDetails}>
                                     <Group position="apart">
-                                        <Title order={5} size={large ? 'h3' : 'h5'}>{product.name}</Title>
+                                        <Title order={5} size={large ? 'h3' : 'h5'}>{p.name}</Title>
                                         <Text size={large ? 'sm' : 'xs'}>
                                             {showPromo ? (
                                                 <>
@@ -80,7 +93,7 @@ const CartList = ({ cart, large }: ICartList) => {
                                             ) : originalPrice}
                                         </Text>
                                     </Group>
-                                    <Text size={large ? 'sm' : 'xs'}>Size: {product.size}</Text>
+                                    <Text size={large ? 'sm' : 'xs'}>Size: {p.size}</Text>
                                 </div>
                             </Grid.Col>
                             <Grid.Col span={12}>
@@ -89,7 +102,7 @@ const CartList = ({ cart, large }: ICartList) => {
                                         <CloseButton 
                                             size={large ? 25 : 21}
                                             aria-label={`Remove ${name} from cart`}
-                                            onClick={() => removeAllFromCart(product)}
+                                            onClick={() => removeAllFromCart(p)}
                                         />
                                     </Grid.Col>
                                     <Grid.Col span={10}>
@@ -97,7 +110,7 @@ const CartList = ({ cart, large }: ICartList) => {
                                             <ActionIcon 
                                                 size={large ? 25 : 21}
                                                 variant="default" 
-                                                onClick={() => updateProductQuantity(product, quantity - 1)}
+                                                onClick={() => updateProductQuantity(p, quantity - 1)}
                                             >
                                                 <FiMinus />
                                             </ActionIcon>
@@ -111,7 +124,7 @@ const CartList = ({ cart, large }: ICartList) => {
                                             <ActionIcon 
                                                 size={large ? 25 : 21}
                                                 variant="default" 
-                                                onClick={() => updateProductQuantity(product, quantity + 1)}
+                                                onClick={() => updateProductQuantity(p, quantity + 1)}
                                             >
                                                 <FiPlus />
                                             </ActionIcon>
