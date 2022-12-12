@@ -8,7 +8,7 @@ import { useMediaQuery } from '@mantine/hooks';
 
 import BaseLayout from '@/layouts/BaseLayout';
 import rootReducer from '@/redux/index';
-import Maintenance from 'maintenance';
+import Maintenance from '../maintenance';
 import MantineStyles from '@/layouts/MantineStyles';
 
 import '../styles/app.scss';
