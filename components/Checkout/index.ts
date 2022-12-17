@@ -1,5 +1,6 @@
 import YourCart from "./YourCart";
 import Details from "./Details";
+import OrderComplete from "./OrderComplete";
 
 import { ICart } from '@/redux/cart';
 
@@ -11,4 +12,4 @@ export interface ICheckout {
     setTotalPrice: (val: number) => void;
 }
 
-export { YourCart, Details };
+export { YourCart, Details, OrderComplete };

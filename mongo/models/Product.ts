@@ -27,7 +27,7 @@ export interface IProduct {
 
 export const SIZES = [ 'Kids', 'Mens', 'Womens', 'Adults' ];
 
-const productSchema = new Schema({
+export const productSchema = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     size: { type: String, required: true },

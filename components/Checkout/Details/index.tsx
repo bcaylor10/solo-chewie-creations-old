@@ -15,13 +15,15 @@ import { useGetAddresses } from '@/queries/account/addresses';
 import { sortBy } from 'lodash';
 
 import styles from './styles.module.scss';
+import { ICart } from '@/redux/cart';
 
 interface IDetails {
+    cart: ICart;
     local: boolean;
     totalPrice: number;
 }
 
-const Details = ({ local, totalPrice }: IDetails) => {
+const Details = ({ cart, local, totalPrice }: IDetails) => {
     const [ user ] = useAuthState(firebaseAuth);
     const { mutate: createPaymentIntent, data: keys, isLoading, status } = useCreatePaymentIntent();
     const { mutate: getAddresses, data: addresses, isLoading: addressLoading, status: addressStatus } = useGetAddresses();
@@ -119,10 +121,13 @@ const Details = ({ local, totalPrice }: IDetails) => {
                         <Title order={3} className={styles.title}>Payment Method</Title>
                         <Elements stripe={stripe} options={{ clientSecret: keys && keys.data.client_secret }}>
                             <CheckoutForm 
+                                cart={cart}
+                                totalPrice={totalPrice}
                                 selectedAddress={selectedAddress} 
                                 addresses={addresses?.data}
                                 user={user}
                                 setProcessingPayment={setProcessingPayment}
+                                clientSecret={keys ? keys.data.client_secret : ''}
                             />
                         </Elements>
                     </Grid.Col>

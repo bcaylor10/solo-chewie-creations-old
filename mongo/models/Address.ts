@@ -13,7 +13,7 @@ export interface IAddress {
     updated_at?: Date;
 }
 
-const addressSchema = new Schema({
+export const addressSchema = new Schema({
     userId: { type: String, required: true},
     address1: { type: String, required: true },
     address2: { type: String },

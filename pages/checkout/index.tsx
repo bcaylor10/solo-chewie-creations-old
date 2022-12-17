@@ -7,7 +7,7 @@ import { YourCart, Details } from '@/components/Checkout';
 import styles from './styles.module.scss';
 
 const Checkout = () => {
-    const [ active, setActive ] = useState<number>(1);
+    const [ active, setActive ] = useState<number>(0);
     const [ local, setLocal ] = useState<boolean>(false);
     const [ totalPrice, setTotalPrice ] = useState<number>(0.00);
     const [ open, setOpen ] = useState<boolean>(false);
@@ -57,7 +57,7 @@ const Checkout = () => {
                         </Stepper.Step>
                         <Stepper.Step label="Checkout Details">
                             <div className={styles.step}>
-                                <Details local={local} totalPrice={totalPrice} />
+                                <Details cart={cart} local={local} totalPrice={totalPrice} />
                             </div>
                         </Stepper.Step>
                         <Stepper.Step label="Order Complete">
