@@ -5,6 +5,8 @@ import connect from 'mongo';
 import { verifyUserToken } from '@/helpers';
 import { changeDefaultAddress } from './[...id]';
 
+import { withAuth } from 'util/hooks/helpers';
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const authToken = req.headers.authorization;
 
@@ -72,4 +74,4 @@ const getAddresses = (userId: string) => new Promise(async (resolve, reject) => 
     .catch((err) => reject(err));
 });
 
-export default handler;
+export default withAuth(handler);
