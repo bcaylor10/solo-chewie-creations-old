@@ -242,30 +242,3 @@ export const filterProductsBySize = (size: string, products?: IProduct[]): IProd
 
     return ordered;
 }
-
-export const verifyUserToken = async (userId: string, token: string) => {
-    try {
-        const { data } = await axios.get('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com');
-        const header64 = token.split('.')[0];
-        const header = JSON.parse(Buffer.from(header64, 'base64').toString('ascii'));
-        const decoded = verify(token, data[header.kid]);
-
-        // @ts-ignore
-        if (!decoded || decoded.user_id !== userId) return null;
-
-        return decoded;
-    } catch (err) {
-        console.log('Error verifying token: ', err);
-    }
-
-    return null;
-}
-
-export const verifyUser = async (res: any, authToken: string, userId: string|string[], adminEmails: string[]) => {
-    const verified = await verifyUserToken(userId.toString(), authToken);
-
-    if (!verified) return res.status(401).json('Unauthorized');
-
-    // @ts-ignore
-    if (!adminEmails.includes(verified.email)) return res.status(401).json('Unauthorized');
-}

@@ -4,8 +4,8 @@ import { forEach } from 'lodash';
 import formidable from 'formidable-serverless';
 import fs from 'fs';
 
-import { verifyUserToken } from '@/helpers';
 import { s3, baseParams } from 'util/aws';
+import { withAuth } from 'util/hooks/helpers';
 
 export const config = {
     api: {
@@ -15,20 +15,6 @@ export const config = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'POST') return res.status(405).json('Method not allowed');
-
-    const authToken = req.headers.authorization;
-    const { userId } = req.query;
-    const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',');
-
-    if (!authToken || !userId || !adminEmails || adminEmails.length === 0) {
-        return res.status(401).json('Unauthorized');
-    }
-
-    const verified = await verifyUserToken(userId.toString(), authToken);
-
-    if (!verified) return res.status(401).json('Unauthorized');
-    // @ts-ignore
-    if (!adminEmails.includes(verified.email)) return res.status(401).json('Unauthorized');
 
     const { images }: any = await new Promise((resolve, reject) => {
         const form = new formidable.IncomingForm({
@@ -63,4 +49,4 @@ const uploadToS3 = (img: any, res: any) => {
     });
 }
 
-export default handler;
+export default withAuth(handler, true);

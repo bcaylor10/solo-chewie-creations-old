@@ -2,32 +2,23 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Address, IAddress } from '@/mongo/models/Address';
 import connect from 'mongo';
-import { verifyUserToken } from '@/helpers';
 import { changeDefaultAddress } from './[...id]';
 
+import { withAuth } from 'util/hooks/helpers';
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const authToken = req.headers.authorization;
-
-    if (!authToken) return res.status(401).end();
-
+    const userId = req.user.uid;
+    
     if (req.method === 'POST') {
-        const { userId, address } = req.body
+        const { address } = req.body
         const { address1, city,  state, zip }: IAddress = address;
-        const verified = await verifyUserToken(userId, authToken);
 
-        if (!verified) return res.status(401).json('Unauthorized');
-        if (!userId || !address1 || !city || !state || !zip) return res.status(422).end();
+        if (!address1 || !city || !state || !zip) return res.status(422).end();
         
         await createAddress(userId, address)
             .then((data) => res.status(201).json(data))
             .catch((err) => res.status(500).json(err));
     } else if (req.method === 'GET') {
-        const { userId } = req.query;
-        if (!userId) return res.status(422).end();
-
-        const verified = await verifyUserToken(userId.toString(), authToken);
-        if (!verified) return res.status(401).json('Unauthorized');
-
         await getAddresses(userId.toString())
             .then((data) => res.status(200).json(data))
             .catch((err) => res.status(500).json(err));
@@ -72,4 +63,4 @@ const getAddresses = (userId: string) => new Promise(async (resolve, reject) => 
     .catch((err) => reject(err));
 });
 
-export default handler;
+export default withAuth(handler);

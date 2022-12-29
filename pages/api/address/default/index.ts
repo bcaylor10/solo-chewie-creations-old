@@ -2,18 +2,13 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Address } from '@/mongo/models/Address';
 import connect from 'mongo';
-import { verifyUserToken } from '@/helpers';
+import { withAuth } from 'util/hooks/helpers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+    const userId = req.user.uid;
+
     if (req.method !== 'GET') res.status(405).end();
-    const authToken = req.headers.authorization;
-    const { userId } = req.query;
-
-    if (!authToken || !userId) return res.status(401).end();
     
-    const verified = await verifyUserToken(userId.toString(), authToken);
-    if (!verified) return res.status(401).json('Unauthorized');
-
     await connect().then(() => {
         return Address.find({ userId: userId, default: true });
     })
@@ -21,4 +16,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     .catch((err) => res.status(500).json(err));
 };
 
-export default handler;
+export default withAuth(handler);

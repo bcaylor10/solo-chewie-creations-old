@@ -30,32 +30,28 @@ const Account = () => {
                     color="green"
                     variant="pills" 
                     orientation={width > 768 ? "vertical" : "horizontal"} 
-                    defaultValue={Object.keys(router.query)[0] || 'profile'}
+                    defaultValue="profile"
                 >
                     <Tabs.List>
                         <Tabs.Tab 
-                            onClick={() => changeRouterQuery('profile')} 
                             value="profile" 
                             icon={<FiUser size={24} />}
                         >
                             Profile
                         </Tabs.Tab>
                         <Tabs.Tab
-                            onClick={() => changeRouterQuery('order-history')}
                             value="order-history" 
                             icon={<FiList size={24} />}
                         >
                             Order History
                         </Tabs.Tab>
                         <Tabs.Tab 
-                            onClick={() => changeRouterQuery('shipping-billing')} 
                             value="shipping-billing" 
                             icon={<FiMapPin size={24} />}
                         >
                             Shipping &amp; Billing
                         </Tabs.Tab>
                         <Tabs.Tab 
-                            onClick={() => changeRouterQuery('product-reviews')} 
                             value="product-reviews" 
                             icon={<FiMessageCircle 
                             size={24} />}

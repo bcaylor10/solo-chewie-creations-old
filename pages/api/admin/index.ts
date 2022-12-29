@@ -1,25 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { verifyUserToken } from '@/helpers';
+import { withAuth } from 'util/hooks/helpers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET') return res.status(405).json('Method not allowed');
 
-    const authToken = req.headers.authorization;
-    const { userId } = req.query;
-    const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',');
-
-    if (!authToken || !userId || !adminEmails || adminEmails.length === 0) {
-        return res.status(401).json('Unauthorized');
-    }
-
-    const verified = await verifyUserToken(userId.toString(), authToken);
-
-    if (!verified) return res.status(401).json('Unauthorized');
-    // @ts-ignore
-    if (!adminEmails.includes(verified.email)) return res.status(401).json('Unauthorized');
-    
-    return res.status(200).json(verified);
+    return res.status(200).json(req.user);
 };
 
-export default handler;
+export default withAuth(handler);

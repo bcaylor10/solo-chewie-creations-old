@@ -65,7 +65,11 @@ const Details = ({ cart, local, totalPrice }: IDetails) => {
 
     useEffect(() => {
         if (!customer?.data) return;
-        createPaymentIntent({ amount: 40, customer_id: customer.data.id });
+        if (user) {
+            user.getIdToken(true).then((token: string) => {
+                createPaymentIntent({ amount: 40, customer_id: customer.data.id, token });
+            }).catch((err) => console.log("Error: ", err))
+        }
     }, [ customer ])
 
     useEffect(() => {
