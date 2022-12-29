@@ -2,35 +2,26 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Address, IAddress } from '@/mongo/models/Address';
 import connect from 'mongo';
-import { verifyUserToken } from '@/helpers';
+import { withAuth } from 'util/hooks/helpers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const authToken = req.headers.authorization;
-
-    if (!authToken) return res.status(401).end();
+    const userId = req.user.uid;
 
     if (req.method === 'DELETE') {
-        const { userId, id } = req.query;
-        if (!userId || !id) return res.status(422).end();
-
-        const verified = await verifyUserToken(userId.toString(), authToken);
-        if (!verified) return res.status(401).json('Unauthorized');
+        const { id } = req.query;
+        if (!id) return res.status(422).end();
         
         await deleteAddress(id.toString())
             .then((data) => res.status(200).json(data))
             .catch((err) => res.status(500).json(err));
     } else if (req.method === 'PUT') {
         const { id } = req.query;
-        const { userId, address } = req.body;
+        const { address } = req.body;
         const { address1, city,  state, zip }: IAddress = address;
 
-        if (!userId || !id) return res.status(422).end();
-        if (!userId || !address1 || !city || !state || !zip) return res.status(422).end();
+        if (!id || !address1 || !city || !state || !zip) return res.status(422).end();
 
-        const verified = await verifyUserToken(userId.toString(), authToken);
-        if (!verified) return res.status(401).json('Unauthorized');
-
-        await updateAddress(userId.toString(), address)
+        await updateAddress(userId, address)
             .then((data) => res.status(200).json(data))
             .catch((err) => res.status(500).json(err));
     } else {
@@ -80,4 +71,4 @@ export const changeDefaultAddress = (userId: string, address: IAddress) => new P
     .catch((err) => reject(err));
 });
 
-export default handler;
+export default withAuth(handler);

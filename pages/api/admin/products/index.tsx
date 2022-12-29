@@ -1,27 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { verifyUser } from '@/helpers';
 import connect from 'mongo';
 import { Product } from 'mongo/models/Product';
+import { withAuth } from 'util/hooks/helpers';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'GET' || req.method === 'PATCH') {
         return res.status(405).json('Method not allowed');
     }
-    const authToken = req.headers.authorization;
-    const adminEmails = process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(',');
-
-    if (!authToken || !adminEmails || adminEmails.length === 0) {
-        return res.status(401).json('Unauthorized');
-    }
 
     if (req.method === 'DELETE') {
-        const { userId, id } = req.query;
+        const { id } = req.query;
 
-        if (!userId) return res.status(401).json('Unauthorized');
         if (!id) return res.status(404);
-
-        await verifyUser(res, authToken, userId, adminEmails);
 
         // @ts-ignore
         await connect().then(() => Product.findByIdAndDelete(id))
@@ -29,12 +20,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .catch((err) => res.status(500).json(err));
     } else if (req.method === 'PUT') {
         const { id } = req.query;
-        const { userId, product } = req.body;
+        const { product } = req.body;
 
-        if (!userId) return res.status(401).json('Unauthorized');
         if (!id) return res.status(404);
-
-        await verifyUser(res, authToken, userId, adminEmails);
 
         const data = mapToModelData(product, true);
 
@@ -44,13 +32,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .then(({ data }) => res.status(200).json(data))
         .catch((err) => res.status(500).json(err));
     } else if (req.method === 'POST') {
-        const { userId, product } = req.body;
-
-        console.log(userId, product);
-
-        if (!userId) return res.status(401).json('Unauthorized');
-
-        await verifyUser(res, authToken, userId, adminEmails);
+        const { product } = req.body;
 
         const data = mapToModelData(product, true);
 
@@ -89,4 +71,4 @@ const mapToModelData = (data: any, isUpdate = false) => {
     return mappedData;
 };
 
-export default handler;
+export default withAuth(handler, true);
