@@ -19,7 +19,7 @@ interface ICartList {
 }
 
 const CartList = ({ cart, large }: ICartList) => {
-    const { mutate: getProducts, isLoading, data } = useGetProductsById();
+    const { mutate: getProducts, data } = useGetProductsById();
     const dispatch = useDispatch();
 
     useMemo(() => {

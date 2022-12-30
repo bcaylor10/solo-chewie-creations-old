@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Grid, Text, TextInput, Divider, Button, Stack, Radio, Group } from '@mantine/core';
-import { isEmpty } from 'lodash';
+import { countBy, find, isEmpty } from 'lodash';
 import { useForm } from '@mantine/form';
 import { FiShoppingBag, FiCheckCircle } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
@@ -8,20 +8,26 @@ import { useDispatch } from 'react-redux';
 import CartList from '@/components/CartList';
 import { calculateTotalPrice, promoIsValid, formatPrice } from '@/helpers';
 import { useGetPromo } from '@/queries/promos';
-import { setCart } from '@/redux/cart';
+import { ICartItem, setCart } from '@/redux/cart';
 import { ICheckout } from '..';
+import { useGetProductsById } from "@/queries/products";
 
 import styles from './styles.module.scss';
+import { IProduct } from '@/mongo/models/Product';
 
 interface IForm {
     code: string;
 }
 
-const YourCart = ({ cart, local, setLocal, totalPrice, setTotalPrice }: ICheckout) => {
-    // if (!cart || !local || !setLocal) return <></>;
+export interface ICartItemPrice {
+    price: number;
+    quantity: number;
+}
 
+const YourCart = ({ cart, local, setLocal, totalPrice, setTotalPrice }: ICheckout) => {
     const dispatch = useDispatch();
-    const { mutate: getPromo, isLoading, status, data } = useGetPromo();
+    const { mutate: getPromo, status, data } = useGetPromo();
+    const { mutate: getProducts, data: products } = useGetProductsById();
     const [ shipping, setShipping ] = useState<string>('shipping');
     const form = useForm<IForm>({
         initialValues: {
@@ -29,28 +35,25 @@ const YourCart = ({ cart, local, setLocal, totalPrice, setTotalPrice }: ICheckou
         }
     });
 
-    // BUG: updating product on admin panel forces user to remove and re-add to cart
-
-    const total = useMemo(() => {
-        const original = calculateTotalPrice(cart, !local, true);
-        const promo = calculateTotalPrice(cart, !local, false);
-
-        return { original, promo }
-    }, [ cart, local ]);
-
-    // TODO: loop through products and check if there is a promo that should be applied to not confused the user
+    useEffect(() => {
+        getProducts(cart.cartItems.map((p: ICartItem) => p.product));
+    }, []);
 
     useEffect(() => {
-        // verify cart is not empty, else it's 0
-        if (cart.cartItems.length === 0) {
-            setTotalPrice(0.00);
-        } else {
-            // total.promo will either be equal to original or discounted, so always use it
-            const price = parseFloat(total.promo.substring(1));
-            setTotalPrice(price || 0);
-        }
+        if (!products?.data) return;
+        let total = 0;
 
-    }, [ total ]);
+        products.data.map((p: IProduct) => {
+            // @ts-ignore
+            const cartProduct = find(cart.cartItems, (c) => c.product === p._id.toString());
+            total += p.price * (cartProduct?.quantity || 1);
+        });
+
+        if (!local) total += 7.99;
+
+        setTotalPrice(parseFloat(total.toString()));
+    }, [ products, local, cart ]);
+
 
     const submit = ({ code }: IForm) => {
         getPromo(code);
@@ -94,11 +97,6 @@ const YourCart = ({ cart, local, setLocal, totalPrice, setTotalPrice }: ICheckou
                             </Text>
                         )}
                         <Text align="right" className={styles.total}>
-                            {!isEmpty(cart.promo) && (
-                                <span className={styles.oldPrice}>
-                                    Original Due: <s>{total.original}</s>
-                                </span>
-                            )}
                             <span>
                                 {(!local || !isEmpty(cart.promo)) && <Divider mb="md" />}
                                 Total: {formatPrice(totalPrice)}

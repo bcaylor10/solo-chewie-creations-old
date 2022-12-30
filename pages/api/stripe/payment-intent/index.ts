@@ -3,7 +3,6 @@ import Stripe from 'stripe';
 
 import { withAuth } from 'util/hooks/helpers';
 import connect from '@/mongo/index';
-import customer from '../customer';
 import { Customer } from '@/mongo/models/Customer';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

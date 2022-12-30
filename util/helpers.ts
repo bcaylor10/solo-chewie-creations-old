@@ -5,9 +5,9 @@ import { verify } from 'jsonwebtoken';
 import axios from 'axios';
 
 import { IProduct } from '@/mongo/models/Product';
-import { ICart, ICartItem } from '@/redux/cart';
 import routes from "@/routes";
 import { IPromo } from '../mongo/models/Promo';
+import { ICartItemPrice } from "@/components/Checkout/YourCart";
 
 export interface IRating {
     count: number;
@@ -131,28 +131,14 @@ export const calculatePromoCost = (product: IProduct, quantity: number, promo: I
     return formatted ? formatPrice(price) : price;
 };
 
-export const calculateTotalPrice = (cart: ICart, includeShipping = false, original = false): string => {
+export const calculateTotalPrice = (cartItems: ICartItemPrice[], includeShipping = false, original = false): string => {
     let price = 0;
-    if (!cart.cartItems) return formatPrice(price);
-    const { promo } = cart;
+    if (!cartItems || cartItems.length === 0) return formatPrice(price);
 
-    /*
-        1, check if promo is listed on item
-        2. check if promo has started
-        3. check if promo has ended
-    */
-
-    cart.cartItems.forEach((c: ICartItem) => {
-        const product = c.product;
-        let amount = product.price * c.quantity;
-
-        if (promo && !original) {
-            // @ts-ignore
-            amount = calculatePromoCost(product, c.quantity, promo);
-        }
-        
-        price += amount;
-    });
+    // cartItems.forEach((c: ICartItemPrice) => {
+    //     let amount = c.price * c.quantity;
+    //     price += amount;
+    // });
 
     if (includeShipping) price += 7.99;
 

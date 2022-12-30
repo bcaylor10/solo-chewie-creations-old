@@ -21,7 +21,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         await connect().then(() => stripe.customers.create({ metadata: { user_id: user_id.toString() } }))
         .then((customer) => {
             customerData = customer;
-            return Customer.create({ user_id: user_id.toString(), customer_id: customer.id })
+            return Customer.create({ 
+                user_id: user_id.toString(), 
+                customer_id: customer.id,
+                cart_items: []
+            })
         })
         .then(() => res.status(201).json(customerData))
         .catch((err) => res.status(500).json(err));

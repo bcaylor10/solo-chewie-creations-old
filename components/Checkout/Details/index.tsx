@@ -28,13 +28,14 @@ const Details = ({ cart, local, totalPrice }: IDetails) => {
     const { mutate: createPaymentIntent, data: keys, isLoading, status } = useCreatePaymentIntent();
     const { mutate: getAddresses, data: addresses, isLoading: addressLoading, status: addressStatus } = useGetAddresses();
     const { mutate: getCustomer, data: customer, isLoading: customerLoading, status: customerStatus } = useGetCustomer();
+    const [ selectedAddress, setSelectedAddress ] = useState<string>('');
+    const [ processingPayment, setProcessingPayment ] = useState<boolean>(false);
+
     const stripe = useMemo(() => {
         if (keys?.data) {
             return loadStripe(keys.data.publishable_key);
         }
     }, [ keys ]);
-    const [ selectedAddress, setSelectedAddress ] = useState<string>('');
-    const [ processingPayment, setProcessingPayment ] = useState<boolean>(false);
 
     // TODO: pass and set a total cost
     // TODO: get customer from stripe via metadata key, check if deleted. if deleted or 404, show error
